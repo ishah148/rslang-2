@@ -1,0 +1,19 @@
+@import url("../../../../variables/Variables.module.css");
+
+.itemcontainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: var(--color-gray);
+  border-radius: 10px;
+  font-family: "Montserrat-Bold";
+  font-size: 14px;
+  color: var(--color-white);
+  transition: 1s;
+  cursor: pointer;
+}
+
+.itemcontainer:hover {
+  background-color: var(--color-blue);
+}

@@ -1,0 +1,57 @@
+.container {
+  width: 100%;
+  min-height: 100vh;
+  background-color: rgb(165, 101, 101);
+  padding-top: 100px;
+
+  .page {
+    width: calc(100% - 60px);
+    padding: 30px;
+  }
+
+  .gamesStats {
+    padding-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    row-gap: 40px;
+    column-gap: 40px;
+    .gameStats {
+      background-color: green;
+      width: 400px;
+      height: 300px;
+    }
+  }
+
+  .wordsStats {
+    height: 200px;
+    background-color: goldenrod;
+  }
+}
+
+.buttons__container {
+  width: 100%;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  background-color: purple;
+  .button__dailyStats,
+  .button__fullStats {
+    display: block;
+    width: 150px;
+    height: 50px;
+
+    border-radius: 10px;
+    font-family: "Montserrat-Bold";
+    font-size: 17px;
+    cursor: pointer;
+    &:hover {
+      transition: .5s;
+      background-color: #00aeff;
+    }
+  }
+}

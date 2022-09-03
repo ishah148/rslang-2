@@ -1,0 +1,38 @@
+@import url("../../../../variables/Variables.module.css");
+
+.pagintaion {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.pagintaionContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.prevBtn,
+.curBtn,
+.nextBtn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-blue);
+  font-family: "Montserrat-Bold";
+  color: var(--color-white);
+  font-size: 20px;
+  user-select: none;
+}
+
+.curBtn {
+  min-width: 110px;
+}
+
+.prevBtn,
+.nextBtn {
+  cursor: pointer;
+}

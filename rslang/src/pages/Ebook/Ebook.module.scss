@@ -1,0 +1,50 @@
+@import url("../../variables/Variables.module.css");
+
+.ebookContainer {
+  padding-top: 70px;
+}
+
+.ebookMenu {
+  display: flex;
+  justify-content: space-between;
+}
+
+.itemsContainer,
+.gamesContainer {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px 0;
+  gap: 20px;
+}
+
+.gamesItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-gray);
+  padding: 10px;
+  border-radius: 10px;
+  gap: 5px;
+  color: var(--color-white);
+  transition: 1s;
+  cursor: pointer;
+  p {
+    font-family: "Montserrat-Bold";
+    font-size: 14px;
+  }
+}
+
+.gamesItem:hover {
+  background-color: var(--color-blue);
+}
+
+.gamesImage {
+  height: 30px;
+  width: 30px;
+}
+
+.ebookWords {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}

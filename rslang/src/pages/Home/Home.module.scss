@@ -1,0 +1,112 @@
+@import url("../../variables/Variables.module.css");
+
+.homeBackground {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  max-height: 500px;
+  left: 0;
+  top: 0;
+  right: 0;
+  order: 2;
+  overflow: hidden;
+}
+
+.homeBackground {
+  img {
+    width: 100%;
+    object-fit: cover;
+    filter: brightness(70%);
+  }
+}
+
+.homeContainer {
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+  z-index: 10;
+  padding-top: 150px;
+  gap: 20px;
+
+  button {
+    width: 40%;
+  }
+}
+
+.homeTitle {
+  font-family: "Montserrat-Bold";
+  color: var(--color-white);
+  font-size: 50px;
+  text-transform: uppercase;
+}
+
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 60px;
+  padding-top: 180px;
+  padding-bottom: 80px;
+}
+
+.titleContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mainTitle {
+  display: flex;
+  justify-content: center;
+  font-family: "Montserrat-Bold";
+  color: var(--color-darkblue);
+  font-size: 30px;
+}
+
+.divider {
+  height: 5px;
+  width: 300px;
+  background-color: var(--color-darkblue);
+}
+
+.capabilitiesContainer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.capabilitie {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 25%;
+  gap: 30px;
+
+  a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+  }
+}
+
+.capabilitieImage {
+  height: 80px;
+  width: 80px;
+}
+
+.capabilitieTitle {
+  font-family: "Montserrat-Bold";
+  font-size: 25px;
+  text-align: center;
+  color: var(--color-darkblue);
+}
+
+.capabilitieSubTitle {
+  font-family: "Montserrat-Regular";
+  font-size: 20px;
+  color: var(--color-darkblue);
+  text-align: center;
+}
