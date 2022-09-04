@@ -21,10 +21,8 @@ const Round = () => {
 
   useEffect(()=>{
     hiddenResult()
-    setTimer(0)
-    console.log('timer',timer)
-    console.log('isShow',isShowResult)
-  },[])
+  },[pending])
+
 
   function start() {
     hiddenResult()
@@ -139,7 +137,7 @@ const Round = () => {
           </button>
         </div>
       </div>
-      {timer > 1 || !isShowResult || <Result result={result} words={sprintWords} resetAction={reset} />}
+      {(timer < 1 && isShowResult) ? <Result result={result} words={sprintWords} resetAction={reset}/>:''}
     </div>
   )
 }
