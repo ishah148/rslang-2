@@ -62,3 +62,9 @@ export function calcAccuracy(arr: GameData) {
 //     return res
 //   }, 0) / arr.length) * 100).toFixed()
 // }
+
+
+export function findWordByid(id: string, words: SprintWord[] | null) {
+  if (!words) return
+  return words.find((word) => word.word.id === id)
+}

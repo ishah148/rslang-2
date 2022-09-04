@@ -1,11 +1,12 @@
 import React, { useEffect } from "react"
 import { GameData } from "../../../models/UserWordsModels"
 import { rand } from "../../../utils/math"
-import { SprintWord } from "../controller/utils"
+import { findWordByid, SprintWord } from "../controller/utils"
 import "./styles.scss"
 type ResultProps = {
   result: GameData
   words: SprintWord[]
+  resetAction:()=>void
 }
 
 const Result = (props: ResultProps) => {
@@ -16,8 +17,9 @@ const Result = (props: ResultProps) => {
   useEffect(()=>{console.log('sorted',sortedArr)},[props])
   return (
     <div className="result-wrapper">
-      <h1>Лучшее комбо:{props.result.bestStreak}</h1>
-      <h1>Точнось:{props.result.accuracy} %</h1>
+      <h1>Game Over</h1>
+      <h2>Лучшее комбо:{props.result.bestStreak || 0}</h2>
+      <h2>Точнось:{props.result.accuracy || 0} %</h2>
       {falsyWords.map((word) => {
         const findedWord = findWordByid(word[0], props.words)
         if (findedWord) {
@@ -33,19 +35,14 @@ const Result = (props: ResultProps) => {
         if (findedWord) {
           return (
             <p >
-              {findedWord.en} -{findedWord.en} - {findedWord.isCorrect ? "верно" : "неверно"}
+              {findedWord.en} -{findedWord.ru} - {findedWord.isCorrect ? "верно" : "неверно"}
             </p>
           )
         }
       })}
-    <button>Close</button>
+    <button onClick={props.resetAction}>Close</button>
     </div>
   )
 }
 
 export default Result
-
-function findWordByid(id: string, words: SprintWord[] | null) {
-  if (!words) return
-  return words.find((word) => word.word.id === id)
-}
