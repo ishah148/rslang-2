@@ -5,8 +5,14 @@ import { UserWordsApi } from "./api/UserWords_api";
 export class GamesService {
   static async updateGameData(gameData: GameData, gameName: string) {
     // gameName либо "audioChallenge" либо "sprint"
+    // переделать с "20 запросов в цикле" на "получить массив пользовательских слов и локально перебирать"
     // StatsApi.updateUserStats(gameData);
     // StatsService.updateUserStats(gameData)
+    if(gameName === 'sprint') {
+      console.log('OBJECT KEYS', gameData.wordsID);
+      gameData.newWords = await GamesService.calcNewWords(gameData.wordsID);
+    }
+    console.log('GAMEDATA',gameData);
     for (const wordID of gameData.wordsID) {
       const response = await UserWordsApi.getUserWord(wordID)
       if (response.status === 404) {
