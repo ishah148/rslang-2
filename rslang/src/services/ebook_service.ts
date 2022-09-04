@@ -28,7 +28,7 @@ export class EBookService {
           if (newUserWord.optional.isLearned) {
             newUserWord.optional.isNew = false;
           } else {
-            newUserWord.optional.isNew = userWord.optional.meetingCounter < 3;
+            newUserWord.optional.isNew = userWord.optional.meetingCounter <= 3;
           }
           newUserWord.optional.meetingCounter = userWord.optional.meetingCounter;
         } else if (userWord.difficulty === 'easy') {
@@ -36,7 +36,7 @@ export class EBookService {
           newUserWord.optional.progressBarSize = 5;
           newUserWord.optional.progressBar = userWord.optional.progressBar;
           newUserWord.optional.isLearned = false;
-          newUserWord.optional.isNew = userWord.optional.meetingCounter < 3;
+          newUserWord.optional.isNew = userWord.optional.meetingCounter <= 3;
           newUserWord.optional.meetingCounter = userWord.optional.meetingCounter;
         }
         return (await UserWordsApi.updateUserWord(wordID, newUserWord)).body;
@@ -47,7 +47,7 @@ export class EBookService {
         newUserWord.optional.progressBarSize = 5;
         newUserWord.optional.progressBar = 0;
         newUserWord.optional.isLearned = false;
-        newUserWord.optional.isNew = true;
+        newUserWord.optional.isNew = false;
         newUserWord.optional.meetingCounter = 0;
       }
       
