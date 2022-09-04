@@ -19,6 +19,13 @@ const Round = () => {
   const { timer, setTimer, setIndex, currentWorldEn, currentWorldRu, currentWord } = useGame(level)
   const { addAnswer } = useResult()
 
+  useEffect(()=>{
+    hiddenResult()
+    setTimer(0)
+    console.log('timer',timer)
+    console.log('isShow',isShowResult)
+  },[])
+
   function start() {
     hiddenResult()
     setIndex(2)

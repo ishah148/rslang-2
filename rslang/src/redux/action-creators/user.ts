@@ -44,6 +44,7 @@ export function setError(value: string | null): UserAction {
 
 export function logOut(): UserAction {
   localStorage.removeItem("user")
+  localStorage.clear();
   return { type: UserActionTypes.LOGOUT }
 }
 
