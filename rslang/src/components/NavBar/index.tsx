@@ -13,6 +13,7 @@ function NavBar() {
 
   const handleClick = () => {
     logOut()
+    localStorage.clear()
     resetUserWords()
   }
 
@@ -47,7 +48,7 @@ function NavBar() {
                 <li>
                   <p>{user.name}</p>
                   <p>{user.message}</p>
-                  <button onClick={() => logOut()}>Logout</button>
+                  <button onClick={() => handleClick()}>Logout</button>
                 </li>
               ) : (
                 <>

@@ -1,35 +1,31 @@
-import React from "react"
+import React, { useEffect } from "react"
 import styles from "./Pagintaion.module.scss"
 
 interface SectionItemProps {
-  chapter: string
-  clickHandler: (page: number, group: string) => void
+  chapter: number
+  clickHandler: (page: number, group: number) => void
+  curPage: number
+  setCurPage: (prev: (prev: number) => number) => void
 }
 
-export default function Paginatinon({ chapter, clickHandler }: SectionItemProps) {
-  const [curPage, setCurPage] = React.useState(1)
-
-  React.useEffect(() => {
-    setCurPage(1)
-  }, [chapter])
+export default function Paginatinon({ chapter, clickHandler, curPage, setCurPage }: SectionItemProps) {
+  useEffect(() => {
+    clickHandler(curPage, chapter)
+  }, [curPage])
 
   function nextPage() {
-    if (curPage >= 30) {
-      setCurPage(30)
+    if (curPage >= 29) {
+      setCurPage((_) => 29)
     } else {
-      setCurPage(curPage + 1)
-      clickHandler(curPage, chapter)
-      
+      setCurPage((value) => value + 1)
     }
   }
 
   function prevPage() {
-    if (curPage <= 1) {
-      setCurPage(1)
+    if (curPage <= 0) {
+      setCurPage((_) => 0)
     } else {
-      setCurPage(curPage - 1)
-      clickHandler(curPage, chapter)
-      
+      setCurPage((value) => value - 1)
     }
   }
 
@@ -39,7 +35,7 @@ export default function Paginatinon({ chapter, clickHandler }: SectionItemProps)
         <div className={styles.prevBtn} onClick={prevPage}>
           &#9668;
         </div>
-        <div className={styles.curBtn}>{curPage} of 30</div>
+        <div className={styles.curBtn}>{curPage + 1} of 30</div>
         <div className={styles.nextBtn} onClick={nextPage}>
           &#9658;
         </div>
