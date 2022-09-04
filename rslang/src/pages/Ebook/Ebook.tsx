@@ -13,10 +13,21 @@ import { ServerUserWord } from "../../models/UserWordsModels"
 
 const SECTIONS = [0, 1, 2, 3, 4, 5, 6]
 
+interface IUserWordsWithCurrentWords extends IWord {
+  difficulty: "easy" | "hard"
+  optional: {
+    isLearned: boolean
+    progressBar: number // 1-2-3 для easy и 1-2-3-4-5 для hard
+    progressBarSize: number //3 or 5
+    isNew: boolean
+    meetingCounter: number
+  }
+}
+
 function Ebook() {
   const [dataWords, setDataWords] = React.useState<IWord[]>([])
   const [curChapter, setCurChapter] = React.useState("0")
-  const [mergedWords, setMergedWords] = React.useState<any[] | null>(null)
+  const [wordsToShow, setWordsToShow] = React.useState<Array<IWord | IUserWordsWithCurrentWords> | null>(null)
 
   const mergeUserWordsWithCurWords = (currentWords: IWord[], userWords: ServerUserWord[]) => {
     return currentWords.map((word) => {
@@ -29,19 +40,18 @@ function Ebook() {
   }
 
   const { isPending, userWords, error } = useTypedSelector((state) => state.userWords)
-  const { getUserWords, setDificultyUserWord } = useUserWordsActionsCreators()
+  const { getUserWords } = useUserWordsActionsCreators()
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     getUserWords()
     clickHandler(0, curChapter)
   }, [])
 
   useEffect(() => {
-    if (userWords.length > 0) {
-      const test: any = mergeUserWordsWithCurWords(dataWords, userWords)
-      setMergedWords(test)
-    }
-  }, [userWords])
+    const mergedWords: Array<IWord | IUserWordsWithCurrentWords> = mergeUserWordsWithCurWords(dataWords, userWords)
+
+    setWordsToShow(mergedWords)
+  }, [userWords, dataWords])
 
   async function clickHandler(page: number, group: string) {
     const { status, data } = await WordsApi.getWords(page, Number(group))
@@ -73,7 +83,7 @@ function Ebook() {
         </div>
       </div>
       <div className={styles.ebookWords}>
-        {dataWords.map((elem) => {
+        {wordsToShow?.map((elem) => {
           return <WordItem key={elem.id} dataWord={elem} />
         })}
       </div>

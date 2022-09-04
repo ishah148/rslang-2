@@ -28,9 +28,9 @@ const Round = () => {
   }
   function reset() {
     GamesService.updateGameData(result,'sprint')
-    setTimer(0)
     hiddenResult()
     sprintSetReset()
+    setTimer(0)
     setIndex(1)
   }
 
@@ -52,9 +52,7 @@ const Round = () => {
     }
   }, [timer])
 
-  useEffect(()=>{
-    hiddenResult()
-  },[])
+  
 
   function handleAnswer(e: React.MouseEvent<HTMLButtonElement>) {
     const tagret = e.target as HTMLButtonElement
