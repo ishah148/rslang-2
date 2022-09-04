@@ -47,6 +47,7 @@ export class AuthApi {
   }
   static async logout() {
     localStorage.removeItem("token")
+    localStorage.removeItem("refreshToken")
   }
   static async jwtLogin() {
     // not working
