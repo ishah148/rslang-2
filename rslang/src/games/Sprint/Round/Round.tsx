@@ -8,6 +8,7 @@ import styles from "./Round.module.scss"
 import { useDispatch } from "react-redux"
 import { SprintActionTypes } from "../../../redux/action-types/sprint"
 import Result from "./Result"
+import { GamesService } from "../../../services/games_services"
 
 const Round = () => {
   const navigate = useNavigate()
@@ -26,6 +27,7 @@ const Round = () => {
     setTimer(60)
   }
   function reset() {
+    GamesService.updateGameData(result,'sprint')
     hiddenResult()
     sprintSetReset()
     setTimer(0)
@@ -50,7 +52,7 @@ const Round = () => {
     }
   }, [timer])
 
-  console.log("timer > 1, isShowReslt", timer > 1, isShowResult)
+  
 
   function handleAnswer(e: React.MouseEvent<HTMLButtonElement>) {
     const tagret = e.target as HTMLButtonElement

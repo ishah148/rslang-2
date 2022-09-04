@@ -34,7 +34,7 @@ export const setDificultyUserWord = (wordID: string, words: ServerUserWord[]) =>
       }
     } catch (error) {
       if (error instanceof Error) {
-        console.log(error.message)
+        
         dispatch(setErrorUserWords(error.message))
       }
     } finally {
@@ -52,7 +52,7 @@ export const getUserWords = () => {
       dispatch(showUserWords(body))
     } catch (error) {
       if (error instanceof Error) {
-        console.log(error.message)
+        
         dispatch(setErrorUserWords(error.message))
       }
     } finally {
