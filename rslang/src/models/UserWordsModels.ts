@@ -1,9 +1,9 @@
 export interface UserWord {
-  difficulty: 'easy' | 'hard' | null;  // easy OR hard
+  difficulty: 'easy' | 'hard' | null;
   optional: {
     isLearned: boolean | null;
     progressBar: number | null; // 1-2-3 для easy и 1-2-3-4-5 для hard
-    progressBarSize: number | null;
+    progressBarSize: number | null; // 3 or 5
     isNew: boolean | null;
     meetingCounter: number | null;
   }
@@ -15,16 +15,11 @@ export interface ServerUserWord {
   optional: {
     isLearned: boolean;
     progressBar: number; // 1-2-3 для easy и 1-2-3-4-5 для hard
-    progressBarSize: number; 
+    progressBarSize: number; //3 or 5
     isNew: boolean;
     meetingCounter: number;
   };
   wordId: string;
-}
-
-export interface UpdateDifficultWordsResponse {
-  id: string;
-  status: 'easy' | 'hard' | null;
 }
 
 export interface GameData {

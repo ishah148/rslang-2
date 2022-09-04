@@ -1,9 +1,9 @@
-import { ServerUserWord, UpdateDifficultWordsResponse, UserWord } from "../models/UserWordsModels";
+import { ServerUserWord, UserWord } from "../models/UserWordsModels";
 import { UserWordsApi } from "./api/UserWords_api";
 
 
 export class EBookService {
-  static async updateDifficultWords(wordID: string): Promise<UpdateDifficultWordsResponse> {
+  static async updateDifficultWords(wordID: string): Promise<ServerUserWord> {
     const newUserWord: UserWord = {
       difficulty: null,
       optional: {
@@ -39,7 +39,7 @@ export class EBookService {
           newUserWord.optional.isNew = userWord.optional.meetingCounter < 3;
           newUserWord.optional.meetingCounter = userWord.optional.meetingCounter;
         }
-        await UserWordsApi.updateUserWord(wordID, newUserWord);
+        return (await UserWordsApi.updateUserWord(wordID, newUserWord)).body;
       }
 
       if (response.status === 404) {
@@ -49,19 +49,15 @@ export class EBookService {
         newUserWord.optional.isLearned = false;
         newUserWord.optional.isNew = true;
         newUserWord.optional.meetingCounter = 0;
-        await UserWordsApi.createUserWord(wordID, newUserWord);
       }
-
+      
       if (response.status !== 200 && response.status !== 404) {
         throw new Error(`updateDifficultWords response.status is --- ${response.status}`);
       }
     } catch (error) {
       throw new Error((error as Error).message);
     }
-    const result: ServerUserWord  = (await UserWordsApi.getUserWord(wordID)).body;
-    return {
-      id: result.wordId,
-      status: result.difficulty, 
-    };
+    
+    return (await UserWordsApi.createUserWord(wordID, newUserWord)).body;
   }
 }

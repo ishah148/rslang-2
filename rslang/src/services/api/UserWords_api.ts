@@ -11,7 +11,7 @@ export class UserWordsApi {
   }
 
   static async createUserWord(wordID: string, wordData: UserWord) {
-    const response = await apiInstance.post(`/users/${localStorage.getItem("userId")}/words/${wordID}`, wordData)
+    const response = await apiInstance.post<ServerUserWord>(`/users/${localStorage.getItem("userId")}/words/${wordID}`, wordData)
     return {
       status: response.status,
       body: response.data,
@@ -19,7 +19,7 @@ export class UserWordsApi {
   }
 
   static async getUserWord(wordID: string) {
-    const response = await apiInstance.get(`/users/${localStorage.getItem("userId")}/words/${wordID}`)
+    const response = await apiInstance.get<ServerUserWord>(`/users/${localStorage.getItem("userId")}/words/${wordID}`)
     return {
       status: response.status,
       body: response.data,
@@ -27,7 +27,7 @@ export class UserWordsApi {
   }
 
   static async updateUserWord(wordID: string, wordData: UserWord) {
-    const response = await apiInstance.put(`/users/${localStorage.getItem("userId")}/words/${wordID}`, wordData)
+    const response = await apiInstance.put<ServerUserWord>(`/users/${localStorage.getItem("userId")}/words/${wordID}`, wordData)
     return {
       status: response.status,
       body: response.data,
