@@ -68,7 +68,7 @@ export class GamesService {
         newWordsCounter++
       }
     } catch (error) {
-      console.log(error)
+      
       throw new Error((error as Error).message)
     }
     return newWordsCounter

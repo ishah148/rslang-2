@@ -37,7 +37,7 @@ export function useResult() {
 
   useEffect(() => {
     const accur = +calcAccuracy(result)
-    console.log('',accur)
+    
     dispatch(SprintResultActionCreator.accuracy(accur))
   }, [combo])
 
@@ -86,7 +86,7 @@ function useTimer() {
   const decrement = () => {
     if (timer > 0) setTimer(timer - 1)
     // if (timer < 1) {
-    //   console.log("", result)
+    //   
     //   sprintSetReset()
     // }
   }

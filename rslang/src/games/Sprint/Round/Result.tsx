@@ -6,15 +6,14 @@ import "./styles.scss"
 type ResultProps = {
   result: GameData
   words: SprintWord[]
-  resetAction:()=>void
+  resetAction: () => void
 }
 
 const Result = (props: ResultProps) => {
-  // useEffect(()=>{console.log('',props)},[])
   const sortedArr = Object.entries(props.result.corectness).sort((a, b) => +a[1] - +b[1])
-  const falsyWords = Object.entries(props.result.corectness).filter(i => i[1] === false)
-  const truewords = Object.entries(props.result.corectness).filter(i => i[1] === true)
-  useEffect(()=>{console.log('sorted',sortedArr)},[props])
+  const falsyWords = Object.entries(props.result.corectness).filter((i) => i[1] === false)
+  const truewords = Object.entries(props.result.corectness).filter((i) => i[1] === true)
+
   return (
     <div className="result-wrapper">
       <h1>Game Over</h1>
@@ -24,7 +23,7 @@ const Result = (props: ResultProps) => {
         const findedWord = findWordByid(word[0], props.words)
         if (findedWord) {
           return (
-            <p >
+            <p>
               {findedWord.en} -{findedWord.en} - {findedWord.isCorrect ? "верно" : "неверно"}
             </p>
           )
@@ -34,13 +33,13 @@ const Result = (props: ResultProps) => {
         const findedWord = findWordByid(word[0], props.words)
         if (findedWord) {
           return (
-            <p >
+            <p>
               {findedWord.en} -{findedWord.ru} - {findedWord.isCorrect ? "верно" : "неверно"}
             </p>
           )
         }
       })}
-    <button onClick={props.resetAction}>Close</button>
+      <button onClick={props.resetAction}>Close</button>
     </div>
   )
 }

@@ -29,14 +29,14 @@ const initialState: ISprintState = {
   combo: 0,
   result: {
     wordsID: [],
-    newWords: null,
+    newWords: -2,
     accuracy: null,
     bestStreak: null,
     corectness: {},
   },
 }
 export const sprintReducer = (state = initialState, action: SprintAction | SprintResultAction) => {
-  // console.log('type',action.type,action.payload)
+  // 
   if (action.type in SprintActionTypes) return handleSprintStateAction(state, action)
   if (action.type in SprintActionResultTypes) return handleSprintStateResultAction(state, action)
   return state
@@ -57,10 +57,10 @@ export function handleSprintStateResultAction(state: ISprintState, action: Sprin
       return { ...state, result: { ...state.result, bestStreak: action.payload } }
 
     case SprintActionResultTypes.CORRECTNESS:
-      // console.log('payload',{...action.payload})
+      // 
       return { ...state, result: { ...state.result, corectness: { ...state.result.corectness, ...action.payload } } }
     case SprintActionResultTypes.RESET:
-      // console.log('payload',{...action.payload})
+      // 
       return { ...initialState,level:initialState.level,difficult:initialState.difficult}
   }
   return state
