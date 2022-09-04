@@ -1,3 +1,4 @@
+import { GameData } from "../../../models/UserWordsModels"
 import { IWord } from "../../../services/api_types"
 import { rand } from "../../../utils/math"
 import { shuffleArr } from "../../../utils/shuffle"
@@ -45,9 +46,19 @@ export function generateRandNumbers(count: number): number[] {
   return res
 }
 
-export function calcAccuracy(arr: boolean[]) {
-  return ((arr.reduce((res, i) => {
-    if (i === true) res++
-    return res
-  }, 0) / arr.length) * 100).toFixed()
+export function calcAccuracy(arr: GameData) {
+  const entries = Object.entries(arr.corectness)
+  const length = entries.length
+  return (
+   ( entries.reduce((res, i) => {
+      if (i[1] === true) res++
+      return res
+    }, 0) / length) * 100
+  ).toFixed()
 }
+// export function calcAccuracy(arr: boolean[]) {
+//   return ((arr.reduce((res, i) => {
+//     if (i === true) res++
+//     return res
+//   }, 0) / arr.length) * 100).toFixed()
+// }

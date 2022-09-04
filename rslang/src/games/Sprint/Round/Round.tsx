@@ -7,18 +7,21 @@ import { useNavigate } from "react-router-dom"
 import styles from "./Round.module.scss"
 import { useDispatch } from "react-redux"
 import { SprintActionTypes } from "../../../redux/action-types/sprint"
+import Result from "./Result"
 
 const Round = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { pending, page, level, result, combo, score } = useTypedSelector((state) => state.sprint)
+  const { pending, page, level, result, combo, score, sprintWords } = useTypedSelector((state) => state.sprint)
   const { sprintSetStart } = useSprintActionsCreators()
   const { timer, setTimer, setIndex, currentWorldEn, currentWorldRu, currentWord } = useGame(level)
   const { addAnswer } = useResult()
 
+
   function start() {
+    setIndex(2)
     dispatch({ type: SprintActionTypes.RESET, payload: null })
-    sprintSetStart(level || 1, generateRandNumbers(1))
+    sprintSetStart(level || 1, generateRandNumbers(5))
     setTimer(60)
   }
   function stop() {
@@ -70,12 +73,12 @@ const Round = () => {
             </div>
           </div>
 
-          <p className={styles.timer}>{timer}</p>
+          <p className={styles.timer}>{timer > 0 ? timer : 0}</p>
         </div>
         <div className={styles.wordsContainer}>
-          <p>{timer > 0? currentWorldEn:''}</p>
+          <p>{timer > 0 ? currentWorldEn : ""}</p>
           <span>-</span>
-          <p>{timer > 0? currentWorldRu:''}</p>
+          <p>{timer > 0 ? currentWorldRu : ""}</p>
         </div>
         {!pending ? (
           <div className={styles.buttonsContainer}>
@@ -109,6 +112,7 @@ const Round = () => {
           </button>
         </div>
       </div>
+      {timer > 1 || <Result result={result} words={sprintWords} />}
     </div>
   )
 }

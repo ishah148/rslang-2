@@ -59,6 +59,9 @@ export function handleSprintStateResultAction(state: ISprintState, action: Sprin
     case SprintActionResultTypes.CORRECTNESS:
       // console.log('payload',{...action.payload})
       return { ...state, result: { ...state.result, corectness: { ...state.result.corectness, ...action.payload } } }
+    case SprintActionResultTypes.RESET:
+      // console.log('payload',{...action.payload})
+      return { ...initialState,level:initialState.level,difficult:initialState.difficult}
   }
   return state
 }

@@ -19,7 +19,7 @@ export function useResult() {
     if (answer === "right") {
       word.result = true
     } else word.result = false
-    setResults((state) => [...state, answer === "right" ? true : false])
+    // setResults((state) => [...state, answer === "right" ? true : false])
     dispatch(SprintResultActionCreator.pushWordID(word.word.id))
     dispatch(SprintResultActionCreator.corectness(word.word.id, word.result))
   }
@@ -36,9 +36,10 @@ export function useResult() {
   }
 
   useEffect(() => {
-    const accur = +calcAccuracy(results)
+    const accur = +calcAccuracy(result)
+    console.log('',accur)
     dispatch(SprintResultActionCreator.accuracy(accur))
-  }, [results])
+  }, [combo])
 
   return { combo, addAnswer }
 }
@@ -106,8 +107,10 @@ function controlIndex(
 ) {
   const { sprintSetStart } = useSprintActionsCreators()
   const { difficult } = useTypedSelector((state) => state.sprint)
-  if (index === sprintWords.length - 15) {
-    sprintSetStart(difficult || 2, generateRandNumbers(4))
-  }
+  useEffect(() => {
+    if (index === sprintWords.length - 15) {
+      sprintSetStart(difficult || 2, generateRandNumbers(4))
+    }
+  }, [index])
 }
 // =============== ===============

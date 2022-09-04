@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import SectionItem from "./components/SectionItem/SectionItem"
 import styles from "./Ebook.module.scss"
 import gameImage from "../../assets/img/mainGames.png"
@@ -7,16 +7,41 @@ import WordItem from "./components/WordItem/WordItem"
 import Paginatinon from "./components/Pagination/Pagination"
 import { WordsApi } from "../../services/api"
 import { IWord } from "../../services/api_types"
+import { useUserWordsActionsCreators } from "../../hooks/useActions"
+import { useTypedSelector } from "../../hooks/useTypedSelector"
+import { ServerUserWord } from "../../models/UserWordsModels"
 
 const SECTIONS = [0, 1, 2, 3, 4, 5, 6]
 
 function Ebook() {
   const [dataWords, setDataWords] = React.useState<IWord[]>([])
   const [curChapter, setCurChapter] = React.useState("0")
+  const [mergedWords, setMergedWords] = React.useState<any[] | null>(null)
+
+  const mergeUserWordsWithCurWords = (currentWords: IWord[], userWords: ServerUserWord[]) => {
+    return currentWords.map((word) => {
+      const foundedWord = userWords.find(({ wordId }) => wordId === word.id)
+      if (foundedWord) {
+        return { ...word, optional: foundedWord.optional, difficulty: foundedWord.difficulty }
+      }
+      return word
+    })
+  }
+
+  const { isPending, userWords, error } = useTypedSelector((state) => state.userWords)
+  const { getUserWords, setDificultyUserWord } = useUserWordsActionsCreators()
 
   React.useEffect(() => {
+    getUserWords()
     clickHandler(0, curChapter)
   }, [])
+
+  useEffect(() => {
+    if (userWords.length > 0) {
+      const test: any = mergeUserWordsWithCurWords(dataWords, userWords)
+      setMergedWords(test)
+    }
+  }, [userWords])
 
   async function clickHandler(page: number, group: string) {
     const { status, data } = await WordsApi.getWords(page, Number(group))

@@ -1,41 +1,77 @@
+
+import { GameData, UserWord } from "../models/UserWordsModels";
 import { UserWordsApi } from "./api/UserWords_api";
-import { GameData } from "../models/UserWordsModels"
 
 export class GamesService {
-  static updateGameData(data: GameData, gameName: string) {
-    //! gameName либо "audioChallenge" либо "sprint"
-    //отсюда нужно в статистику отправлять новые слова
-    // StatsApi.updateUserStats(data);
+  static async updateGameData(gameData: GameData, gameName: string) {
+    // gameName либо "audioChallenge" либо "sprint"
+    // StatsApi.updateUserStats(gameData);
+    // StatsService.updateUserStats(gameData)
+    for (const wordID of gameData.wordsID) {
+      const response = await UserWordsApi.getUserWord(wordID)
+      if (response.status === 404) {
+        // вынести в UserWords_Service (метод createNewUserWord)
+        const newUserWord: UserWord = {
+          difficulty: "easy",
+          optional: {
+            isLearned: false,
+            progressBar: gameData.corectness[wordID] ? 1 : 0,
+            progressBarSize: 3,
+            isNew: true,
+            meetingCounter: 1,
+          },
+        }
+        UserWordsApi.createUserWord(wordID, newUserWord)
+      }
+
+      if (response.status === 200) {
+        // вынести в UserWords_Service (метод updateUserWord)
+        const userWord = response.body
+        const newUserWord: UserWord = {
+          difficulty: null,
+          optional: {
+            isLearned: null,
+            progressBar: null,
+            progressBarSize: null,
+            isNew: null,
+            meetingCounter: null,
+          },
+        }
+      }
+
+      if (response.status !== 200 && response.status !== 404) {
+        throw new Error(`updateGameData response.status is --- ${response.status}`)
+      }
+    }
   }
 
   static async calcNewWords(idArray: string[]): Promise<number> {
-    let newWordsCounter = 0;
+    let newWordsCounter = 0
     try {
       for (const id of idArray) {
-        const response = await UserWordsApi.getUserWord(id);
+        const response = await UserWordsApi.getUserWord(id)
         if (response.status === 404) {
-          newWordsCounter++;
-          continue;
+          newWordsCounter++
+          continue
         }
         if (response.status !== 200) {
-          throw new Error(`calcNewWords response.status is --- ${response.status}`);
+          throw new Error(`calcNewWords response.status is --- ${response.status}`)
         }
-        const userWord = response.body;
+        const userWord = response.body
         if (
           !userWord ||
           userWord.optional?.isNew ||
           (!userWord.optional?.isNew && userWord?.optional?.meetingCounter > 0)
         ) {
-          continue;
+          continue
         }
-        newWordsCounter++;
-
+        newWordsCounter++
       }
     } catch (error) {
       console.log(error)
-      throw new Error((error as Error).message);
+      throw new Error((error as Error).message)
     }
-    return newWordsCounter;
+    return newWordsCounter
   }
 
   static calcBestStreak(data: boolean[]): number {

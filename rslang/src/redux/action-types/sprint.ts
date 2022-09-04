@@ -18,11 +18,11 @@ export enum SprintActionTypes {
 
 type sprintSetStartAction = {
   type: SprintActionTypes.START
-  payload:null
+  payload: null
 }
 type sprintSetComboAction = {
   type: SprintActionTypes.COMBO
-  payload:number;
+  payload: number
 }
 type SprintErrorAction = {
   type: SprintActionTypes.ERROR
@@ -48,7 +48,7 @@ type SprintPushWordsAction = {
 
 type sprintSetResetAction = {
   type: SprintActionTypes.RESET
-  payload:null
+  payload: null
 }
 type SprintUpdateLevelAction = {
   type: SprintActionTypes.UPDATE_LEVEL
@@ -65,43 +65,48 @@ export type SprintAction =
   | SprintUpdateLevelAction
   | sprintSetComboAction
 
-  // =============== RESULT must separete in other file ===============
+// =============== RESULT must separete in other file ===============
 
-  export enum SprintActionResultTypes {
-    WORD_ID = "WORD_ID",
-    NEW_WORDS = "NEW_WORDS",
-    ACCURACY = "ACCURACY",
-    BEST_STREAK = "BEST_STREAK",
-    CORRECTNESS = "CORRECTNESS",
+export enum SprintActionResultTypes {
+  WORD_ID = "WORD_ID",
+  NEW_WORDS = "NEW_WORDS",
+  ACCURACY = "ACCURACY",
+  BEST_STREAK = "BEST_STREAK",
+  CORRECTNESS = "CORRECTNESS",
+  RESET = "RESET",
+}
+
+type SprintActionResultWordIDAction = {
+  type: SprintActionResultTypes.WORD_ID
+  payload: string
+}
+type SprintActionResultNewWordsAction = {
+  type: SprintActionResultTypes.NEW_WORDS
+  payload: number
+}
+type SprintActionResultAccuracyAction = {
+  type: SprintActionResultTypes.ACCURACY
+  payload: number
+}
+type SprintActionResultBestStreakction = {
+  type: SprintActionResultTypes.BEST_STREAK
+  payload: number
+}
+type SprintActionResultCorrectnesAction = {
+  type: SprintActionResultTypes.CORRECTNESS
+  payload: {
+    [wordID: string]: boolean
   }
-  
-  type SprintActionResultWordIDAction = {
-    type: SprintActionResultTypes.WORD_ID
-    payload: string
-  }
-  type SprintActionResultNewWordsAction = {
-    type: SprintActionResultTypes.NEW_WORDS
-    payload: number
-  }
-  type SprintActionResultAccuracyAction = {
-    type: SprintActionResultTypes.ACCURACY
-    payload: number
-  }
-  type SprintActionResultBestStreakction = {
-    type: SprintActionResultTypes.BEST_STREAK
-    payload: number
-  }
-  type SprintActionResultCorrectnesAction = {
-    type: SprintActionResultTypes.CORRECTNESS
-    payload: {
-      [wordID: string]: boolean
-    }
-  }
-  
-  export type SprintResultAction =
-    | SprintActionResultWordIDAction
-    | SprintActionResultNewWordsAction
-    | SprintActionResultAccuracyAction
-    | SprintActionResultBestStreakction
-    | SprintActionResultCorrectnesAction
-  
+}
+type SprintActionResetAction = {
+  type: SprintActionResultTypes.RESET
+  payload: null
+}
+
+export type SprintResultAction =
+  | SprintActionResultWordIDAction
+  | SprintActionResultNewWordsAction
+  | SprintActionResultAccuracyAction
+  | SprintActionResultBestStreakction
+  | SprintActionResultCorrectnesAction
+  | SprintActionResetAction

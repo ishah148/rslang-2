@@ -8,21 +8,22 @@ export class WordsService {
     //обработать ситуацию, когда сложное слово становится легким, а степень изучения 3-4-5
     const userWord: UserWord = response.body;
     const newWord = {
-      difficulty,
+      difficulty: userWord.difficulty,
       optional: userWord.optional
     }
     await UserWordsApi.updateUserWord(wordID, newWord);
     // return await UserWordsApi.updateUserWord(wordID, newWord);
   }
 
-  static async updateLearnedWord(wordID: string, isLearned: boolean, sucсessAttemptsInARow: number) {
+  static async updateLearnedWord(wordID: string, isLearned: boolean, progressBar: number) {
     const response = await UserWordsApi.getUserWord(wordID);
     const userWord: UserWord = response.body;
     const newWord = {
       difficulty: userWord.difficulty,
       optional: {
         isLearned,
-        sucсessAttemptsInARow,
+        progressBar,
+        progressBarSize: userWord.optional.progressBarSize,
         isNew: userWord.optional.isNew,
         meetingCounter: userWord.optional.meetingCounter,
      }
@@ -38,7 +39,8 @@ export class WordsService {
       difficulty: userWord.difficulty,
       optional: {
         isLearned: userWord.optional.isLearned,
-        sucсessAttemptsInARow: userWord.optional.sucсessAttemptsInARow,
+        progressBar: userWord.optional.progressBar,
+        progressBarSize: userWord.optional.progressBarSize,
         isNew,
         meetingCounter,
      }

@@ -3,12 +3,18 @@ import styles from "./WordItem.module.scss"
 import { IWord } from "../../../../services/api_types"
 
 import playBtn from "../../../../assets/img/playBtn.png"
+import { ServerUserWord } from "../../../../models/UserWordsModels"
+import { useTypedSelector } from "../../../../hooks/useTypedSelector"
+import { useUserWordsActionsCreators } from "../../../../hooks/useActions"
 
-interface IWordObject {
-  dataWord: IWord
-}
+// interface IWordObject {
+//   dataWord: IWord
+// }
 
-export default function WordItem({ dataWord }: IWordObject) {
+export default function WordItem({ dataWord }: any) {
+  const { isPending, userWords, error } = useTypedSelector((state) => state.userWords)
+  const { getUserWords, setDificultyUserWord } = useUserWordsActionsCreators()
+
   function playButton() {
     const audio = new Audio("https://rslang-rss.herokuapp.com/" + dataWord.audio)
     audio.play()
@@ -40,6 +46,9 @@ export default function WordItem({ dataWord }: IWordObject) {
           </div>
         </div>
       </div>
+
+      <button onClick={() => setDificultyUserWord(dataWord.id, userWords)}>HARD</button>
+      {isPending && <p>Loading...</p>}
       <div className={styles.btnContainer}>
         <img draggable="false" src={playBtn} className={styles.playBtn} onClick={playButton}></img>
       </div>

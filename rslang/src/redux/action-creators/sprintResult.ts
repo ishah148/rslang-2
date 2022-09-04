@@ -19,5 +19,8 @@ export class SprintResultActionCreator {
   static corectness(id: string, bool: boolean) {
     return { type: SprintActionResultTypes.CORRECTNESS, payload: { [id]: bool } }
   }
+  static reset() {
+    return { type: SprintActionResultTypes.RESET, payload:null }
+  }
   // static
 }
