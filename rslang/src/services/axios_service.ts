@@ -24,9 +24,9 @@ apiInstance.interceptors.response.use(
   async (error: AxiosError) => {
     const originalRequest = error.config
     if(error.response?.status === 401){
-      console.log('error401',error)
+      // console.log('error401',error)
       try{
-        console.log('error status',401)
+        // console.log('error status',401)
         const userId = localStorage.getItem('userId')
         const res = await axios.get<Auth>(`${API_URL}/users/${userId}/tokens`,{
           headers:{
@@ -36,15 +36,14 @@ apiInstance.interceptors.response.use(
             'Authorization':`Bearer ${localStorage.getItem("refreshToken")}`
           }
         })
-        console.log('res data token',res.data.token)
+        // console.log('res data token',res.data.token)
         localStorage.setItem('token',res.data.token)
         localStorage.setItem('refreshToken',res.data.refreshToken)
         return apiInstance.request(originalRequest)
       }catch(e){
-        console.log('erorororororor',e)
+        console.log('error with 401',e)
       }
     }
-    console.log('!!!!!')
     return error.response
   }
 )
