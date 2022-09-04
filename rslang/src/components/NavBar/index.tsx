@@ -1,6 +1,6 @@
 import React from "react"
 import { NavLink, useLocation } from "react-router-dom"
-import { useActions } from "../../hooks/useActions"
+import { useActions, useUserWordsActionsCreators } from "../../hooks/useActions"
 import { useTypedSelector } from "../../hooks/useTypedSelector"
 import logo from "../../assets/img/logoRslang.png"
 import styles from "./NavBar.module.scss"
@@ -8,8 +8,13 @@ import styles from "./NavBar.module.scss"
 function NavBar() {
   const { user } = useTypedSelector((state) => state.user)
   const { logOut } = useActions()
-
+  const { resetUserWords } = useUserWordsActionsCreators()
   const location = useLocation()
+
+  const handleClick = () => {
+    logOut()
+    resetUserWords()
+  }
 
   return (
     <>

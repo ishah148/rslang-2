@@ -38,7 +38,6 @@ export class AuthApi {
     const responce = await apiInstance.post<Auth>("/signin", user)
     localStorage.setItem("token", responce.data.token)
     localStorage.setItem("userId", responce.data.userId)
-    localStorage.setItem("refreshToken", responce.data.refreshToken)
     // return apiInstance.post<Auth>("/signin", user)
     return {
       status: responce.status,
@@ -47,7 +46,6 @@ export class AuthApi {
   }
   static async logout() {
     localStorage.removeItem("token")
-    localStorage.removeItem("refreshToken")
   }
   static async jwtLogin() {
     // not working

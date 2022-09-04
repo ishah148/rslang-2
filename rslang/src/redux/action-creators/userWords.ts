@@ -4,10 +4,12 @@ import { userWordsActionTypes, userWordsAction } from "../action-types/userWords
 import { ServerUserWord } from "../../models/UserWordsModels"
 import { UserWordsApi } from "../../services/api/UserWords_api"
 
-const updateDifficultyUserWords = (id: string, words: ServerUserWord[], status: "easy" | "hard") => {
+const updateDifficultyUserWords = (response: ServerUserWord, words: ServerUserWord[]) => {
+  const founded = words.find(({ wordId }) => wordId === response.wordId)
+  if (founded === undefined) return [...words, response]
   return words.map(({ wordId }, i, arr) => {
-    if (wordId === id) {
-      return { ...arr[i], difficulty: status }
+    if (wordId === response.wordId) {
+      return { ...arr[i], difficulty: response.difficulty }
     }
     return arr[i]
   })
@@ -17,28 +19,22 @@ export const setDificultyUserWord = (wordID: string, words: ServerUserWord[]) =>
   return async (dispatch: Dispatch<userWordsAction>) => {
     dispatch(setPendingUserWords(true))
     try {
-      const { id, status } = await EBookService.updateDifficultWords(wordID)
-
-      if (status !== "easy" && status !== "hard") {
+      const response = await EBookService.updateDifficultWords(wordID)
+      const { difficulty } = response
+      if (difficulty !== "easy" && difficulty !== "hard") {
         throw new Error("server send us wrong status (file/userWords/line:20)")
       }
+      if (difficulty === "hard" || difficulty === "easy") {
+        const updatedUserWords = updateDifficultyUserWords(response, words)
 
-      if (status === "easy") {
-        const updatedUserWords = updateDifficultyUserWords(id, words, status)
-        dispatch(showUserWords(updatedUserWords))
-      }
-
-      if (status === "hard") {
-        const updatedUserWords = updateDifficultyUserWords(id, words, status)
         dispatch(showUserWords(updatedUserWords))
       }
     } catch (error) {
       if (error instanceof Error) {
-        
         dispatch(setErrorUserWords(error.message))
+
+        dispatch(setPendingUserWords(false))
       }
-    } finally {
-      dispatch(setPendingUserWords(false))
     }
   }
 }
@@ -52,7 +48,6 @@ export const getUserWords = () => {
       dispatch(showUserWords(body))
     } catch (error) {
       if (error instanceof Error) {
-        
         dispatch(setErrorUserWords(error.message))
       }
     } finally {
@@ -71,4 +66,8 @@ const setPendingUserWords = (value: boolean): userWordsAction => {
 
 const setErrorUserWords = (value: string | null): userWordsAction => {
   return { type: userWordsActionTypes.ERROR, payload: value }
+}
+
+export const resetUserWords = (): userWordsAction => {
+  return { type: userWordsActionTypes.RESET }
 }

@@ -1,8 +1,9 @@
 import { ServerUserWord } from "../../models/UserWordsModels"
 export enum userWordsActionTypes {
-  SHOW = "show",
-  PENDING = "pending",
-  ERROR = "error",
+  SHOW = "show user words",
+  PENDING = "user words are pending",
+  ERROR = "set user words error",
+  RESET = "reset user words state",
 }
 
 interface userWordsShowAction {
@@ -20,4 +21,12 @@ interface userWordsSetErrorAction {
   payload: string | null
 }
 
-export type userWordsAction = userWordsShowAction | userWordsSetPendingAction | userWordsSetErrorAction
+interface userWordsResetAction {
+  type: userWordsActionTypes.RESET
+}
+
+export type userWordsAction =
+  | userWordsShowAction
+  | userWordsSetPendingAction
+  | userWordsSetErrorAction
+  | userWordsResetAction
