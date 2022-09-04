@@ -85,10 +85,10 @@ function useTimer() {
 
   const decrement = () => {
     if (timer > 0) setTimer(timer - 1)
-    if (timer < 1) {
-      console.log("", result)
-      sprintSetReset()
-    }
+    // if (timer < 1) {
+    //   console.log("", result)
+    //   sprintSetReset()
+    // }
   }
   useEffect(() => {
     const interval = setTimeout(decrement, 1000)
