@@ -33,7 +33,7 @@ const Result = (props: ResultProps) => {
         const findedWord = findWordByid(word[0], props.words)
         if (findedWord) {
           return (
-            <p>
+            <p key={findedWord.word.id + rand(0,600)}>
               {findedWord.en} -{findedWord.ru} - {findedWord.isCorrect ? "верно" : "неверно"}
             </p>
           )
