@@ -3,6 +3,7 @@ import { UserWordsApi } from "./api/UserWords_api";
 
 
 export class EBookService {
+
   static async updateDifficultWords(wordID: string): Promise<ServerUserWord> {
     const newUserWord: UserWord = {
       difficulty: null,
@@ -14,6 +15,8 @@ export class EBookService {
         meetingCounter: null,
       }
     }
+    let result: ServerUserWord | null = null;
+
     try {
       const response = await UserWordsApi.getUserWord(wordID);
 
@@ -28,7 +31,7 @@ export class EBookService {
           if (newUserWord.optional.isLearned) {
             newUserWord.optional.isNew = false;
           } else {
-            newUserWord.optional.isNew = userWord.optional.meetingCounter < 3;
+            newUserWord.optional.isNew = userWord.optional.meetingCounter <= 3;
           }
           newUserWord.optional.meetingCounter = userWord.optional.meetingCounter;
         } else if (userWord.difficulty === 'easy') {
@@ -36,10 +39,11 @@ export class EBookService {
           newUserWord.optional.progressBarSize = 5;
           newUserWord.optional.progressBar = userWord.optional.progressBar;
           newUserWord.optional.isLearned = false;
-          newUserWord.optional.isNew = userWord.optional.meetingCounter < 3;
+          newUserWord.optional.isNew = userWord.optional.meetingCounter <= 3;
           newUserWord.optional.meetingCounter = userWord.optional.meetingCounter;
         }
-        return (await UserWordsApi.updateUserWord(wordID, newUserWord)).body;
+
+        result = (await UserWordsApi.updateUserWord(wordID, newUserWord)).body;
       }
 
       if (response.status === 404) {
@@ -47,17 +51,76 @@ export class EBookService {
         newUserWord.optional.progressBarSize = 5;
         newUserWord.optional.progressBar = 0;
         newUserWord.optional.isLearned = false;
-        newUserWord.optional.isNew = true;
+        newUserWord.optional.isNew = false;
         newUserWord.optional.meetingCounter = 0;
+        result = (await UserWordsApi.createUserWord(wordID, newUserWord)).body;
       }
-      
+
       if (response.status !== 200 && response.status !== 404) {
         throw new Error(`updateDifficultWords response.status is --- ${response.status}`);
       }
     } catch (error) {
       throw new Error((error as Error).message);
     }
-    
-    return (await UserWordsApi.createUserWord(wordID, newUserWord)).body;
+
+    return result as ServerUserWord;
+  }
+
+  static async updateLearnedWord(wordID: string): Promise<ServerUserWord> {
+    const newUserWord: UserWord = {
+      difficulty: null,
+      optional: {
+        isLearned: null,
+        progressBar: null,
+        progressBarSize: null,
+        isNew: null,
+        meetingCounter: null,
+      }
+    }
+    let result: ServerUserWord | null = null;
+
+    try {
+      const response = await UserWordsApi.getUserWord(wordID);
+
+      if (response.status === 200) {
+        const userWord: ServerUserWord = response.body;
+
+        if (userWord.optional.isLearned === true) {
+          newUserWord.optional.isLearned = false;
+          newUserWord.optional.isNew = userWord.optional.meetingCounter <=3;
+          newUserWord.optional.meetingCounter = userWord.optional.meetingCounter;
+          newUserWord.optional.progressBarSize = userWord.optional.progressBarSize;
+          newUserWord.difficulty = userWord.optional.progressBarSize === 5 ? 'hard' : 'easy'; // "восстановление" состояния progressbar
+          newUserWord.optional.progressBar = 0;
+        } else if (userWord.optional.isLearned === false) {
+          newUserWord.optional.isLearned = true;
+          newUserWord.optional.isNew = false;
+          newUserWord.optional.meetingCounter = userWord.optional.meetingCounter;
+          newUserWord.difficulty = 'easy';
+          newUserWord.optional.progressBar = 3;
+          newUserWord.optional.progressBarSize = userWord.optional.progressBarSize; // 'сохранение' состояния progressbar
+        }
+
+        result = (await UserWordsApi.updateUserWord(wordID, newUserWord)).body;
+      }
+
+      if (response.status === 404) {
+          newUserWord.optional.isLearned = true;
+          newUserWord.optional.isNew = false;
+          newUserWord.optional.meetingCounter = 0;
+          newUserWord.difficulty = 'easy';
+          newUserWord.optional.progressBar = 3;
+          newUserWord.optional.progressBarSize = 3; 
+        result = (await UserWordsApi.createUserWord(wordID, newUserWord)).body;
+      }
+
+      if (response.status !== 200 && response.status !== 404) {
+        throw new Error(`updateLearnedWord response.status is --- ${response.status}`);
+      }
+    } catch (error) {
+      throw new Error((error as Error).message);
+    }
+
+    return result as ServerUserWord;
   }
 }

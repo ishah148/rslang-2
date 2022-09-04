@@ -1,12 +1,18 @@
 
-import { GameData, UserWord } from "../models/UserWordsModels";
+import { GameData, ServerUserWord, UserWord } from "../models/UserWordsModels";
 import { UserWordsApi } from "./api/UserWords_api";
 
 export class GamesService {
   static async updateGameData(gameData: GameData, gameName: string) {
     // gameName либо "audioChallenge" либо "sprint"
+    // переделать с "20 запросов в цикле" на "получить массив пользовательских слов и локально перебирать"
     // StatsApi.updateUserStats(gameData);
     // StatsService.updateUserStats(gameData)
+    if(gameName === 'sprint') {
+      console.log('OBJECT KEYS', gameData.wordsID);
+      gameData.newWords = await GamesService.calcNewWords(gameData.wordsID);
+    }
+    console.log('GAMEDATA',gameData);
     for (const wordID of gameData.wordsID) {
       const response = await UserWordsApi.getUserWord(wordID)
       if (response.status === 404) {
@@ -48,20 +54,21 @@ export class GamesService {
   static async calcNewWords(idArray: string[]): Promise<number> {
     let newWordsCounter = 0
     try {
-      for (const id of idArray) {
-        const response = await UserWordsApi.getUserWord(id)
-        if (response.status === 404) {
-          newWordsCounter++
-          continue
-        }
-        if (response.status !== 200) {
-          throw new Error(`calcNewWords response.status is --- ${response.status}`)
-        }
-        const userWord = response.body
+      const response = await UserWordsApi.getUserWords();
+
+      if (response.status !== 200) {
+        throw new Error(`calcNewWords response.status is --- ${response.status}`)
+      }
+
+      const userWordsArray: ServerUserWord[] = response.body
+      for (const ID of idArray) {
+        const userWord: ServerUserWord | undefined = userWordsArray.find((userWord) => ID === userWord.wordId)
         if (
-          !userWord ||
-          userWord.optional?.isNew ||
-          (!userWord.optional?.isNew && userWord?.optional?.meetingCounter > 0)
+          userWord &&
+          (
+            userWord.optional?.isNew ||
+            (!userWord.optional?.isNew && userWord.optional?.meetingCounter > 3)
+          )
         ) {
           continue
         }
