@@ -23,8 +23,8 @@ apiInstance.interceptors.response.use(
   },
   async (error: AxiosError) => {
     const originalRequest = error.config
-    console.log('error no 401',error)
     if(error.response?.status === 401){
+      console.log('error401',error)
       try{
         console.log('error status',401)
         const userId = localStorage.getItem('userId')
