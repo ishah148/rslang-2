@@ -26,7 +26,8 @@ interface IUserWordsWithCurrentWords extends IWord {
 
 function Ebook() {
   const [dataWords, setDataWords] = React.useState<IWord[]>([])
-  const [curChapter, setCurChapter] = React.useState("0")
+  const [curChapter, setCurChapter] = React.useState(0)
+  const [curPage, setCurPage] = React.useState(0)
   const [wordsToShow, setWordsToShow] = React.useState<Array<IWord | IUserWordsWithCurrentWords> | null>(null)
 
   const mergeUserWordsWithCurWords = (currentWords: IWord[], userWords: ServerUserWord[]) => {
@@ -39,12 +40,12 @@ function Ebook() {
     })
   }
 
+  console.log(dataWords[0])
   const { isPending, userWords, error } = useTypedSelector((state) => state.userWords)
   const { getUserWords } = useUserWordsActionsCreators()
 
   React.useLayoutEffect(() => {
     getUserWords()
-    clickHandler(0, curChapter)
   }, [])
 
   useEffect(() => {
@@ -53,9 +54,10 @@ function Ebook() {
     setWordsToShow(mergedWords)
   }, [userWords, dataWords])
 
-  async function clickHandler(page: number, group: string) {
-    const { status, data } = await WordsApi.getWords(page, Number(group))
+  async function clickHandler(page: number, group: number) {
     setCurChapter(group)
+    setCurPage(page)
+    const { status, data } = await WordsApi.getWords(page, group)
     setDataWords(data)
   }
 
@@ -64,7 +66,7 @@ function Ebook() {
       <div className={styles.ebookMenu}>
         <div className={styles.itemsContainer}>
           {SECTIONS.map((elem) => {
-            return <SectionItem key={elem.toString()} group={elem.toString()} clickHandler={clickHandler} />
+            return <SectionItem key={elem.toString()} group={elem} clickHandler={clickHandler} />
           })}
         </div>
         <div className={styles.gamesContainer}>
@@ -87,7 +89,7 @@ function Ebook() {
           return <WordItem key={elem.id} dataWord={elem} />
         })}
       </div>
-      <Paginatinon chapter={curChapter} clickHandler={clickHandler} />
+      <Paginatinon chapter={curChapter} curPage={curPage} setCurPage={setCurPage} clickHandler={clickHandler} />
     </div>
   )
 }
