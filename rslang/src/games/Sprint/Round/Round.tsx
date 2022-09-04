@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { useSprintActionsCreators } from "../../../hooks/useActions"
 import { useTypedSelector } from "../../../hooks/useTypedSelector"
 import { useResult, useGame } from "../controller/hooks"
@@ -12,27 +12,45 @@ import Result from "./Result"
 const Round = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { pending, page, level, result, combo, score, sprintWords } = useTypedSelector((state) => state.sprint)
-  const { sprintSetStart } = useSprintActionsCreators()
+  const [isShowResult, setShowResult] = useState<boolean>(false)
+  const { pending, level, result, combo, score, sprintWords } = useTypedSelector((state) => state.sprint)
+  const { sprintSetStart, sprintSetReset } = useSprintActionsCreators()
   const { timer, setTimer, setIndex, currentWorldEn, currentWorldRu, currentWord } = useGame(level)
   const { addAnswer } = useResult()
 
-
   function start() {
+    hiddenResult()
     setIndex(2)
     dispatch({ type: SprintActionTypes.RESET, payload: null })
     sprintSetStart(level || 1, generateRandNumbers(5))
     setTimer(60)
   }
-  function stop() {
+  function reset() {
+    hiddenResult()
+    sprintSetReset()
     setTimer(0)
     setIndex(1)
-    console.log("result ", result)
+  }
+
+  function showResult() {
+    setShowResult(true)
+  }
+  function hiddenResult() {
+    setShowResult(false)
   }
 
   function changeLevel() {
+    sprintSetReset()
     navigate("/games/sprint")
   }
+
+  useEffect(() => {
+    if (timer < 1) {
+      showResult()
+    }
+  }, [timer])
+
+  console.log("timer > 1, isShowReslt", timer > 1, isShowResult)
 
   function handleAnswer(e: React.MouseEvent<HTMLButtonElement>) {
     const tagret = e.target as HTMLButtonElement
@@ -96,7 +114,7 @@ const Round = () => {
           <button className={styles.btnChangeTimer} onClick={() => setTimer((i) => i - 5)}>
             Timer -5
           </button>
-          <button className={styles.btnChangeTimer} onClick={() => setTimer((i) => i + 5)}>
+          <button className={styles.btnChangeTimer} onClick={() => setTimer((i) => i + 5)} disabled={timer < 1}>
             Timer +5
           </button>
 
@@ -104,7 +122,7 @@ const Round = () => {
             {" "}
             Start{" "}
           </button>
-          <button className={styles.btnStop} onClick={stop}>
+          <button className={styles.btnStop} onClick={() => setTimer(0)}>
             Stop
           </button>
           <button className={styles.btnChangeLevel} onClick={changeLevel}>
@@ -112,7 +130,7 @@ const Round = () => {
           </button>
         </div>
       </div>
-      {timer > 1 || <Result result={result} words={sprintWords} />}
+      {timer > 1 || !isShowResult || <Result result={result} words={sprintWords} resetAction={reset} />}
     </div>
   )
 }
