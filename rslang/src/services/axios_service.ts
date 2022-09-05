@@ -1,10 +1,12 @@
 import axios, { AxiosError } from "axios"
 import { Auth, AuthError } from "./api_types"
 export const API_URL = "https://rslang-rss.herokuapp.com"
+// export const API_URL = "http://localhost:3002"
 
 export const apiInstance = axios.create({
   // withCredentials: true,
   baseURL: API_URL,
+  
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -25,9 +27,14 @@ apiInstance.interceptors.response.use(
     const originalRequest = error.config
     if(error.response?.status === 401){
       try{
-        const userId = localStorage.getItem('userId')
+        // const userId = localStorage.getItem('userId')
+        const userId = JSON.parse(localStorage.getItem('user') || '').userId
+
         const refreshToken = JSON.parse(localStorage.getItem('user') || '').refreshToken
+        // console.log('rT',refreshToken)
+        // console.log('',userId)
         const res = await axios.get<Auth>(`${API_URL}/users/${userId}/tokens`,{
+          // withCredentials:true,
           headers:{
             Accept: "application/json",
             "Content-Type": "application/json",

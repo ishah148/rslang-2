@@ -5,22 +5,22 @@ import CardActions from "@mui/material/CardActions"
 import CardContent from "@mui/material/CardContent"
 import Typography from "@mui/material/Typography"
 import CardMedia from "@mui/material/CardMedia/CardMedia"
-import imageAudioBook from "../../../assets/img/audiobook.jpg"
 
 interface BasicCardProps {
   children: React.ReactNode
   name: string
   article: string
+  image: string
 }
 
-export function BasicCard({ name, article, children }: BasicCardProps) {
+export function BasicCard({ name, article, children,image }: BasicCardProps) {
   return (
     <Card sx={{ minWidth: 275, height: 320 }}>
       <CardMedia
         component="img"
         height="140px"
         width="140px"
-        image={imageAudioBook}
+        image={image}
         alt="green iguana"
       />
       <CardContent>
