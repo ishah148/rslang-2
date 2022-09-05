@@ -19,22 +19,24 @@ const Result = (props: ResultProps) => {
       <h1>Game Over</h1>
       <h2>Лучшее комбо:{props.result.bestStreak || 0}</h2>
       <h2>Точнось:{props.result.accuracy || 0} %</h2>
+      <h2>Ошибки</h2>
       {falsyWords.map((word) => {
         const findedWord = findWordByid(word[0], props.words)
         if (findedWord) {
           return (
             <p>
-              {findedWord.en} -{findedWord.en} - {findedWord.isCorrect ? "верно" : "неверно"}
+              {findedWord.en} -{findedWord.ru}
             </p>
           )
         }
       })}
+      <h2>Угадал</h2>
       {truewords.map((word) => {
         const findedWord = findWordByid(word[0], props.words)
         if (findedWord) {
           return (
             <p>
-              {findedWord.en} -{findedWord.ru} - {findedWord.isCorrect ? "верно" : "неверно"}
+              {findedWord.en} - {findedWord.ru}
             </p>
           )
         }

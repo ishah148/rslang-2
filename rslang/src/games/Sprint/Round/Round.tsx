@@ -20,6 +20,7 @@ const Round = () => {
   const { addAnswer } = useResult()
 
   useEffect(()=>{
+    console.log('',132321321321321)
     hiddenResult()
   },[pending])
 
