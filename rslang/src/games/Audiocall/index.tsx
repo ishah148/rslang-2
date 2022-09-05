@@ -25,7 +25,7 @@ function Audiocall() {
     startSound.play()
     audiocallSetPending()
     setRoundNumber(0)
-    audiocallStart(Number(group))
+    audiocallStart(group)
   }
 
   if (pending) {

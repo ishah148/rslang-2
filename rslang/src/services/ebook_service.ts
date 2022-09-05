@@ -26,16 +26,20 @@ export class EBookService {
         if (userWord.difficulty === 'hard') {
           newUserWord.difficulty = 'easy';
           newUserWord.optional.progressBarSize = 3;
-          newUserWord.optional.progressBar = 0;
-          newUserWord.optional.isLearned = false;
-          newUserWord.optional.isNew =  (userWord.optional.meetingCounter <= 3) && (userWord.optional.meetingCounter !== 0);
+          newUserWord.optional.progressBar = userWord.optional.progressBar > 3 ? 3 : userWord.optional.progressBar;
+          newUserWord.optional.isLearned = userWord.optional.progressBar === 3;
+          if (newUserWord.optional.isLearned) {
+            newUserWord.optional.isNew = false;
+          } else {
+            newUserWord.optional.isNew = userWord.optional.meetingCounter <= 3;
+          }
           newUserWord.optional.meetingCounter = userWord.optional.meetingCounter;
         } else if (userWord.difficulty === 'easy') {
           newUserWord.difficulty = 'hard';
           newUserWord.optional.progressBarSize = 5;
-          newUserWord.optional.progressBar = 0;
+          newUserWord.optional.progressBar = userWord.optional.progressBar;
           newUserWord.optional.isLearned = false;
-          newUserWord.optional.isNew =  (userWord.optional.meetingCounter <= 3) && (userWord.optional.meetingCounter !== 0);
+          newUserWord.optional.isNew = userWord.optional.meetingCounter <= 3;
           newUserWord.optional.meetingCounter = userWord.optional.meetingCounter;
         }
 
@@ -83,30 +87,30 @@ export class EBookService {
 
         if (userWord.optional.isLearned === true) {
           newUserWord.optional.isLearned = false;
-          newUserWord.optional.isNew = (userWord.optional.meetingCounter <= 3) && (userWord.optional.meetingCounter !== 0);
+          newUserWord.optional.isNew = userWord.optional.meetingCounter <=3;
           newUserWord.optional.meetingCounter = userWord.optional.meetingCounter;
-          newUserWord.optional.progressBarSize = 3;
-          newUserWord.difficulty = 'easy';
+          newUserWord.optional.progressBarSize = userWord.optional.progressBarSize;
+          newUserWord.difficulty = userWord.optional.progressBarSize === 5 ? 'hard' : 'easy'; // "восстановление" состояния progressbar
           newUserWord.optional.progressBar = 0;
         } else if (userWord.optional.isLearned === false) {
           newUserWord.optional.isLearned = true;
           newUserWord.optional.isNew = false;
           newUserWord.optional.meetingCounter = userWord.optional.meetingCounter;
-          newUserWord.optional.progressBar = userWord.difficulty === 'hard' ? 5 : 3;
-          newUserWord.optional.progressBarSize = userWord.difficulty === 'hard' ? 5 : 3;
           newUserWord.difficulty = 'easy';
+          newUserWord.optional.progressBar = 3;
+          newUserWord.optional.progressBarSize = userWord.optional.progressBarSize; // 'сохранение' состояния progressbar
         }
 
         result = (await UserWordsApi.updateUserWord(wordID, newUserWord)).body;
       }
 
       if (response.status === 404) {
-        newUserWord.optional.isLearned = true;
-        newUserWord.optional.isNew = false;
-        newUserWord.optional.meetingCounter = 0;
-        newUserWord.difficulty = 'easy';
-        newUserWord.optional.progressBar = 3;
-        newUserWord.optional.progressBarSize = 3;
+          newUserWord.optional.isLearned = true;
+          newUserWord.optional.isNew = false;
+          newUserWord.optional.meetingCounter = 0;
+          newUserWord.difficulty = 'easy';
+          newUserWord.optional.progressBar = 3;
+          newUserWord.optional.progressBarSize = 3; 
         result = (await UserWordsApi.createUserWord(wordID, newUserWord)).body;
       }
 
