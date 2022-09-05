@@ -35,7 +35,7 @@ import Round from "./games/Sprint/Round/Round"
 import Stats from "./pages/Statistics"
 import Ebook from "./pages/Ebook/Ebook"
 
-
+console.log('v0.1')
 function App() {
   const { user } = useTypedSelector((state) => state.user)
   const dispatch = useDispatch()
@@ -52,17 +52,17 @@ function App() {
     <>
       <div className="container">
         <NavBar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/games" element={<Games />} />
-          <Route path="/games/audiocall" element={<Audiocall />} />
-          <Route path="/games/audiocall/result" element={<Result />} />
-          <Route path="/games/sprint" element={<Sprint />} />
-          <Route path="/games/sprint/round" element={<Round />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/signin" element={<Signin />} />
-          <Route path="/ebook" element={<Ebook />} />
-          <Route path="/statistics" element={<Stats />} />
+        <Routes >
+          <Route path="/rslang-2/" element={<Home />} />
+          <Route path="/rslang-2/games" element={<Games />} />
+          <Route path="/rslang-2/games/audiocall" element={<Audiocall />} />
+          <Route path="/rslang-2/games/audiocall/result" element={<Result />} />
+          <Route path="/rslang-2/games/sprint" element={<Sprint />} />
+          <Route path="/rslang-2/games/sprint/round" element={<Round />} />
+          <Route path="/rslang-2/signup" element={<Signup />} />
+          <Route path="/rslang-2/signin" element={<Signin />} />
+          <Route path="/rslang-2/ebook" element={<Ebook />} />
+          <Route path="/rslang-2/statistics" element={<Stats />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

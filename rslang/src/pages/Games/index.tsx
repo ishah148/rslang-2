@@ -32,7 +32,7 @@ function Games() {
   return (
     <div className={styles.games__wrapper}>
       <BasicCard {...game1}>
-        <Link to="/games/audiocall">
+        <Link to="/rslang-2/games/audiocall">
           <Button
             size="small"
             variant="contained"
@@ -45,7 +45,7 @@ function Games() {
       </BasicCard>
 
       <BasicCard {...game2}>
-        <Link to="/games/sprint">
+        <Link to="/rslang-2/games/sprint">
           <Button size="small" variant="contained" sx={{ justifyContent: "center" }}>
             Start!!!
           </Button>

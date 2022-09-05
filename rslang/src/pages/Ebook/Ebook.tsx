@@ -69,13 +69,13 @@ function Ebook() {
           })}
         </div>
         <div className={styles.gamesContainer}>
-          <NavLink to="/games/audiocall">
+          <NavLink to="/rslang-2/games/audiocall">
             <div className={styles.gamesItem}>
               <img src={gameImage} className={styles.gamesImage}></img>
               <p>AudioCall</p>
             </div>
           </NavLink>
-          <NavLink to="/games/game2">
+          <NavLink to="/rslang-2/games/sprint">
             <div className={styles.gamesItem}>
               <img src={gameImage} className={styles.gamesImage}></img>
               <p>Sprint</p>

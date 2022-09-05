@@ -15,7 +15,7 @@ const Sprint = () => {
     if (level) {
       
       sprintSetLevel(+level)
-      navigate("/games/sprint/round")
+      navigate("/rslang-2/games/sprint/round")
     }
   }
   return (
