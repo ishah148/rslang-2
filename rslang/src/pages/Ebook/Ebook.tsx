@@ -40,7 +40,6 @@ function Ebook() {
     })
   }
 
-  console.log(dataWords[0])
   const { isPending, userWords, error } = useTypedSelector((state) => state.userWords)
   const { getUserWords } = useUserWordsActionsCreators()
 
