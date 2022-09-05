@@ -15,7 +15,7 @@ export class UserWordsApi {
     return {
       status: response.status,
       body: response.data,
-    }
+    } //! надо ли?
   }
 
   static async getUserWord(wordID: string) {
@@ -31,7 +31,7 @@ export class UserWordsApi {
     return {
       status: response.status,
       body: response.data,
-    }
+    } //! надо ли?
   }
 
   static async deleteUserWord(wordID: string) {
@@ -39,6 +39,6 @@ export class UserWordsApi {
     return {
       status: response.status,
       body: response.data,
-    }
+    } //! надо ли?
   }
 }

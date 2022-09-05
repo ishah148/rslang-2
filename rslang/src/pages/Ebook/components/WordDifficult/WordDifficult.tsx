@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from "react"
-import styles from "./WordItem.module.scss"
-import { IWord } from "../../../../services/api_types"
+import styles from "./WordDifficult.module.scss"
 
 import playBtn from "../../../../assets/img/playBtn.png"
-import { ServerUserWord } from "../../../../models/UserWordsModels"
 import { useTypedSelector } from "../../../../hooks/useTypedSelector"
 import { useUserWordsActionsCreators } from "../../../../hooks/useActions"
 import { CircularProgress } from "@mui/material"
-import { Link, NavLink } from "react-router-dom"
-import { IUserWordsWithCurrentWords } from "../../Ebook"
+import { Link } from "react-router-dom"
+import { IUserAggregatedWord } from "../../../../services/api/AggregatedWords"
 
-// interface IWordObject {
-//   dataWord: IWord
-// }
-
-export default function WordItem({ dataWord }: { dataWord: IUserWordsWithCurrentWords }) {
+export default function WordDifficult({ dataWord }: { dataWord: IUserAggregatedWord }) {
   const { userWords } = useTypedSelector((state) => state.userWords)
   const { setDificultyUserWord, setLearndUserWord } = useUserWordsActionsCreators()
 
@@ -22,7 +16,7 @@ export default function WordItem({ dataWord }: { dataWord: IUserWordsWithCurrent
     const audio = new Audio("https://rslang-rss.herokuapp.com/" + dataWord.audio)
     audio.play()
   }
-
+  console.log(dataWord)
   return (
     <>
       <div className={styles.wordcontainer}>
@@ -56,7 +50,7 @@ export default function WordItem({ dataWord }: { dataWord: IUserWordsWithCurrent
         </div>
       </div>
 
-      <div
+      {/* <div
         style={{
           display: "flex",
           marginTop: -20,
@@ -69,14 +63,14 @@ export default function WordItem({ dataWord }: { dataWord: IUserWordsWithCurrent
         {localStorage.getItem("user") ? (
           <>
             <button
-              style={{ width: 200, backgroundColor: dataWord?.difficulty === "hard" ? "green" : "" }}
-              onClick={() => setDificultyUserWord(dataWord.id, userWords)}
+              style={{ width: 200, backgroundColor: dataWord?.userWords?.difficulty === "hard" ? "green" : "" }}
+              onClick={() => setDificultyUserWord(dataWord._id, userWords)}
             >
               <p>Hard</p>
             </button>
             <button
-              style={{ width: 200, backgroundColor: dataWord?.optional?.isLearned === true ? "green" : "" }}
-              onClick={() => setLearndUserWord(dataWord.id, userWords)}
+              style={{ width: 200, backgroundColor: dataWord?.userWords?.optional?.isLearned === true ? "green" : "" }}
+              onClick={() => setLearndUserWord(dataWord._id, userWords)}
             >
               <p>Learnd</p>
             </button>
@@ -84,19 +78,26 @@ export default function WordItem({ dataWord }: { dataWord: IUserWordsWithCurrent
         ) : (
           <>
             <Link to="/signin">
-              <button style={{ width: 200, backgroundColor: dataWord.difficulty === "hard" ? "green" : "" }}>
+              <button
+                style={{ width: 200, backgroundColor: dataWord?.userWords?.difficulty === "hard" ? "green" : "" }}
+              >
                 <p>Hard</p>
               </button>
             </Link>
             <Link to="/signin">
-              <button style={{ width: 200, backgroundColor: dataWord?.optional?.isLearned === true ? "green" : "" }}>
+              <button
+                style={{
+                  width: 200,
+                  backgroundColor: dataWord?.userWords?.optional?.isLearned === true ? "green" : "",
+                }}
+              >
                 <p>Learnd</p>
               </button>
             </Link>
           </>
         )}
       </div>
-      {dataWord.optional ? (
+      {dataWord?.userWords?.optional ? (
         <ul
           style={{
             display: "flex",
@@ -106,13 +107,13 @@ export default function WordItem({ dataWord }: { dataWord: IUserWordsWithCurrent
             listStyle: "none",
           }}
         >
-          <li>difficulty: {dataWord.difficulty}</li>
-          <li>Is learnd: {dataWord.optional.isLearned ? "yes" : "no"}</li>
+          <li>difficulty: {dataWord.userWords?.difficulty}</li>
+          <li>Is learnd: {dataWord.userWords?.optional?.isLearned ? "yes" : "no"}</li>
           <li>
-            Progress bar: {dataWord.optional.progressBar} / {dataWord.optional.progressBarSize}
+            Progress bar: {dataWord.userWords?.optional?.progressBar} / {dataWord.userWords?.optional?.progressBarSize}
           </li>
-          <li>is New: {dataWord.optional.isNew ? "yes" : "no"}</li>
-          <li>meetingCounter: {dataWord.optional.meetingCounter}</li>
+          <li>is New: {dataWord.userWords?.optional?.isNew ? "yes" : "no"}</li>
+          <li>meetingCounter: {dataWord.userWords?.optional?.meetingCounter}</li>
         </ul>
       ) : (
         <ul
@@ -130,7 +131,7 @@ export default function WordItem({ dataWord }: { dataWord: IUserWordsWithCurrent
           <li>is New: null</li>
           <li>meetingCounter: null</li>
         </ul>
-      )}
+      )} */}
     </>
   )
 }

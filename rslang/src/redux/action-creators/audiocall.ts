@@ -3,11 +3,11 @@ import { createRounds, processAudiocallResult } from "../../games/Audiocall/cont
 import { GamesService } from "../../services/games_services"
 import { AudiocallAction, AudiocallActionTypes, IResult, IRoundWord } from "../action-types/audiocall"
 
-export const audiocallStart = (group: number) => {
+export const audiocallStart = (group: number, page?: number) => {
   return async (dispatch: Dispatch<AudiocallAction>) => {
     try {
       dispatch(audiocallSetPending())
-      const roundsWords: IRoundWord[] = await createRounds(group)
+      const roundsWords: IRoundWord[] = await createRounds(group, page)
       dispatch({ type: AudiocallActionTypes.START, payload: roundsWords })
     } catch (error) {
       if (error instanceof Error) dispatch(audiocallSetError(error.message))
@@ -55,8 +55,6 @@ export function audiocallSetResult(
       }
     } catch (error) {
       dispatch({ type: AudiocallActionTypes.RESULT, payload: false })
-      
-      
     }
   }
 }
