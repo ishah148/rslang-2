@@ -16,7 +16,6 @@ import Signin from "./pages/Signin"
 
 // import Stats from "./pages/Statistics"
 
-
 import NavBar from "./components/NavBar"
 import { AuthApi, generateRandStr, UserApi, WordsApi } from "./services/api"
 import { newWordTest, testUser, testUserErr } from "./services/api_types"
@@ -34,10 +33,11 @@ import Round from "./games/Sprint/Round/Round"
 // import Round from "./games/Sprint/Round"
 import Stats from "./pages/Statistics"
 import Ebook from "./pages/Ebook/Ebook"
+import { useUserWordsActionsCreators } from "./hooks/useActions"
 
-console.log('v0.1')
 function App() {
   const { user } = useTypedSelector((state) => state.user)
+  const { getUserWords } = useUserWordsActionsCreators()
   const dispatch = useDispatch()
   useEffect(() => {
     const jsonUser: string | null = localStorage.getItem("user")
@@ -47,7 +47,11 @@ function App() {
       dispatch({ type: UserActionTypes.SIGNIN, payload: localUser })
     }
   }, [])
-
+  React.useLayoutEffect(() => {
+    if (user) {
+      getUserWords()
+    }
+  }, [user])
   return (
     <>
       <div className="container">

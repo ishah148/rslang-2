@@ -1,4 +1,3 @@
-
 import { GameData, ServerUserWord, UserWord } from "../models/UserWordsModels";
 import { UserWordsApi } from "./api/UserWords_api";
 
@@ -45,44 +44,70 @@ export class GamesService {
           newUserWord.optional.isNew = true;
           newUserWord.optional.meetingCounter = 1;
           await UserWordsApi.createUserWord(ID, newUserWord);
+          console.log('!userWord ---- ', newUserWord);
         } else {
           // вынести в UserWords_Service (метод createNewUserWord)
-          if (userWord.optional.isLearned === false && newUserWord.optional.isLearned == false) {
+          newUserWord.optional.meetingCounter = userWord.optional.meetingCounter++;
+          if(!gameData.corectness[ID]) {
+            newUserWord.optional.progressBar = 0;
+          } else {
+            if(userWord.optional.progressBar + 1 >  userWord.optional.progressBarSize) {
+              newUserWord.optional.progressBar = userWord.optional.progressBarSize;
+            } else {
+              newUserWord.optional.progressBar = userWord.optional.progressBar + 1;
+            }
+
+            if(newUserWord.optional.progressBar === userWord.optional.progressBarSize) {
+              newUserWord.optional.isLearned = true;
+            } else {
+              newUserWord.optional.isLearned = false;
+            }
+          }
+
+          if (userWord.optional.isLearned === false && newUserWord.optional.isLearned === false) {
             newUserWord.optional.progressBarSize = userWord.optional.progressBarSize;
             newUserWord.optional.progressBar = userWord.optional.progressBar + 1; // необязательно ?
             newUserWord.difficulty = userWord.difficulty;
             newUserWord.optional.isNew = ((newUserWord.optional.meetingCounter as number) <= 3) && (newUserWord.optional.meetingCounter !== 0);
+            console.log('isLearned == false && isLearned == false ---- ', newUserWord);
 
           } else if (userWord.optional.isLearned == true && newUserWord.optional.isLearned == true) {
             newUserWord.optional.progressBarSize = userWord.optional.progressBarSize;
             newUserWord.optional.progressBar = userWord.optional.progressBar; // необязательно ?
             newUserWord.difficulty = userWord.difficulty;
             newUserWord.optional.isNew = ((newUserWord.optional.meetingCounter as number) <= 3) && (newUserWord.optional.meetingCounter !== 0);
+            console.log('isLearned == true && isLearned == true ---- ', newUserWord);
 
           } else if (userWord.difficulty == 'easy' && newUserWord.optional.isLearned == true) {
             newUserWord.difficulty = 'easy';
             newUserWord.optional.progressBar = 3; // необязательно ?
             newUserWord.optional.progressBarSize = 3;
             newUserWord.optional.isNew = false;
+            console.log('userWord.difficulty == easy && newUserWord.isLearned == true ---- ', newUserWord);
 
           } else if (userWord.difficulty == 'hard' && newUserWord.optional.isLearned == true) {
             newUserWord.difficulty = 'easy';
             newUserWord.optional.progressBar = 5; // необязательно ?
             newUserWord.optional.progressBarSize = 5;
             newUserWord.optional.isNew = false;
+            console.log('userWord.difficulty == hard && newUserWord.isLearned == true ---- ', newUserWord);
 
           } else if (userWord.optional.progressBarSize == 3 && newUserWord.optional.isLearned == false) {
             newUserWord.optional.progressBarSize = 3;
             newUserWord.optional.progressBar = 0; // необязательно ?
             newUserWord.difficulty = 'easy';
             newUserWord.optional.isNew = ((newUserWord.optional.meetingCounter as number) <= 3) && (newUserWord.optional.meetingCounter !== 0);
+            console.log('userWord.progressBarSize == 3 && newUserWord.isLearned == false ---- ', newUserWord);
 
           } else if (userWord.optional.progressBarSize == 5 && newUserWord.optional.isLearned == false) {
             newUserWord.optional.progressBarSize = 5;
             newUserWord.optional.progressBar = 0; // необязательно ?
             newUserWord.difficulty = 'hard';
             newUserWord.optional.isNew = ((newUserWord.optional.meetingCounter as number) <= 3) && (newUserWord.optional.meetingCounter !== 0);
+            console.log('userWord.progressBarSize == 5 && newUserWord.isLearned == false ---- ', newUserWord);
           }
+          console.log(newUserWord);
+          await UserWordsApi.updateUserWord(ID, newUserWord);
         }
       }
     } catch(error) {
