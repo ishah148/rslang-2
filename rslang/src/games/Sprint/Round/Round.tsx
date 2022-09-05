@@ -20,9 +20,11 @@ const Round = () => {
   const { addAnswer } = useResult()
 
   useEffect(()=>{
-    console.log('',132321321321321)
     hiddenResult()
   },[pending])
+  useEffect(()=>{
+    hiddenResult()
+  },[])
 
 
   function start() {
@@ -138,6 +140,7 @@ const Round = () => {
           </button>
         </div>
       </div>
+      {isShowResult?'':''}
       {(timer < 1 && isShowResult) ? <Result result={result} words={sprintWords} resetAction={reset}/>:''}
     </div>
   )
