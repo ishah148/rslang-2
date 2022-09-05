@@ -24,6 +24,9 @@ const Round = () => {
   }, [pending])
   useEffect(() => {
     hiddenResult()
+    return ()=>{
+      sprintSetReset()
+    }
   }, [])
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown)
