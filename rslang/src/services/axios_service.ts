@@ -1,7 +1,7 @@
 import axios, { AxiosError } from "axios"
 import { Auth, AuthError } from "./api_types"
-// export const API_URL = "https://rslang-rss.herokuapp.com"
-export const API_URL = "http://localhost:3002"
+export const API_URL = "https://rslang-rss.herokuapp.com"
+// export const API_URL = "http://localhost:3002"
 
 export const apiInstance = axios.create({
   // withCredentials: true,
