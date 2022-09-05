@@ -37,7 +37,7 @@ export class AuthApi {
   static async login(user: user) {
     const responce = await apiInstance.post<Auth>("/signin", user)
     localStorage.setItem("token", responce.data.token)
-    localStorage.setItem("refreshToken", responce.data.token)
+    localStorage.setItem("refreshToken", responce.data.refreshToken)
     localStorage.setItem("userId", responce.data.userId)
     // return apiInstance.post<Auth>("/signin", user)
     return {

@@ -19,14 +19,18 @@ const Round = () => {
   const { timer, setTimer, setIndex, currentWorldEn, currentWorldRu, currentWord } = useGame(level)
   const { addAnswer } = useResult()
 
-  useEffect(()=>{
+  useEffect(() => {
     hiddenResult()
-  },[pending])
-  useEffect(()=>{
+  }, [pending])
+  useEffect(() => {
     hiddenResult()
-  },[])
-
-
+  }, [])
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown)
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown)
+    }
+  })
   function start() {
     hiddenResult()
     setIndex(2)
@@ -35,7 +39,7 @@ const Round = () => {
     setTimer(60)
   }
   function reset() {
-    GamesService.updateGameData(result,'sprint')
+    GamesService.updateGameData(result, "sprint")
     hiddenResult()
     sprintSetReset()
     setTimer(0)
@@ -60,11 +64,17 @@ const Round = () => {
     }
   }, [timer])
 
-  
+  function handleKeyDown(e: KeyboardEvent) {
+    console.log("", e.key)
+    if (e.key === "Enter" || e.key === " ") e.preventDefault()
+    if (e.key === "ArrowLeft") handleAnswer(null, "left")
+    if (e.key === "ArrowRight") handleAnswer(null, "right")
+    if (e.key === "Escape") setTimer(0)
+  }
 
-  function handleAnswer(e: React.MouseEvent<HTMLButtonElement>) {
-    const tagret = e.target as HTMLButtonElement
-    const answer = tagret.dataset.answer
+  function handleAnswer(e: React.MouseEvent<HTMLButtonElement> | null, keyPress?: "left" | "right") {
+    const tagret = e?.target as HTMLButtonElement
+    const answer = tagret?.dataset.answer
     const rightAnswer = () => {
       dispatch({ type: SprintActionTypes.SCORE, payload: score + 10 })
       addAnswer(currentWord, "right")
@@ -73,9 +83,18 @@ const Round = () => {
       dispatch({ type: SprintActionTypes.SCORE, payload: score - 10 })
       addAnswer(currentWord, "incorrect")
     }
-    if (answer === "yes" && currentWord.isCorrect) rightAnswer()
-    else if (answer === "no" && !currentWord.isCorrect) rightAnswer()
-    else incorrectAnswer()
+    console.log('keyPress',keyPress)
+    if (answer) {
+      if (answer === "yes" && currentWord.isCorrect) rightAnswer()
+      else if (answer === "no" && !currentWord.isCorrect) rightAnswer()
+      else incorrectAnswer()
+    }
+    if (keyPress) {
+      if (keyPress === "left" && currentWord.isCorrect) rightAnswer()
+      else if (keyPress === "right" && !currentWord.isCorrect) rightAnswer()
+      else incorrectAnswer()
+    }
+
     setIndex((i) => i + 1)
   }
 
@@ -110,10 +129,20 @@ const Round = () => {
         </div>
         {!pending ? (
           <div className={styles.buttonsContainer}>
-            <button className={styles.btnGreenQa} data-answer="yes" onClick={handleAnswer} disabled={timer === 0}>
+            <button
+              className={styles.btnGreenQa}
+              data-answer="yes"
+              onClick={(e) => handleAnswer(e)}
+              disabled={timer === 0}
+            >
               Yes
             </button>
-            <button className={styles.btnRedQa} data-answer="no" onClick={handleAnswer} disabled={timer === 0}>
+            <button
+              className={styles.btnRedQa}
+              data-answer="no"
+              onClick={(e) => handleAnswer(e)}
+              disabled={timer === 0}
+            >
               No
             </button>
           </div>
@@ -140,8 +169,8 @@ const Round = () => {
           </button>
         </div>
       </div>
-      {isShowResult?'':''}
-      {(timer < 1 && isShowResult) ? <Result result={result} words={sprintWords} resetAction={reset}/>:''}
+      {isShowResult ? "" : ""}
+      {timer < 1 && isShowResult ? <Result result={result} words={sprintWords} resetAction={reset} /> : ""}
     </div>
   )
 }
