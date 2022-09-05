@@ -25,7 +25,7 @@ function Games() {
   function playShahGame(level: number, pages: Array<number>) {
     // sprintSetLevel(5)
     sprintSetStart(level, [1, 2, 3])
-    navigate("/games/sprint/round")
+    navigate("/rslang-2/games/sprint/round")
   }
 
   const { audiocallSetReset } = useAudiocallActionsCreators()

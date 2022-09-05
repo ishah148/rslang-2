@@ -25,7 +25,7 @@ function SigninForm() {
   useEffect(() => {
     setPassword("")
     setEmail("")
-    if (user?.message === "Authenticated") navigate("/")
+    if (user?.message === "Authenticated") navigate("/rslang-2")
   }, [user])
 
   useEffect(() => {

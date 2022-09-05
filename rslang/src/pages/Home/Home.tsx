@@ -13,12 +13,22 @@ function Home() {
   return (
     <>
       <div className={styles.homeBackground}>
+        
         <img src={backgroundImage} alt="background-image"></img>
       </div>
       <div className={styles.homeContainer}>
         <p className={styles.homeTitle}>
           Improve your English level with RsLang
         </p>
+        <div className="alert">
+        <p>Не проверяйте пожалуйста сегодня! Спасибо!!! :)</p>
+        <p>Контакты для связи : </p>
+        <p>@IgorTg123</p>
+        <p>@theroofisonfire</p>
+        <p>Discord:</p>
+        <p>IgorShah(ishah148)#3091</p>
+        <p>theroofisonfire#1523</p>
+        </div>
         <NavLink to="/rslang-2/games">
           <button className={variables.button}>start learning</button>
         </NavLink>
