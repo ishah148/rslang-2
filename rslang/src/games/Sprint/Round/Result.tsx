@@ -10,31 +10,46 @@ type ResultProps = {
 }
 
 const Result = (props: ResultProps) => {
-  const sortedArr = Object.entries(props.result.corectness).sort((a, b) => +a[1] - +b[1])
   const falsyWords = Object.entries(props.result.corectness).filter((i) => i[1] === false)
   const truewords = Object.entries(props.result.corectness).filter((i) => i[1] === true)
 
   return (
     <div className="result-wrapper">
-      <h1>Game Over</h1>
-      <h2>Лучшее комбо:{props.result.bestStreak || 0}</h2>
-      <h2>Точнось:{props.result.accuracy || 0} %</h2>
+      {props.words.length ? (
+        <>
+          <h1>Game Over</h1>
+          <h2>Лучшее комбо:{props.result.bestStreak || 0}</h2>
+          <h2>Точнось:{props.result.accuracy || 0} %</h2>
+        </>
+      ) : (
+        <>
+          <h1>Управление</h1>
+          <h2>←- Да</h2>
+          <h2>-→ Нет</h2>
+          <h2>Esc - Остановить игру</h2>
+        </>
+      )}
+      {props.words.length ? <h2>Ошибки:</h2> : ""}
+      <p></p>
       {falsyWords.map((word) => {
         const findedWord = findWordByid(word[0], props.words)
         if (findedWord) {
           return (
             <p>
-              {findedWord.en} -{findedWord.en} - {findedWord.isCorrect ? "верно" : "неверно"}
+              {findedWord.word.word} - {findedWord.word.wordTranslate}
             </p>
           )
         }
       })}
+
+      {props.words.length ? <h2>Угадал:</h2> : ""}
+
       {truewords.map((word) => {
         const findedWord = findWordByid(word[0], props.words)
         if (findedWord) {
           return (
             <p>
-              {findedWord.en} -{findedWord.ru} - {findedWord.isCorrect ? "верно" : "неверно"}
+              {findedWord.word.word} - {findedWord.word.wordTranslate}
             </p>
           )
         }
