@@ -14,7 +14,7 @@ import { CircularProgress } from "@mui/material"
 
 export default function WordItem({ dataWord }: any) {
   const { userWords } = useTypedSelector((state) => state.userWords)
-  const { getUserWords, setDificultyUserWord } = useUserWordsActionsCreators()
+  const { setDificultyUserWord, setLearndUserWord } = useUserWordsActionsCreators()
 
   function playButton() {
     const audio = new Audio("https://rslang-rss.herokuapp.com/" + dataWord.audio)
@@ -69,7 +69,10 @@ export default function WordItem({ dataWord }: any) {
         >
           <p>Hard</p>
         </button>
-        <button style={{ width: 200 }}>
+        <button
+          style={{ width: 200, backgroundColor: dataWord?.optional?.isLearned === true ? "green" : "" }}
+          onClick={() => setLearndUserWord(dataWord.id, userWords)}
+        >
           <p>Learnd</p>
         </button>
       </div>
@@ -86,7 +89,7 @@ export default function WordItem({ dataWord }: any) {
           <li>difficulty: {dataWord.difficulty}</li>
           <li>Is learnd: {dataWord.optional.isLearned ? "yes" : "no"}</li>
           <li>
-            Progress bar: {dataWord.optional.progressBar} / {dataWord.optional.progressBarSize}
+            Progress bar: {dataWord.optional.progressBar} / {dataWord.difficulty === "hard" ? "5" : "3"}
           </li>
           <li>is New: {dataWord.optional.isNew ? "yes" : "no"}</li>
           <li>meetingCounter: {dataWord.optional.meetingCounter}</li>
