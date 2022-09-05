@@ -89,7 +89,7 @@ export default function WordItem({ dataWord }: any) {
           <li>difficulty: {dataWord.difficulty}</li>
           <li>Is learnd: {dataWord.optional.isLearned ? "yes" : "no"}</li>
           <li>
-            Progress bar: {dataWord.optional.progressBar} / {dataWord.difficulty === "hard" ? "5" : "3"}
+            Progress bar: {dataWord.optional.progressBar} / {dataWord.optional.progressBarSize}
           </li>
           <li>is New: {dataWord.optional.isNew ? "yes" : "no"}</li>
           <li>meetingCounter: {dataWord.optional.meetingCounter}</li>
