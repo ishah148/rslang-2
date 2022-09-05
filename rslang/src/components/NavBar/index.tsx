@@ -19,11 +19,7 @@ function NavBar() {
 
   return (
     <>
-      <div
-        className={
-          location.pathname === "/ebook" || location.pathname === "/games" ? styles.mainNavActive : styles.mainNav
-        }
-      >
+      <div className={location.pathname === "/ebook" ? styles.mainNavActive : styles.mainNav}>
         <div className={styles.mainNavContainer}>
           <NavLink to="/">
             <div className={styles.logoContainer}>
