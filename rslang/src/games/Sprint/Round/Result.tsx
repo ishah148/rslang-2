@@ -25,7 +25,7 @@ const Result = (props: ResultProps) => {
         if (findedWord) {
           return (
             <p>
-              {findedWord.en} -{findedWord.ru}
+              {findedWord.word.word} - {findedWord.word.wordTranslate}
             </p>
           )
         }
@@ -36,7 +36,7 @@ const Result = (props: ResultProps) => {
         if (findedWord) {
           return (
             <p>
-              {findedWord.en} - {findedWord.ru}
+              {findedWord.word.word} - {findedWord.word.wordTranslate}
             </p>
           )
         }
