@@ -2,18 +2,25 @@ import React, { useEffect } from "react"
 import SectionItem from "./components/SectionItem/SectionItem"
 import styles from "./Ebook.module.scss"
 import gameImage from "../../assets/img/mainGames.png"
-import { NavLink } from "react-router-dom"
+import { Link } from "react-router-dom"
 import WordItem from "./components/WordItem/WordItem"
 import Paginatinon from "./components/Pagination/Pagination"
 import { WordsApi } from "../../services/api"
 import { IWord } from "../../services/api_types"
-import { useUserWordsActionsCreators } from "../../hooks/useActions"
+import {
+  useAudiocallActionsCreators,
+  useSprintActionsCreators,
+  useUserWordsActionsCreators,
+} from "../../hooks/useActions"
 import { useTypedSelector } from "../../hooks/useTypedSelector"
 import { ServerUserWord } from "../../models/UserWordsModels"
+import { IUserAggregatedWordsResponce, UserAggregatedWordsApi } from "../../services/api/AggregatedWords"
+import LinearProgress from "@mui/material/LinearProgress/LinearProgress"
+import WordDifficult from "./components/WordDifficult/WordDifficult"
 
 const SECTIONS = [0, 1, 2, 3, 4, 5, 6]
 
-interface IUserWordsWithCurrentWords extends IWord {
+export interface IUserWordsWithCurrentWords extends IWord {
   difficulty: "easy" | "hard"
   optional: {
     isLearned: boolean
@@ -28,8 +35,10 @@ function Ebook() {
   const [dataWords, setDataWords] = React.useState<IWord[]>([])
   const [curChapter, setCurChapter] = React.useState(0)
   const [curPage, setCurPage] = React.useState(0)
-  const [wordsToShow, setWordsToShow] = React.useState<Array<IWord | IUserWordsWithCurrentWords> | null>(null)
-
+  const [wordsToShow, setWordsToShow] = React.useState<
+    Array<IWord | IUserWordsWithCurrentWords> | IUserAggregatedWordsResponce | null
+  >(null)
+  const [loading, setLoading] = React.useState(false)
   const mergeUserWordsWithCurWords = (currentWords: IWord[], userWords: ServerUserWord[]) => {
     return currentWords.map((word) => {
       const foundedWord = userWords.find(({ wordId }) => wordId === word.id)
@@ -39,26 +48,49 @@ function Ebook() {
       return word
     })
   }
+  const { sprintSetStart } = useSprintActionsCreators()
+  function handleSprintStart(group: number, page: number) {
+    sprintSetStart(group, [page])
+  }
 
-  const { isPending, userWords, error } = useTypedSelector((state) => state.userWords)
-  const { getUserWords } = useUserWordsActionsCreators()
+  const { audiocallStart } = useAudiocallActionsCreators()
+  const handleAudiocallStart = (group: number, page: number) => {
+    audiocallStart(group, page)
+  }
 
-  React.useLayoutEffect(() => {
-    getUserWords()
-  }, [])
-
+  const { userWords } = useTypedSelector((state) => state.userWords)
   useEffect(() => {
-    const mergedWords: Array<IWord | IUserWordsWithCurrentWords> = mergeUserWordsWithCurWords(dataWords, userWords)
-
-    setWordsToShow(mergedWords)
+    if (curChapter < 6) {
+      const mergedWords: Array<IWord | IUserWordsWithCurrentWords> = mergeUserWordsWithCurWords(
+        dataWords as IWord[],
+        userWords
+      )
+      setWordsToShow(mergedWords)
+    }
   }, [userWords, dataWords])
 
   async function clickHandler(page: number, group: number) {
     setCurChapter(group)
     setCurPage(page)
-    const { status, data } = await WordsApi.getWords(page, group)
-    setDataWords(data)
+    if (group < 6) {
+      setLoading((prev) => true)
+      const { status, data } = await WordsApi.getWords(page, group)
+      setLoading((prev) => false)
+      setDataWords(data)
+    }
+    console.log(group)
+    if (group === 6) {
+      setLoading((prev) => true)
+      const { status, body } = await UserAggregatedWordsApi.getHardUserAggregatedWords()
+      setLoading((prev) => false)
+      setWordsToShow(body)
+    }
   }
+
+  const { getUserWords } = useUserWordsActionsCreators()
+  React.useLayoutEffect(() => {
+    getUserWords()
+  }, [])
 
   return (
     <div className={styles.ebookContainer}>
@@ -69,26 +101,34 @@ function Ebook() {
           })}
         </div>
         <div className={styles.gamesContainer}>
-          <NavLink to="/games/audiocall">
+          <Link to="/rslang-2/games/audiocall" onClick={() => handleAudiocallStart(curChapter, curPage)}>
             <div className={styles.gamesItem}>
               <img src={gameImage} className={styles.gamesImage}></img>
               <p>AudioCall</p>
             </div>
-          </NavLink>
-          <NavLink to="/games/game2">
+          </Link>
+          <Link to="/rslang-2/games/sprint" onClick={() => handleSprintStart(curChapter, curPage)}>
             <div className={styles.gamesItem}>
               <img src={gameImage} className={styles.gamesImage}></img>
               <p>Sprint</p>
             </div>
-          </NavLink>
+          </Link>
         </div>
       </div>
+      {loading && <LinearProgress />}
       <div className={styles.ebookWords}>
-        {wordsToShow?.map((elem) => {
-          return <WordItem key={elem.id} dataWord={elem} />
-        })}
+        {(wordsToShow as IUserAggregatedWordsResponce)?.[0]?.paginatedResults &&
+          (wordsToShow as IUserAggregatedWordsResponce)?.[0]?.paginatedResults.map((elem) => {
+            return <WordDifficult key={elem._id} dataWord={elem} />
+          })}
+        {!(wordsToShow as IUserAggregatedWordsResponce)?.[0]?.paginatedResults &&
+          (wordsToShow as IUserWordsWithCurrentWords[])?.map((elem) => {
+            return <WordItem key={elem.id} dataWord={elem} />
+          })}
       </div>
-      <Paginatinon chapter={curChapter} curPage={curPage} setCurPage={setCurPage} clickHandler={clickHandler} />
+      {!(wordsToShow as IUserAggregatedWordsResponce)?.[0]?.paginatedResults && (
+        <Paginatinon chapter={curChapter} curPage={curPage} setCurPage={setCurPage} clickHandler={clickHandler} />
+      )}
     </div>
   )
 }

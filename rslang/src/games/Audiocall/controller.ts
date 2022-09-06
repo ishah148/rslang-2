@@ -18,9 +18,11 @@ const createChoice = (word: string, allWords: string[]) => {
   return shuffleArr<IChoice>([...mocks, { wordTranslated: word, isCorrect: true }])
 }
 
-export const createRounds = async (group: number) => {
-  const randomPage = generateRandom(1, maxPages)
-  const { data, status } = await WordsApi.getWords(randomPage, group)
+export const createRounds = async (group: number, page?: number) => {
+  if (page === undefined) {
+    page = generateRandom(1, maxPages)
+  }
+  const { data, status } = await WordsApi.getWords(page, group)
   if (status !== 200) throw Error("Ooops!, Seems somthing went wrong :(")
   const shuffledData = shuffleArr<IWord>(data)
   const allWords = shuffledData.map((el) => el.wordTranslate)

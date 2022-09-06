@@ -29,7 +29,7 @@ function SignupForm() {
       setName("")
       setEmail("")
       setPassword("")
-      navigate("/signin")
+      navigate("/rslang-2/signin")
       setSuccess(false)
     }
     return () => {

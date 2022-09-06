@@ -58,7 +58,7 @@ const Round = () => {
 
   function changeLevel() {
     sprintSetReset()
-    navigate("/games/sprint")
+    navigate("/rslang-2/games/sprint")
   }
 
   useEffect(() => {
@@ -68,7 +68,7 @@ const Round = () => {
   }, [timer])
 
   function handleKeyDown(e: KeyboardEvent) {
-    console.log("", e.key)
+
     if (e.key === "Enter" || e.key === " ") e.preventDefault()
     if (e.key === "ArrowLeft") handleAnswer(null, "left")
     if (e.key === "ArrowRight") handleAnswer(null, "right")
@@ -86,7 +86,7 @@ const Round = () => {
       dispatch({ type: SprintActionTypes.SCORE, payload: score - 10 })
       addAnswer(currentWord, "incorrect")
     }
-    console.log('keyPress',keyPress)
+    
     if (answer) {
       if (answer === "yes" && currentWord.isCorrect) rightAnswer()
       else if (answer === "no" && !currentWord.isCorrect) rightAnswer()

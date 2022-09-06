@@ -18,7 +18,7 @@ function Result() {
 
   useEffect(() => {
     if (allRaundResults.length === 0) {
-      navigate("/games/audiocall")
+      navigate("/rslang-2/games/audiocall")
     }
   }, [allRaundResults])
 

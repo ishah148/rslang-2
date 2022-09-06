@@ -21,7 +21,7 @@ function NavBar() {
     <>
       <div className={location.pathname === "/ebook" ? styles.mainNavActive : styles.mainNav}>
         <div className={styles.mainNavContainer}>
-          <NavLink to="/">
+          <NavLink to="/rslang-2/">
             <div className={styles.logoContainer}>
               <img src={logo} alt="logo"></img>
             </div>
@@ -29,13 +29,13 @@ function NavBar() {
           <nav>
             <ul className={styles.mainNavLinks}>
               <li>
-                <NavLink to="/games">Games</NavLink>
+                <NavLink to="/rslang-2/games">Games</NavLink>
               </li>
               <li>
-                <NavLink to="/ebook">Ebook</NavLink>
+                <NavLink to="/rslang-2/ebook">Ebook</NavLink>
               </li>
               <li>
-                <NavLink to="/statistics">Stats</NavLink>
+                <NavLink to="/rslang-2/statistics">Stats</NavLink>
               </li>
               {user?.message === "Authenticated" ? (
                 <li>
@@ -46,10 +46,10 @@ function NavBar() {
               ) : (
                 <>
                   <li>
-                    <NavLink to="/signup">Signup</NavLink>
+                    <NavLink to="/rslang-2/signup">Signup</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/signin">Signin</NavLink>
+                    <NavLink to="/rslang-2/signin">Signin</NavLink>
                   </li>
                 </>
               )}

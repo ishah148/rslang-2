@@ -16,7 +16,6 @@ import Signin from "./pages/Signin"
 
 // import Stats from "./pages/Statistics"
 
-
 import NavBar from "./components/NavBar"
 import { AuthApi, generateRandStr, UserApi, WordsApi } from "./services/api"
 import { newWordTest, testUser, testUserErr } from "./services/api_types"
@@ -34,10 +33,11 @@ import Round from "./games/Sprint/Round/Round"
 // import Round from "./games/Sprint/Round"
 import Stats from "./pages/Statistics"
 import Ebook from "./pages/Ebook/Ebook"
-
+import { useUserWordsActionsCreators } from "./hooks/useActions"
 
 function App() {
   const { user } = useTypedSelector((state) => state.user)
+  const { getUserWords } = useUserWordsActionsCreators()
   const dispatch = useDispatch()
   useEffect(() => {
     const jsonUser: string | null = localStorage.getItem("user")
@@ -47,22 +47,26 @@ function App() {
       dispatch({ type: UserActionTypes.SIGNIN, payload: localUser })
     }
   }, [])
-
+  React.useLayoutEffect(() => {
+    if (user) {
+      getUserWords()
+    }
+  }, [user])
   return (
     <>
       <div className="container">
         <NavBar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/games" element={<Games />} />
-          <Route path="/games/audiocall" element={<Audiocall />} />
-          <Route path="/games/audiocall/result" element={<Result />} />
-          <Route path="/games/sprint" element={<Sprint />} />
-          <Route path="/games/sprint/round" element={<Round />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/signin" element={<Signin />} />
-          <Route path="/ebook" element={<Ebook />} />
-          <Route path="/statistics" element={<Stats />} />
+        <Routes >
+          <Route path="/rslang-2/" element={<Home />} />
+          <Route path="/rslang-2/games" element={<Games />} />
+          <Route path="/rslang-2/games/audiocall" element={<Audiocall />} />
+          <Route path="/rslang-2/games/audiocall/result" element={<Result />} />
+          <Route path="/rslang-2/games/sprint" element={<Sprint />} />
+          <Route path="/rslang-2/games/sprint/round" element={<Round />} />
+          <Route path="/rslang-2/signup" element={<Signup />} />
+          <Route path="/rslang-2/signin" element={<Signin />} />
+          <Route path="/rslang-2/ebook" element={<Ebook />} />
+          <Route path="/rslang-2/statistics" element={<Stats />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
