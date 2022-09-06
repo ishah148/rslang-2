@@ -10,6 +10,7 @@ import gamesImage from "../../assets/img/mainGames.png"
 import statisticImage from "../../assets/img/mainStatisticpng.png"
 
 import shah from "../../assets/img/shah.png"
+import nikolay from "../../assets/img/nikolay.png"
 
 function Home() {
   return (
@@ -70,30 +71,47 @@ function Home() {
           </div>
         </div>
         <div className={styles.aboutTeam}>
-          <div className={styles.card + " " + styles.shah}>
+
+        <div className={styles.card + " " + styles.shah}>
             <div className={styles.body}>
               <div className={styles.image}>
               <img src={shah} />
               </div> 
-                <h2>Team Leader</h2>
+                <h2>CallBack master</h2>
                 <h3>Координирование работы команды, настройка конфигов проекта, redux,игры </h3>
                 
             </div>
 
             <div className={styles.epmty}></div>
           </div>
-          {/* <div className={styles.kovz}>
+
+          <div className={styles.card + " " + styles.shah}>
             <div className={styles.body}>
-            <div className={styles.image}></div>
+              <div className={styles.image}>
+              <img src={nikolay} />
+              </div> 
+                <h2>Архитектор</h2>
+                <h3>GitHub, логика взаимодействия клиент-сервер,статистика, разработчик конфликтов</h3>
+                
             </div>
+
             <div className={styles.epmty}></div>
           </div>
-          <div className={styles.shah}>
+
+          <div className={styles.card + " " + styles.shah}>
             <div className={styles.body}>
-            <div className={styles.image}></div>
+              <div className={styles.image}>
+              {/* <img src={shah} /> */}
+              </div> 
+                <h2>Design master</h2>
+                <h3>Дизайн проета, авторизация, home page</h3>
+                
             </div>
+
             <div className={styles.epmty}></div>
-          </div> */}
+          </div>
+
+
         </div>
       </div>
     </>
