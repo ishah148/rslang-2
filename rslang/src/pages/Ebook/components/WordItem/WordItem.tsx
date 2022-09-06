@@ -129,7 +129,7 @@ export default function WordItem({ dataWord }: { dataWord: IUserWordsWithCurrent
               </div>
             </>
           ) : (
-            <p>hello</p>
+            <p className={styles.progressTitle}>No info</p>
             // <ul
             //   className={styles.optionalContainer}
             //   style={{
