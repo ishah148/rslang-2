@@ -9,25 +9,24 @@ import textBookImage from "../../assets/img/mainTextbook.png"
 import gamesImage from "../../assets/img/mainGames.png"
 import statisticImage from "../../assets/img/mainStatisticpng.png"
 
+import shah from "../../assets/img/shah.png"
+
 function Home() {
   return (
     <>
       <div className={styles.homeBackground}>
-        
         <img src={backgroundImage} alt="background-image"></img>
       </div>
       <div className={styles.homeContainer}>
-        <p className={styles.homeTitle}>
-          Improve your English level with RsLang
-        </p>
+        <p className={styles.homeTitle}>Improve your English level with RsLang</p>
         <div className="alert">
-        <p>Не проверяйте пожалуйста сегодня! Спасибо!!! :)</p>
-        <p>Контакты для связи : </p>
-        <p>@IgorTg123</p>
-        <p>@theroofisonfire</p>
-        <p>Discord:</p>
-        <p>IgorShah(ishah148)#3091</p>
-        <p>theroofisonfire#1523</p>
+          <p>Не проверяйте пожалуйста сегодня! Спасибо!!! :)</p>
+          <p>Контакты для связи : </p>
+          <p>@IgorTg123</p>
+          <p>@theroofisonfire</p>
+          <p>Discord:</p>
+          <p>IgorShah(ishah148)#3091</p>
+          <p>theroofisonfire#1523</p>
         </div>
         <NavLink to="/rslang-2/games">
           <button className={variables.button}>start learning</button>
@@ -41,17 +40,12 @@ function Home() {
         <div className={styles.capabilitiesContainer}>
           <div className={styles.capabilitie}>
             <NavLink to="/rslang-2/ebook">
-              <img
-                className={styles.capabilitieImage}
-                src={textBookImage}
-              ></img>
+              <img className={styles.capabilitieImage} src={textBookImage}></img>
               <p className={styles.capabilitieTitle}>Electronic textbook</p>
             </NavLink>
             <p className={styles.capabilitieSubTitle}>
-              An electronic textbook is a textbook that contains a list of
-              words. These words need to be studied. There is also a section
-              with difficult words, it consists of words that the user has
-              marked as difficult.
+              An electronic textbook is a textbook that contains a list of words. These words need to be studied. There
+              is also a section with difficult words, it consists of words that the user has marked as difficult.
             </p>
           </div>
           <div className={styles.capabilitie}>
@@ -60,26 +54,46 @@ function Home() {
               <p className={styles.capabilitieTitle}>Mini games</p>
             </NavLink>
             <p className={styles.capabilitieSubTitle}>
-              Mini-games «Audio Challenge» and «Sprint» are games in which you
-              can learn words while playing. A very modern approach in which
-              there is interest and excitement not to lose.
+              Mini-games «Audio Challenge» and «Sprint» are games in which you can learn words while playing. A very
+              modern approach in which there is interest and excitement not to lose.
             </p>
           </div>
           <div className={styles.capabilitie}>
             <NavLink to="/rslang-2/statistics">
-              <img
-                className={styles.capabilitieImage}
-                src={statisticImage}
-              ></img>
+              <img className={styles.capabilitieImage} src={statisticImage}></img>
               <p className={styles.capabilitieTitle}>Statistics page</p>
             </NavLink>
             <p className={styles.capabilitieSubTitle}>
-              An electronic textbook is a textbook that contains a list of
-              words. These words need to be studied. There is also a section
-              with difficult words, it consists of words that the user has
-              marked as difficult.
+              An electronic textbook is a textbook that contains a list of words. These words need to be studied. There
+              is also a section with difficult words, it consists of words that the user has marked as difficult.
             </p>
           </div>
+        </div>
+        <div className={styles.aboutTeam}>
+          <div className={styles.card + " " + styles.shah}>
+            <div className={styles.body}>
+              <div className={styles.image}>
+              <img src={shah} />
+              </div> 
+                <h2>Team Leader</h2>
+                <h3>Координирование работы команды, настройка конфигов проекта, redux,игры </h3>
+                
+            </div>
+
+            <div className={styles.epmty}></div>
+          </div>
+          {/* <div className={styles.kovz}>
+            <div className={styles.body}>
+            <div className={styles.image}></div>
+            </div>
+            <div className={styles.epmty}></div>
+          </div>
+          <div className={styles.shah}>
+            <div className={styles.body}>
+            <div className={styles.image}></div>
+            </div>
+            <div className={styles.epmty}></div>
+          </div> */}
         </div>
       </div>
     </>
