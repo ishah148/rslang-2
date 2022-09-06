@@ -59,6 +59,7 @@ export default function WordItem({ dataWord }: { dataWord: IUserWordsWithCurrent
 
         <div className={styles.optionalWrapper}>
           <div
+            className={styles.buttonsHardness}
             style={
               {
                 // display: "flex",
@@ -73,12 +74,13 @@ export default function WordItem({ dataWord }: { dataWord: IUserWordsWithCurrent
             {localStorage.getItem("user") ? (
               <>
                 <button
-                  style={{ width: 200, backgroundColor: dataWord?.difficulty === "hard" ? "green" : "" }}
+                  className={dataWord?.difficulty === "hard" ? styles.btnHardActive : styles.btnHard}
                   onClick={() => setDificultyUserWord(dataWord.id, userWords)}
                 >
                   <p>Hard</p>
                 </button>
                 <button
+                  className={dataWord?.optional?.isLearned === true ? styles.btnLearnedActive : styles.btnLearned}
                   // style={{ width: 200, backgroundColor: dataWord?.optional?.isLearned === true ? "green" : "" }}
                   onClick={() => setLearndUserWord(dataWord.id, userWords)}
                 >
@@ -103,40 +105,64 @@ export default function WordItem({ dataWord }: { dataWord: IUserWordsWithCurrent
             )}
           </div>
           {dataWord.optional ? (
-            <ul
-              className={styles.optionalContainer}
-              style={{
-                display: "flex",
-                marginTop: -20,
-                justifyContent: "space-between",
-                flexWrap: "wrap",
-                listStyle: "none",
-              }}
-            >
-              <li>difficulty: {dataWord.difficulty}</li>
-              <li>Is learnd: {dataWord.optional.isLearned ? "yes" : "no"}</li>
-              <li>
-                Progress bar: {dataWord.optional.progressBar} / {dataWord.optional.progressBarSize}
-              </li>
-              <li>is New: {dataWord.optional.isNew ? "yes" : "no"}</li>
-              <li>meetingCounter: {dataWord.optional.meetingCounter}</li>
-            </ul>
+            <>
+              <div className={styles.progressItem}>
+                <p className={styles.progressTitle}>Learning progress:</p>
+                {Array.from("1".repeat(dataWord.optional.progressBarSize)).map((elem, index) => {
+                  return (
+                    <div
+                      style={{
+                        height: `${20 + 2 * index}px`,
+                        width: `${20 + 2 * index}px`,
+                        background: `${index < dataWord.optional.progressBar ? "#00aeff" : "#a5a5a5"}`,
+                      }}
+                      className={styles.progress}
+                      key={index}
+                    ></div>
+                  )
+                })}
+              </div>
+
+              <div className={styles.progressItem}>
+                <p className={styles.progressTitle}>Learned:</p>
+                <p className={styles.progressTitle}>{dataWord.optional.isLearned ? "Yes" : "No"}</p>
+              </div>
+            </>
           ) : (
-            <ul
-              style={{
-                display: "flex",
-                marginTop: -20,
-                justifyContent: "space-between",
-                flexWrap: "wrap",
-                listStyle: "none",
-              }}
-            >
-              <li>difficulty: null</li>
-              <li>Is learnd: null</li>
-              <li>Progress bar: null</li>
-              <li>is New: null</li>
-              <li>meetingCounter: null</li>
-            </ul>
+            <p>hello</p>
+            // <ul
+            //   className={styles.optionalContainer}
+            //   style={{
+            //     display: "flex",
+            //     marginTop: -20,
+            //     justifyContent: "space-between",
+            //     flexWrap: "wrap",
+            //     listStyle: "none",
+            //   }}
+            // >
+            //   <li>difficulty: {dataWord.difficulty}</li>
+            //   <li>Is learnd: {dataWord.optional.isLearned ? "yes" : "no"}</li>
+            //   <li>
+            //     Progress bar: {dataWord.optional.progressBar} / {dataWord.optional.progressBarSize}
+            //   </li>
+            //   <li>is New: {dataWord.optional.isNew ? "yes" : "no"}</li>
+            //   <li>meetingCounter: {dataWord.optional.meetingCounter}</li>
+            // </ul>
+            // <ul
+            //   style={{
+            //     display: "flex",
+            //     marginTop: -20,
+            //     justifyContent: "space-between",
+            //     flexWrap: "wrap",
+            //     listStyle: "none",
+            //   }}
+            // >
+            //   <li>difficulty: null</li>
+            //   <li>Is learnd: null</li>
+            //   <li>Progress bar: null</li>
+            //   <li>is New: null</li>
+            //   <li>meetingCounter: null</li>
+            // </ul>
           )}
         </div>
       </div>

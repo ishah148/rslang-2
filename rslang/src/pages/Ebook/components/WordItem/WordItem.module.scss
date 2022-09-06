@@ -2,7 +2,7 @@
 
 .wordcontainer {
   display: flex;
-  height: 200px;
+  flex-direction: column;
   gap: 20px;
   background-color: var(--color-darkblue);
   border-radius: 10px;
@@ -10,13 +10,17 @@
   box-sizing: border-box;
   width: 100%;
 }
-.wordCard{
+.wordCard {
   width: 100%;
+  gap: 20px;
   display: flex;
   // background: green;
 }
-.optionalWrapper{
+.optionalWrapper {
   width: 100%;
+  display: flex;
+  gap: 40px;
+  align-items: flex-end;
   .optionalContainer {
     background: red;
   }
@@ -89,4 +93,49 @@
 
 .playBtn:hover {
   filter: brightness(60%);
+}
+
+.buttonsHardness {
+  display: flex;
+  width: 250px;
+  gap: 20px;
+
+  button {
+    width: 50%;
+  }
+}
+
+/* CUSTOM-BUTTON-START */
+
+.btnHard,
+.btnLearned {
+  font-family: "Montserrat-Bold";
+  font-size: 16px;
+  text-transform: uppercase;
+  background: var(--color-blue);
+}
+
+.btnHardActive {
+  background: red;
+}
+
+.btnLearnedActive {
+  background: green;
+}
+
+.progress {
+  height: 30px;
+  width: 30px;
+}
+
+.progressItem {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.progressTitle {
+  font-family: "Montserrat-Regular";
+  font-size: 16px;
+  color: var(--color-white);
 }
