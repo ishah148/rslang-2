@@ -66,7 +66,7 @@
 
 .divider {
   height: 5px;
-  width: 300px;
+  width: 100%;
   background-color: var(--color-darkblue);
 }
 
@@ -74,6 +74,7 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
+  margin-bottom: 80px;
 }
 
 .capabilitie {
@@ -111,43 +112,60 @@
   text-align: center;
 }
 
-.aboutTeam{
+.aboutTeam {
   width: 100%;
   height: 500px;
-  
+
   display: flex;
   font-family: "Montserrat-Regular";
   padding: 15px;
   gap: 135px;
   justify-content: center;
-  h2,h3{
+  h2,
+  h3 {
     text-align: center;
   }
-  .card{
+  .card {
     width: 300px;
-    border: 1px solid black;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: var(--color-darkblue);
+    border-radius: 10px;
+    padding: 20px;
+    box-sizing: border-box;
+    cursor: pointer;
   }
-  .image{
+  .card:hover {
+    box-shadow: 0 0 50px rgba(0, 119, 166, 0.5);
+  }
+  .image {
     width: 100%;
-    img{
+    img {
       width: 100%;
       border-radius: 50%;
+      background-color: var(--color-blue);
     }
   }
-  h2{
-    color: var(--color-darkblue);
+  h2 {
+    color: var(--color-blue);
     font-size: 25px;
     font-family: "Montserrat-Bold";
     margin-bottom: 10px;
-    
   }
-  .body{
+  h3 {
+    color: var(--color-white);
+    font-size: 18px;
+    font-family: "Montserrat-Regular";
+  }
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     width: 250px;
     height: 250px;
     // border: 1px solid green;
     padding: 15px;
+    user-select: none;
   }
 }
