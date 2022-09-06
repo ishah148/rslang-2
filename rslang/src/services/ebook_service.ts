@@ -1,3 +1,4 @@
+import { StatsUpdateObject } from "../models/StatsModels";
 import { ServerUserWord, UserWord } from "../models/UserWordsModels";
 import { UserWordsApi } from "./api/UserWords_api";
 
@@ -5,6 +6,7 @@ import { UserWordsApi } from "./api/UserWords_api";
 export class EBookService {
 
   static async updateDifficultWords(wordID: string): Promise<ServerUserWord> {
+
     const newUserWord: UserWord = {
       difficulty: null,
       optional: {

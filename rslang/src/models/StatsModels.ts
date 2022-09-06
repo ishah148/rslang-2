@@ -31,9 +31,7 @@ export interface StatsModel {
 }
 
 export interface StatsUpdateObject {
-  newWords: number;
-  learnedWords: number;
-  accuracy: number
+  newLearnedWords: number;
 }
 
 
