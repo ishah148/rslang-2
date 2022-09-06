@@ -2,7 +2,7 @@ import React, { useEffect } from "react"
 import SectionItem from "./components/SectionItem/SectionItem"
 import styles from "./Ebook.module.scss"
 import gameImage from "../../assets/img/mainGames.png"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import WordItem from "./components/WordItem/WordItem"
 import Paginatinon from "./components/Pagination/Pagination"
 import { WordsApi } from "../../services/api"
@@ -16,7 +16,7 @@ import { useTypedSelector } from "../../hooks/useTypedSelector"
 import { ServerUserWord } from "../../models/UserWordsModels"
 import { IUserAggregatedWordsResponce, UserAggregatedWordsApi } from "../../services/api/AggregatedWords"
 import LinearProgress from "@mui/material/LinearProgress/LinearProgress"
-import WordDifficult from "./components/WordDifficult/WordDifficult"
+import HardWords from "./components/HardWords"
 
 const SECTIONS = [0, 1, 2, 3, 4, 5, 6]
 
@@ -69,6 +69,7 @@ function Ebook() {
     }
   }, [userWords, dataWords])
 
+  const navigate = useNavigate()
   async function clickHandler(page: number, group: number) {
     setCurChapter(group)
     setCurPage(page)
@@ -78,8 +79,12 @@ function Ebook() {
       setLoading((prev) => false)
       setDataWords(data)
     }
-    console.log(group)
+
     if (group === 6) {
+      if (!localStorage.getItem("user")) {
+        navigate("/signin")
+        return
+      }
       setLoading((prev) => true)
       const { status, body } = await UserAggregatedWordsApi.getHardUserAggregatedWords()
       setLoading((prev) => false)
@@ -89,7 +94,7 @@ function Ebook() {
 
   const { getUserWords } = useUserWordsActionsCreators()
   React.useLayoutEffect(() => {
-    getUserWords()
+    if (localStorage.getItem("user")) getUserWords()
   }, [])
 
   return (
@@ -100,27 +105,29 @@ function Ebook() {
             return <SectionItem key={elem.toString()} group={elem} clickHandler={clickHandler} />
           })}
         </div>
-        <div className={styles.gamesContainer}>
-          <Link to="/rslang-2/games/audiocall" onClick={() => handleAudiocallStart(curChapter, curPage)}>
-            <div className={styles.gamesItem}>
-              <img src={gameImage} className={styles.gamesImage}></img>
-              <p>AudioCall</p>
-            </div>
-          </Link>
-          <Link to="/rslang-2/games/sprint" onClick={() => handleSprintStart(curChapter, curPage)}>
-            <div className={styles.gamesItem}>
-              <img src={gameImage} className={styles.gamesImage}></img>
-              <p>Sprint</p>
-            </div>
-          </Link>
-        </div>
+        {!(wordsToShow as IUserAggregatedWordsResponce)?.[0]?.paginatedResults && (
+          <div className={styles.gamesContainer}>
+            <Link to="/games/audiocall" onClick={() => handleAudiocallStart(curChapter, curPage)}>
+              <div className={styles.gamesItem}>
+                <img src={gameImage} className={styles.gamesImage}></img>
+                <p>AudioCall</p>
+              </div>
+            </Link>
+            <Link to="/games/sprint/round" onClick={() => handleSprintStart(curChapter, curPage)}>
+              <div className={styles.gamesItem}>
+                <img src={gameImage} className={styles.gamesImage}></img>
+                <p>Sprint</p>
+              </div>
+            </Link>
+          </div>
+        )}
       </div>
       {loading && <LinearProgress />}
       <div className={styles.ebookWords}>
-        {(wordsToShow as IUserAggregatedWordsResponce)?.[0]?.paginatedResults &&
-          (wordsToShow as IUserAggregatedWordsResponce)?.[0]?.paginatedResults.map((elem) => {
-            return <WordDifficult key={elem._id} dataWord={elem} />
-          })}
+        {(wordsToShow as IUserAggregatedWordsResponce)?.[0]?.paginatedResults && (
+          <HardWords wordsToShow={wordsToShow as IUserAggregatedWordsResponce} />
+        )}
+
         {!(wordsToShow as IUserAggregatedWordsResponce)?.[0]?.paginatedResults &&
           (wordsToShow as IUserWordsWithCurrentWords[])?.map((elem) => {
             return <WordItem key={elem.id} dataWord={elem} />

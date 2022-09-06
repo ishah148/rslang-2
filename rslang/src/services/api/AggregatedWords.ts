@@ -13,7 +13,7 @@ interface IUserServerWord {
 }
 
 export interface IUserAggregatedWord extends IWord {
-  userWords: IUserServerWord
+  userWord: IUserServerWord
   _id: string
 }
 

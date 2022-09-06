@@ -4,11 +4,15 @@ import styles from "./WordDifficult.module.scss"
 import playBtn from "../../../../assets/img/playBtn.png"
 import { useTypedSelector } from "../../../../hooks/useTypedSelector"
 import { useUserWordsActionsCreators } from "../../../../hooks/useActions"
-import { CircularProgress } from "@mui/material"
-import { Link } from "react-router-dom"
 import { IUserAggregatedWord } from "../../../../services/api/AggregatedWords"
 
-export default function WordDifficult({ dataWord }: { dataWord: IUserAggregatedWord }) {
+export default function WordDifficult({
+  dataWord,
+  setWordsCount,
+}: {
+  dataWord: IUserAggregatedWord
+  setWordsCount: (prev: (prev: number) => number) => void
+}) {
   const { userWords } = useTypedSelector((state) => state.userWords)
   const { setDificultyUserWord, setLearndUserWord } = useUserWordsActionsCreators()
 
@@ -16,9 +20,11 @@ export default function WordDifficult({ dataWord }: { dataWord: IUserAggregatedW
     const audio = new Audio("https://rslang-rss.herokuapp.com/" + dataWord.audio)
     audio.play()
   }
-  console.log(dataWord)
+
+  const [show, setShow] = useState(true)
+
   return (
-    <>
+    <div style={{ display: show ? "block" : "none" }}>
       <div className={styles.wordcontainer}>
         <img className={styles.wordImage} src={"https://rslang-rss.herokuapp.com/" + dataWord.image}></img>
         <div className={styles.wordInfo}>
@@ -49,89 +55,53 @@ export default function WordDifficult({ dataWord }: { dataWord: IUserAggregatedW
           <img draggable="false" src={playBtn} className={styles.playBtn} onClick={playButton}></img>
         </div>
       </div>
-
-      {/* <div
+      <div
         style={{
           display: "flex",
-          marginTop: -20,
+          marginTop: 10,
           gap: 10,
           justifyContent: "center",
           flexWrap: "wrap",
           listStyle: "none",
         }}
       >
-        {localStorage.getItem("user") ? (
-          <>
-            <button
-              style={{ width: 200, backgroundColor: dataWord?.userWords?.difficulty === "hard" ? "green" : "" }}
-              onClick={() => setDificultyUserWord(dataWord._id, userWords)}
-            >
-              <p>Hard</p>
-            </button>
-            <button
-              style={{ width: 200, backgroundColor: dataWord?.userWords?.optional?.isLearned === true ? "green" : "" }}
-              onClick={() => setLearndUserWord(dataWord._id, userWords)}
-            >
-              <p>Learnd</p>
-            </button>
-          </>
-        ) : (
-          <>
-            <Link to="/signin">
-              <button
-                style={{ width: 200, backgroundColor: dataWord?.userWords?.difficulty === "hard" ? "green" : "" }}
-              >
-                <p>Hard</p>
-              </button>
-            </Link>
-            <Link to="/signin">
-              <button
-                style={{
-                  width: 200,
-                  backgroundColor: dataWord?.userWords?.optional?.isLearned === true ? "green" : "",
-                }}
-              >
-                <p>Learnd</p>
-              </button>
-            </Link>
-          </>
-        )}
+        <button
+          style={{ width: 200, backgroundColor: dataWord.userWord.difficulty === "hard" ? "green" : "" }}
+          onClick={() => {
+            setShow(false)
+            setWordsCount((prev) => prev - 1)
+            setDificultyUserWord(dataWord._id, userWords)
+          }}
+        >
+          <p>X</p>
+        </button>
+        {/* <button
+          style={{ width: 200, backgroundColor: dataWord.userWord.optional.isLearned === true ? "green" : "" }}
+          onClick={() => {
+            setShow(false)
+            setLearndUserWord(dataWord._id, userWords)
+          }}
+        >
+          <p>Learnd</p>
+        </button> */}
       </div>
-      {dataWord?.userWords?.optional ? (
-        <ul
-          style={{
-            display: "flex",
-            marginTop: -20,
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-            listStyle: "none",
-          }}
-        >
-          <li>difficulty: {dataWord.userWords?.difficulty}</li>
-          <li>Is learnd: {dataWord.userWords?.optional?.isLearned ? "yes" : "no"}</li>
-          <li>
-            Progress bar: {dataWord.userWords?.optional?.progressBar} / {dataWord.userWords?.optional?.progressBarSize}
-          </li>
-          <li>is New: {dataWord.userWords?.optional?.isNew ? "yes" : "no"}</li>
-          <li>meetingCounter: {dataWord.userWords?.optional?.meetingCounter}</li>
-        </ul>
-      ) : (
-        <ul
-          style={{
-            display: "flex",
-            marginTop: -20,
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-            listStyle: "none",
-          }}
-        >
-          <li>difficulty: null</li>
-          <li>Is learnd: null</li>
-          <li>Progress bar: null</li>
-          <li>is New: null</li>
-          <li>meetingCounter: null</li>
-        </ul>
-      )} */}
-    </>
+      <ul
+        style={{
+          display: "flex",
+          marginTop: 10,
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+          listStyle: "none",
+        }}
+      >
+        <li>difficulty: {dataWord.userWord.difficulty}</li>
+        <li>Is learnd: {dataWord.userWord.optional.isLearned ? "yes" : "no"}</li>
+        <li>
+          Progress bar: {dataWord.userWord.optional.progressBar} / {dataWord.userWord.optional.progressBarSize}
+        </li>
+        <li>is New: {dataWord.userWord.optional.isNew ? "yes" : "no"}</li>
+        <li>meetingCounter: {dataWord.userWord.optional.meetingCounter}</li>
+      </ul>
+    </div>
   )
 }

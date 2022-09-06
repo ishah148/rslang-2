@@ -16,10 +16,9 @@ interface BasicCardProps {
   children: React.ReactNode
   name: string
   article: string
-  image: string
 }
 
-export function BasicCard({ name, article, children,image }: BasicCardProps) {
+export function BasicCard({ name, article, children }: BasicCardProps) {
   return (
     <Card style={{ backgroundColor: "#624c9d" }} className={styles.cardContainer} sx={{ minWidth: 275, height: 320 }}>
       <CardMedia component="img" height="140px" width="140px" image={imageSprint} alt="green iguana" />
