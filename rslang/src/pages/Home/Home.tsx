@@ -1,5 +1,5 @@
 import React from "react"
-import { NavLink } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom"
 
 import styles from "./Home.module.scss"
 import variables from "../../variables/Variables.module.css"
@@ -11,6 +11,7 @@ import statisticImage from "../../assets/img/mainStatisticpng.png"
 
 import shah from "../../assets/img/shah.png"
 import nikolay from "../../assets/img/nikolay.png"
+import kirill from "../../assets/img/kirill.png"
 
 function Home() {
   return (
@@ -70,48 +71,62 @@ function Home() {
             </p>
           </div>
         </div>
+
+        <div className={styles.titleContainer}>
+          <h2 className={styles.mainTitle}>The project was made by</h2>
+          <div className={styles.divider}></div>
+        </div>
         <div className={styles.aboutTeam}>
-
-        <div className={styles.card + " " + styles.shah}>
+          <a
+            href="https://github.com/ishah148"
+            target="_blank"
+            className={styles.card + " " + styles.shah}
+            rel="noreferrer"
+          >
             <div className={styles.body}>
               <div className={styles.image}>
-              <img src={shah} />
-              </div> 
-                <h2>CallBack master</h2>
-                <h3>Координирование работы команды, настройка конфигов проекта, redux,игры </h3>
-                
+                <img src={shah} />
+              </div>
+              <h2>CallBack master</h2>
+              <h3>Координирование работы команды, настройка конфигов проекта, redux,игры </h3>
             </div>
 
             <div className={styles.epmty}></div>
-          </div>
+          </a>
 
-          <div className={styles.card + " " + styles.shah}>
+          <a
+            href="https://github.com/NikolayKovzik"
+            target="_blank"
+            className={styles.card + " " + styles.shah}
+            rel="noreferrer"
+          >
             <div className={styles.body}>
               <div className={styles.image}>
-              <img src={nikolay} />
-              </div> 
-                <h2>Архитектор</h2>
-                <h3>GitHub, логика взаимодействия клиент-сервер,статистика, разработчик конфликтов</h3>
-                
+                <img src={nikolay} />
+              </div>
+              <h2>Архитектор</h2>
+              <h3>GitHub, логика взаимодействия клиент-сервер,статистика, разработчик конфликтов</h3>
             </div>
 
             <div className={styles.epmty}></div>
-          </div>
+          </a>
 
-          <div className={styles.card + " " + styles.shah}>
+          <a
+            href="https://github.com/DarkCrew"
+            target="_blank"
+            className={styles.card + " " + styles.shah}
+            rel="noreferrer"
+          >
             <div className={styles.body}>
               <div className={styles.image}>
-              {/* <img src={shah} /> */}
-              </div> 
-                <h2>Design master</h2>
-                <h3>Дизайн проета, авторизация, home page</h3>
-                
+                <img src={kirill} />
+              </div>
+              <h2>Design master</h2>
+              <h3>Дизайн проета, авторизация, home page</h3>
             </div>
 
             <div className={styles.epmty}></div>
-          </div>
-
-
+          </a>
         </div>
       </div>
     </>
