@@ -37,9 +37,6 @@ function NavBar() {
               <li>
                 <NavLink to="/statistics">Stats</NavLink>
               </li>
-              <li>
-                <NavLink to="*">NotFound</NavLink>
-              </li>
               {user?.message === "Authenticated" ? (
                 <li>
                   <p>{user.name}</p>
