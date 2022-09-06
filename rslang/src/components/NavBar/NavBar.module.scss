@@ -28,6 +28,22 @@
   display: flex;
   height: 100%;
   gap: 50px;
+
+  li {
+    display: flex;
+    gap: 20px;
+    border-radius: 10px;
+
+    button {
+      border-radius: 10px;
+      transition: 1s;
+    }
+
+    button:hover {
+      color: var(--color-white);
+      background: var(--color-darkblue);
+    }
+  }
 }
 
 .mainNav li,
