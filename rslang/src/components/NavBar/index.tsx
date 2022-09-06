@@ -19,7 +19,7 @@ function NavBar() {
 
   return (
     <>
-      <div className={location.pathname === "/ebook" ? styles.mainNavActive : styles.mainNav}>
+      <div className={location.pathname === "/rslang-2/ebook" ? styles.mainNavActive : styles.mainNav}>
         <div className={styles.mainNavContainer}>
           <NavLink to="/rslang-2/">
             <div className={styles.logoContainer}>
@@ -38,7 +38,12 @@ function NavBar() {
                 <NavLink to="/rslang-2/statistics">Stats</NavLink>
               </li>
               {user?.message === "Authenticated" ? (
-                <li>
+                <li
+                  style={{
+                    background: "#00aeff",
+                    padding: "0 10px",
+                  }}
+                >
                   <p>{user.name}</p>
                   <p>{user.message}</p>
                   <button onClick={() => handleClick()}>Logout</button>
