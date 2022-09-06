@@ -8,10 +8,24 @@
   border-radius: 10px;
   padding: 10px;
   box-sizing: border-box;
+  width: 100%;
+}
+.wordCard{
+  width: 100%;
+  display: flex;
+  // background: green;
+}
+.optionalWrapper{
+  width: 100%;
+  .optionalContainer {
+    background: red;
+  }
 }
 
 .wordImage {
-  min-width: 300px;
+  // min-width: 300px;
+  width: 250px;
+  height: 250px;
   object-fit: cover;
 }
 
