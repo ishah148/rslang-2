@@ -107,13 +107,13 @@ function Ebook() {
         </div>
         {!(wordsToShow as IUserAggregatedWordsResponce)?.[0]?.paginatedResults && (
           <div className={styles.gamesContainer}>
-            <Link to="/games/audiocall" onClick={() => handleAudiocallStart(curChapter, curPage)}>
+            <Link to="/rslang-2/games/audiocall" onClick={() => handleAudiocallStart(curChapter, curPage)}>
               <div className={styles.gamesItem}>
                 <img src={gameImage} className={styles.gamesImage}></img>
                 <p>AudioCall</p>
               </div>
             </Link>
-            <Link to="/games/sprint/round" onClick={() => handleSprintStart(curChapter, curPage)}>
+            <Link to="/rslang-2/games/sprint/round" onClick={() => handleSprintStart(curChapter, curPage)}>
               <div className={styles.gamesItem}>
                 <img src={gameImage} className={styles.gamesImage}></img>
                 <p>Sprint</p>

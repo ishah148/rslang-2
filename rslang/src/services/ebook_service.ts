@@ -28,14 +28,14 @@ export class EBookService {
           newUserWord.optional.progressBarSize = 3;
           newUserWord.optional.progressBar = 0;
           newUserWord.optional.isLearned = false;
-          newUserWord.optional.isNew =  (userWord.optional.meetingCounter <= 3) && (userWord.optional.meetingCounter !== 0);
+          newUserWord.optional.isNew =  (userWord.optional.meetingCounter <= 5) && (userWord.optional.meetingCounter !== 0);
           newUserWord.optional.meetingCounter = userWord.optional.meetingCounter;
         } else if (userWord.difficulty === 'easy') {
           newUserWord.difficulty = 'hard';
           newUserWord.optional.progressBarSize = 5;
           newUserWord.optional.progressBar = 0;
           newUserWord.optional.isLearned = false;
-          newUserWord.optional.isNew =  (userWord.optional.meetingCounter <= 3) && (userWord.optional.meetingCounter !== 0);
+          newUserWord.optional.isNew =  (userWord.optional.meetingCounter <= 5) && (userWord.optional.meetingCounter !== 0);
           newUserWord.optional.meetingCounter = userWord.optional.meetingCounter;
         }
 
@@ -83,7 +83,7 @@ export class EBookService {
 
         if (userWord.optional.isLearned === true) {
           newUserWord.optional.isLearned = false;
-          newUserWord.optional.isNew = (userWord.optional.meetingCounter <= 3) && (userWord.optional.meetingCounter !== 0);
+          newUserWord.optional.isNew = (userWord.optional.meetingCounter <= 5) && (userWord.optional.meetingCounter !== 0);
           newUserWord.optional.meetingCounter = userWord.optional.meetingCounter;
           newUserWord.optional.progressBarSize = 3;
           newUserWord.difficulty = 'easy';
