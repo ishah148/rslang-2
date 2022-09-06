@@ -1,12 +1,14 @@
 {
   "files": {
-    "main.css": "/rslang-2/static/css/main.bfe7f840.css",
-    "main.js": "/rslang-2/static/js/main.6afe07c8.js",
+    "main.css": "/rslang-2/static/css/main.54eac728.css",
+    "main.js": "/rslang-2/static/js/main.185e278b.js",
+    "static/media/gameMainCont.jpg": "/rslang-2/static/media/gameMainCont.71de8c3e85298ffb65c4.jpg",
+    "static/media/wordsGame.jpg": "/rslang-2/static/media/wordsGame.d0ec022de3c44800a9b2.jpg",
+    "static/media/audioBackground.jpg": "/rslang-2/static/media/audioBackground.1ade5932eb8a7678b5ff.jpg",
     "static/media/main_background.jpg": "/rslang-2/static/media/main_background.2ebbd0c2766a8afa4bbd.jpg",
     "static/media/Montserrat-Bold.ttf": "/rslang-2/static/media/Montserrat-Bold.63fae500fdcf19ce83d4.ttf",
     "static/media/Montserrat-Regular.ttf": "/rslang-2/static/media/Montserrat-Regular.ac98a5f5ca71180fe293.ttf",
     "static/media/game_background.png": "/rslang-2/static/media/game_background.e160537d91c2a77aa215.png",
-    "static/media/audiobook.jpg": "/rslang-2/static/media/audiobook.7b4c661408332c1314cf.jpg",
     "static/media/status_w5zDGaI.mp3": "/rslang-2/static/media/status_w5zDGaI.656635e305cbf4796f68.mp3",
     "static/media/rs-school.png": "/rslang-2/static/media/rs-school.8043b59c7a113dfe964b.png",
     "static/media/ding-sound-effect_1.mp3": "/rslang-2/static/media/ding-sound-effect_1.6635996c7f240a634487.mp3",
@@ -16,11 +18,11 @@
     "static/media/playBtn.png": "/rslang-2/static/media/playBtn.67b4f2acaa6d19607508.png",
     "static/media/adriantnt_u_click.mp3": "/rslang-2/static/media/adriantnt_u_click.8233ef5bdbe83b672159.mp3",
     "index.html": "/rslang-2/index.html",
-    "main.bfe7f840.css.map": "/rslang-2/static/css/main.bfe7f840.css.map",
-    "main.6afe07c8.js.map": "/rslang-2/static/js/main.6afe07c8.js.map"
+    "main.54eac728.css.map": "/rslang-2/static/css/main.54eac728.css.map",
+    "main.185e278b.js.map": "/rslang-2/static/js/main.185e278b.js.map"
   },
   "entrypoints": [
-    "static/css/main.bfe7f840.css",
-    "static/js/main.6afe07c8.js"
+    "static/css/main.54eac728.css",
+    "static/js/main.185e278b.js"
   ]
 }
