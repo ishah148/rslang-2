@@ -6,6 +6,12 @@ import CardContent from "@mui/material/CardContent"
 import Typography from "@mui/material/Typography"
 import CardMedia from "@mui/material/CardMedia/CardMedia"
 
+import imageAudioBook from "../../../assets/img/audiobook.jpg"
+import imageSprint from "../../../assets/img/wordsGame.jpg"
+
+import styles from "./BasicCard.module.scss"
+
+
 interface BasicCardProps {
   children: React.ReactNode
   name: string
@@ -15,24 +21,19 @@ interface BasicCardProps {
 
 export function BasicCard({ name, article, children,image }: BasicCardProps) {
   return (
-    <Card sx={{ minWidth: 275, height: 320 }}>
-      <CardMedia
-        component="img"
-        height="140px"
-        width="140px"
-        image={image}
-        alt="green iguana"
-      />
-      <CardContent>
-        <Typography variant="h5" component="div">
-          {name}
-        </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+    <Card style={{ backgroundColor: "#624c9d" }} className={styles.cardContainer} sx={{ minWidth: 275, height: 320 }}>
+      <CardMedia component="img" height="140px" width="140px" image={imageSprint} alt="green iguana" />
+      <CardContent className={styles.name}>
+        <Typography>{name}</Typography>
+        <Typography className={styles.subname} sx={{ mb: 1.5 }} color="text.secondary">
+
           {/* {props} */}
         </Typography>
-        <Typography variant="body2">{article}</Typography>
+        <Typography className={styles.subtitle} variant="body2">
+          {article}
+        </Typography>
       </CardContent>
-      <CardActions>{children}</CardActions>
+      <CardActions className={styles.buttonCard}>{children}</CardActions>
     </Card>
   )
 }

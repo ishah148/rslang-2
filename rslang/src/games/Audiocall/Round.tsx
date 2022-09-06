@@ -119,38 +119,39 @@ function Round({ round, setRoundNumber, lastRaund, currentRaund }: props) {
   }
 
   return (
-    <div>
-      <span style={{ backgroundColor: "grey", display: "inline-block" }}>
-        <img
-          style={{ visibility: chosen ? "visible" : "hidden", verticalAlign: "middle" }}
-          src={API_URL + "/" + round.image}
-          width={300}
-          height={300}
-          alt=""
-        />
-      </span>
+    <div className={styles.wordInfo}>
+      <div className={styles.imageContainer}>
+        <span style={{ backgroundColor: "grey", display: "inline-block" }}>
+          <img
+            style={{ visibility: chosen ? "visible" : "hidden", verticalAlign: "middle" }}
+            src={API_URL + "/" + round.image}
+            alt=""
+          />
+        </span>
+        <div className={styles["custom-player"]}>
+          <Fab variant="extended" onClick={() => audioPlayerRef.current?.play()}>
+            <VolumeUpRoundedIcon sx={{ mr: 1, fontSize: 60 }} color="primary" />
+            {chosen ? round.transcription : "PLAY"}
+          </Fab>
+          <audio
+            className={styles["audio-player"]}
+            ref={audioPlayerRef}
+            src={API_URL + "/" + round.audio}
+            controls
+            autoPlay
+          ></audio>
+        </div>
+      </div>
       <h2
+        className={styles.wordResult}
         style={{
           visibility: chosen ? "visible" : "hidden",
-          fontSize: "8rem",
           color: lastRaundResult ? "green" : "red",
         }}
       >
         {round.word}
       </h2>
-      <div className={styles["custom-player"]}>
-        <Fab variant="extended" onClick={() => audioPlayerRef.current?.play()}>
-          <VolumeUpRoundedIcon sx={{ mr: 1, fontSize: 60 }} color="primary" />
-          {chosen ? round.transcription : "PLAY"}
-        </Fab>
-        <audio
-          className={styles["audio-player"]}
-          ref={audioPlayerRef}
-          src={API_URL + "/" + round.audio}
-          controls
-          autoPlay
-        ></audio>
-      </div>
+
       <Stack spacing={2} direction="row">
         {round.choice.map(({ wordTranslated, isCorrect }, i) => (
           <Button
@@ -167,18 +168,20 @@ function Round({ round, setRoundNumber, lastRaund, currentRaund }: props) {
           </Button>
         ))}
       </Stack>
-      {chosen ? (
-        <Button color="secondary" variant="contained" size="large" onClick={() => handleClick()}>
-          {lastRaund === currentRaund ? "SHOW THE RESULT" : "CONTINUE"}
+      <div className={styles.buttonsNavigate}>
+        {chosen ? (
+          <Button color="secondary" variant="contained" size="large" onClick={() => handleClick()}>
+            {lastRaund === currentRaund ? "SHOW THE RESULT" : "CONTINUE"}
+          </Button>
+        ) : (
+          <Button color="warning" variant="outlined" size="large" onClick={() => handleClick()}>
+            I don`t know
+          </Button>
+        )}
+        <Button color="warning" variant="outlined" size="large" onClick={() => audiocallSetReset()}>
+          LEAVE
         </Button>
-      ) : (
-        <Button color="warning" variant="outlined" size="large" onClick={() => handleClick()}>
-          I don`t know
-        </Button>
-      )}
-      <Button color="warning" variant="outlined" size="large" onClick={() => audiocallSetReset()}>
-        LEAVE
-      </Button>
+      </div>
     </div>
   )
 }

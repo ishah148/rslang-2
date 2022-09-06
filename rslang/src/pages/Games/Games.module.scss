@@ -1,28 +1,29 @@
 .games__wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    border: 1px solid black;
-    justify-content: center;
-
-    height: 500px;
-    margin-top: 100px;
-    gap: 2em;
-    padding: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  gap: 40px;
+  height: calc(100vh - 100px);
+  padding-top: 100px;
+  left: 0;
+  right: 0;
+  background: linear-gradient(rgba(0, 67, 99, 0.3), rgba(0, 67, 99, 0.6)), url(../../assets/img/gameMainCont.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .games__container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border: 1px solid black;
-    width: 400px;
-    height: 300px;
-    padding: 15px;
-    .games__button{
-        width: 100px;
-        align-self: center;
-    }
-    p{
-
-    }
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid black;
+  width: 400px;
+  height: 300px;
+  padding: 15px;
+  .games__button {
+    width: 100px;
+    align-self: center;
+  }
+  p {
+  }
 }

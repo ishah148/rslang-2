@@ -10,14 +10,14 @@ import imageOne from "../../assets/img/audiobook.jpg"
 import imageTwo from "../../assets/img/audiobook.jpg"
 
 const game1 = {
-  name: "audiocall",
-  article: "some audiocall",
-  image:imageOne,
+
+  name: "Audiocall",
+  article: "Test your listening skills",
 }
 const game2 = {
-  name: "sprint",
-  article: "some sptint",
-  image:imageTwo,
+  name: "Sprint",
+  article: "Find out how well you know the words",
+
 }
 function Games() {
   const { sprintSetLevel, sprintSetStart } = useSprintActionsCreators()
@@ -39,7 +39,7 @@ function Games() {
             sx={{ justifyContent: "center" }}
             onClick={() => audiocallSetReset()}
           >
-            Start!!!
+            Start
           </Button>
         </Link>
       </BasicCard>
@@ -47,11 +47,10 @@ function Games() {
       <BasicCard {...game2}>
         <Link to="/rslang-2/games/sprint">
           <Button size="small" variant="contained" sx={{ justifyContent: "center" }}>
-            Start!!!
+            Start
           </Button>
         </Link>
       </BasicCard>
-      <button onClick={() => playShahGame(0, [1, 2, 3])}></button>
     </div>
   )
 }

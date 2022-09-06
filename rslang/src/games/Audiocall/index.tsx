@@ -9,6 +9,8 @@ import { Button, CircularProgress } from "@mui/material"
 import { useSound } from "../../hooks/useSound"
 import start from "./assets/adriantnt_u_click.mp3"
 
+import styles from "./Audiocall.module.scss"
+
 function Audiocall() {
   const { rounds, pending, result, error } = useTypedSelector((state) => state.audiocall)
 
@@ -30,13 +32,7 @@ function Audiocall() {
 
   if (pending) {
     return (
-      <div
-        style={{
-          padding: 30,
-          height: "100vh",
-          width: "100vw",
-        }}
-      >
+      <div>
         <h1>AUDIOCALL</h1>
 
         <CircularProgress />
@@ -49,8 +45,8 @@ function Audiocall() {
   }
 
   return (
-    <div style={{ backgroundColor: "white", padding: 30, height: "100vh", width: "100vw" }}>
-      <h1>AUDIOCALL</h1>
+    <div className={styles.audioContainer}>
+      <h1 className={styles.title}>Audiocall</h1>
       {!rounds ? (
         <>
           <Settings {...{ handleClick, handleChange, error, group, pending }} />
