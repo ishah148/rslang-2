@@ -53,7 +53,7 @@ export interface DailyStatsData {
 
 
 export interface FullStatsData {
-  [data: string]: {
+  [date: string]: {
     newWords: number;
     totalLearnedWords: number;
   }
