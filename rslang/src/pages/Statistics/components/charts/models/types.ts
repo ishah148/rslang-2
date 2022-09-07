@@ -17,5 +17,6 @@ export const defaultGraphPropsData = {
       backgroundColor: "rgba(255, 99, 132, 0.5)",
     },
   ],
+  
 }
 
