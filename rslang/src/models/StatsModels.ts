@@ -81,25 +81,25 @@ export interface StatsUpdateObject {
 
 
 export interface DailyStatsData {
-  newWords: number;
-  learnedWords: number;
-  totalAccuracy: number;
+  newWords: number | null;
+  learnedWords: number | null;
+  totalAccuracy: number | null;
   audioChallenge: {
-    newWords: number;
-    accuracy: number;
-    bestStreak: number;
+    newWords: number | null;
+    accuracy: number | null;
+    bestStreak: number | null;
   }
   sprint: {
-    newWords: number;
-    accuracy: number;
-    bestStreak: number;
+    newWords: number | null;
+    accuracy: number | null;
+    bestStreak: number | null;
   }
 }
 
 
 export interface FullStatsData {
   [date: string]: {
-    newWords: number;
-    totalLearnedWords: number;
+    newWords: number | null;
+    totalLearnedWords: number | null;
   }
 }

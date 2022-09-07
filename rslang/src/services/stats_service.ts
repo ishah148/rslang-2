@@ -54,7 +54,7 @@ export class StatsService {
           newStatsForCurrentDate.learnedWords = 0;
           newStatsForCurrentDate.totalLearnedWords = 0;
         }
-        console.log(newStatistics);
+        console.log('updateStatisticWithGameData ----- ', newStatistics);
         await StatsApi.updateUserStats(newStatistics);
       }
 
@@ -103,8 +103,10 @@ export class StatsService {
         if (statsUpdateObject.newLearnedWords < 0) {
           console.log('WTFFFFFFFFFFFFFFFFFFF BOOOYYYYYYYYYYYYYYYYY');
         }
-        console.log(statistics);
+        console.log('updateStatisticWithGameData ----- ', statistics);
         await StatsApi.updateUserStats(statistics);
+        await StatsService.getDailyStatistics(); //!DELETE
+        await StatsService.getFullStatistics(); //!DELETE
       }
     } catch (error) {
       throw new Error((error as Error).message)
@@ -134,21 +136,90 @@ export class StatsService {
 
 
   static async getDailyStatistics(): Promise<DailyStatsData> {
-    return {
-      newWords: 112,
-      learnedWords: 100,
-      totalAccuracy: 60,
+    let dailyStats: DailyStatsData = {
+      newWords: null,
+      learnedWords: null,
+      totalAccuracy: null,
       audioChallenge: {
-        newWords: 67,
-        accuracy: 100,
-        bestStreak: 19,
+        newWords: null,
+        accuracy: null,
+        bestStreak: null,
       },
       sprint: {
-        newWords: 45,
-        accuracy: 40,
-        bestStreak: 26,
+        newWords: null,
+        accuracy: null,
+        bestStreak: null,
       }
     }
+
+    const date = UtilsService.getCurrentDate();
+
+    try {
+      const response = await StatsApi.getUserStats();
+
+      if (response.status !== 200 && response.status !== 404) {
+        throw new Error(`getDailyStatistics in StatsService response.status is --- ${response.status}`)
+      }
+
+      if (response.status === 404) {
+        dailyStats = {
+          newWords: 0,
+          learnedWords: 0,
+          totalAccuracy: 0,
+          audioChallenge: {
+            newWords: 0,
+            accuracy: 0,
+            bestStreak: 0,
+          },
+          sprint: {
+            newWords: 0,
+            accuracy: 0,
+            bestStreak: 0,
+          }
+        }
+      }
+
+      if (response.status === 200) {
+        const statistics: ServerStatsModel = response.body;
+        if (!statistics.optional[date]) {
+          dailyStats = {
+            newWords: 0,
+            learnedWords: 0,
+            totalAccuracy: 0,
+            audioChallenge: {
+              newWords: 0,
+              accuracy: 0,
+              bestStreak: 0,
+            },
+            sprint: {
+              newWords: 0,
+              accuracy: 0,
+              bestStreak: 0,
+            }
+          }
+        } else {
+          dailyStats = {
+            newWords: statistics.optional[date].newWords,
+            learnedWords: statistics.optional[date].learnedWords,
+            totalAccuracy: statistics.optional[date].accuracy,
+            audioChallenge: {
+              newWords: statistics.optional[date].audioChallenge.newWords,
+              accuracy: UtilsService.calcAverageAccuracy(statistics.optional[date].audioChallenge.accuracy),
+              bestStreak: statistics.optional[date].audioChallenge.bestStreak,
+            },
+            sprint: {
+              newWords: statistics.optional[date].sprint.newWords,
+              accuracy: UtilsService.calcAverageAccuracy(statistics.optional[date].sprint.accuracy),
+              bestStreak: statistics.optional[date].sprint.bestStreak,
+            }
+          }
+        }
+      }
+    } catch (error) {
+      throw new Error((error as Error).message)
+    }
+    console.log('getDailyStatistics ----- ', dailyStats);
+    return dailyStats;
 
   }
 
@@ -163,7 +234,7 @@ export class StatsService {
     const d8 = '2022/9/21';
     const d9 = '2022/9/22';
     const d10 = '2022/9/23';
-    return {
+    const testObj: FullStatsData = {
       [d1]: {
         newWords: 30,
         totalLearnedWords: 123,
@@ -205,5 +276,54 @@ export class StatsService {
         totalLearnedWords: 601,
       },
     }
+
+    const date = UtilsService.getCurrentDate();
+
+    let fullStatsData: FullStatsData = {
+      [date]: {
+        newWords: 0,
+        totalLearnedWords: 0,
+      }
+    }
+
+    try {
+      const response = await StatsApi.getUserStats();
+
+      if (response.status !== 200 && response.status !== 404) {
+        throw new Error(`getFullStatistics in StatsService response.status is --- ${response.status}`)
+      }
+
+      if (response.status === 404) {
+        fullStatsData = {
+          [date]: {
+            newWords: 0,
+            totalLearnedWords: 0,
+          }
+        }
+      }
+
+      if (response.status === 200) {
+        const statistics: ServerStatsModel = response.body;
+        for (const day in statistics.optional) {
+          fullStatsData[day] = {
+            newWords: statistics.optional[day].newWords,
+            totalLearnedWords: statistics.optional[day].totalLearnedWords,
+          }
+        }
+
+        if (!statistics.optional[date]) {
+          const lastDate: string = UtilsService.getLastDateInStatistics(statistics);
+          fullStatsData[date] = {
+            newWords: statistics.optional[lastDate].newWords,
+            totalLearnedWords: statistics.optional[lastDate].totalLearnedWords,
+          }
+        }
+      }
+    } catch (error) {
+      throw new Error((error as Error).message)
+    }
+
+    console.log('getFullStatistics ----- ', fullStatsData);
+    return fullStatsData;
   }
 }
