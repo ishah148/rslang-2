@@ -36,6 +36,7 @@ export function BarChart(props: props) {
     console.log("labels", labels)
     console.log("newwords", newWords)
     console.log("generatePropsObj(labels,newWords)", generatePropsObj(labels, newWords))
+    console.log('defaultGraphPropsData',defaultGraphPropsData)
     console.log("graphProps", graphProps)
   }, [props, test])
 

@@ -8,7 +8,7 @@ export type graphPropsData = {
 }
 
 export const defaultGraphPropsData = {
-  labels:[''],
+  labels:['January', 'February', 'March', 'April', 'May', 'June', 'July'],
   datasets: [
     {
       label: "Dataset 1",
@@ -17,3 +17,4 @@ export const defaultGraphPropsData = {
     },
   ],
 }
+
