@@ -18,7 +18,7 @@ interface IWordObject {
 const BACKGROUNDS = ["#4d5c6c", "#5c5c73", "#736b4e", "#68483b", "#5e6156", "#735e63", "#374829"]
 
 export default function WordItem({ dataWord, currentChapter }: IWordObject) {
-  console.log(BACKGROUNDS[currentChapter])
+  
   const { userWords } = useTypedSelector((state) => state.userWords)
   const { setDificultyUserWord, setLearndUserWord } = useUserWordsActionsCreators()
 
