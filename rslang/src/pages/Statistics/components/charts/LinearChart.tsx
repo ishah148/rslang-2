@@ -1,5 +1,5 @@
-import React from "react"
-import styles from '../Stats.module.scss'
+import React, { useEffect, useState } from "react"
+import styles from "../Stats.module.scss"
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,49 +9,56 @@ import {
   Title,
   Tooltip,
   Legend,
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
+} from "chart.js"
+import { Line } from "react-chartjs-2"
+import { FullStatsData } from "../../../../models/StatsModels"
+import { generatePropsObjTotalWords } from "./utils"
+import { defaultGraphPropsData, graphPropsData } from "./models/types"
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
+type props = {
+  data: FullStatsData | undefined
+}
 
-export function LinearChart() {
-
+export function LinearChart(props: props) {
   const options = {
     responsive: true,
     plugins: {
       legend: {
-        position: 'top' as const,
+        position: "top" as const,
       },
       title: {
         display: true,
-        text: 'Chart.js Line Chart',
+        text: "Chart.js Line Chart",
       },
     },
-  };
+  }
 
-  const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  const [graphProps, setGraphProps] = useState<graphPropsData>(defaultGraphPropsData)
 
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: 'Dataset 2',
-        data: [1, 4, 7, 8, 9],
-        borderColor: 'rgb(53, 162, 235)',
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
-      },
-    ],
-  };
+  useEffect(() => {
+    const data = Object.entries(props.data || 0)
+    const labels = data.map((i) => i[0]) as string[]
+    const newWords = data.map((i) => i[1])
 
-  return (
-    <Line options={options} data={data} />
-  )
+    if (data.length) setGraphProps({ ...graphProps, ...generatePropsObjTotalWords(labels, newWords) })
+  }, [props])
+
+  return <Line options={options} data={graphProps} />
 }
+
+// for debug!
+// const [test, setTest] = useState(false)
+// console.log("labels", labels)
+// console.log("newwords", newWords)
+// console.log("generatePropsObj(labels,newWords)", generatePropsObjNewWords(labels, newWords))
+// console.log('defaultGraphPropsData',defaultGraphPropsData)
+// console.log("graphProps", graphProps)
+
+
+// <button
+// onClick={() => {
+//   console.log("graphProps", graphProps)
+//   setTest(!test)
+// }}
+// ></button>
