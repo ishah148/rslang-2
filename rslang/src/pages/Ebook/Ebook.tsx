@@ -83,7 +83,7 @@ function Ebook() {
 
     if (group === 6) {
       if (!localStorage.getItem("user")) {
-        navigate("/signin")
+        navigate("/rslang-2/signin")
         return
       }
       setLoading((prev) => true)
