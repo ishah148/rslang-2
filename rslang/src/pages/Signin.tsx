@@ -7,7 +7,7 @@ function Signin() {
   return (
     <div className="auth-form-wrapper">
       <SigninForm />
-      <Link className="auth-form-btn" to="/rslang-2/signup">
+      <Link className="auth-form-btn" to="/signup">
         Create an account
       </Link>
     </div>

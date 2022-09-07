@@ -58,7 +58,7 @@ const Round = () => {
 
   function changeLevel() {
     sprintSetReset()
-    navigate("/rslang-2/games/sprint")
+    navigate("/games/sprint")
   }
 
   useEffect(() => {
