@@ -49,7 +49,7 @@ export class StatsService {
         newStatistics.learnedWords = statsUpdateObject.newLearnedWords;
         newStatsForCurrentDate.totalLearnedWords = statsUpdateObject.newLearnedWords;
         if (statsUpdateObject.newLearnedWords < 0) {
-          console.log('WTFFFFFFFFFFFFFFFFFFF BOOOYYYYYYYYYYYYYYYYY');
+          console.log(`WTF BOY 2?  statsUpdateObject.newLearnedWords: ${statsUpdateObject.newLearnedWords}`);
           newStatistics.learnedWords = 0;
           newStatsForCurrentDate.learnedWords = 0;
           newStatsForCurrentDate.totalLearnedWords = 0;
@@ -97,16 +97,19 @@ export class StatsService {
           statsForCurrentDate.accuracy = UtilsService.calcAverageAccuracy(statsForCurrentDate.sprint.accuracy, statsForCurrentDate.audioChallenge.accuracy);
           statsForCurrentDate.newWords = (statsForCurrentDate.sprint.newWords as number) + (statsForCurrentDate.audioChallenge.newWords as number);
           (statsForCurrentDate.learnedWords as number) += statsUpdateObject.newLearnedWords;
+          if ((statsForCurrentDate.learnedWords as number) < 0) {
+            statsForCurrentDate.learnedWords = 0;
+          }
         }
         (statistics.learnedWords as number) += statsUpdateObject.newLearnedWords;
         statsForCurrentDate.totalLearnedWords = statistics.learnedWords;
-        if (statsUpdateObject.newLearnedWords < 0) {
-          console.log('WTFFFFFFFFFFFFFFFFFFF BOOOYYYYYYYYYYYYYYYYY');
+        if ((statistics.learnedWords as number) < 0) {
+          console.log(`WTF BOY 2?  statsUpdateObject.newLearnedWords: ${statsUpdateObject.newLearnedWords} --- statistics.learnedWords: ${statistics.learnedWords}`, );
+          statistics.learnedWords = 0;
+          statsForCurrentDate.totalLearnedWords = 0;
         }
         console.log('updateStatisticWithGameData ----- ', statistics);
         await StatsApi.updateUserStats(statistics);
-        await StatsService.getDailyStatistics(); //!DELETE
-        await StatsService.getFullStatistics(); //!DELETE
       }
     } catch (error) {
       throw new Error((error as Error).message)
@@ -136,19 +139,19 @@ export class StatsService {
 
 
   static async getDailyStatistics(): Promise<DailyStatsData> {
-    let dailyStats: DailyStatsData = {
-      newWords: null,
-      learnedWords: null,
-      totalAccuracy: null,
+    const dailyStats: DailyStatsData = {
+      newWords: 0,
+      learnedWords: 0,
+      totalAccuracy: 0,
       audioChallenge: {
-        newWords: null,
-        accuracy: null,
-        bestStreak: null,
+        newWords: 0,
+        accuracy: 0,
+        bestStreak: 0,
       },
       sprint: {
-        newWords: null,
-        accuracy: null,
-        bestStreak: null,
+        newWords: 0,
+        accuracy: 0,
+        bestStreak: 0,
       }
     }
 
@@ -161,58 +164,20 @@ export class StatsService {
         throw new Error(`getDailyStatistics in StatsService response.status is --- ${response.status}`)
       }
 
-      if (response.status === 404) {
-        dailyStats = {
-          newWords: 0,
-          learnedWords: 0,
-          totalAccuracy: 0,
-          audioChallenge: {
-            newWords: 0,
-            accuracy: 0,
-            bestStreak: 0,
-          },
-          sprint: {
-            newWords: 0,
-            accuracy: 0,
-            bestStreak: 0,
-          }
-        }
-      }
-
       if (response.status === 200) {
         const statistics: ServerStatsModel = response.body;
-        if (!statistics.optional[date]) {
-          dailyStats = {
-            newWords: 0,
-            learnedWords: 0,
-            totalAccuracy: 0,
-            audioChallenge: {
-              newWords: 0,
-              accuracy: 0,
-              bestStreak: 0,
-            },
-            sprint: {
-              newWords: 0,
-              accuracy: 0,
-              bestStreak: 0,
-            }
-          }
-        } else {
-          dailyStats = {
-            newWords: statistics.optional[date].newWords,
-            learnedWords: statistics.optional[date].learnedWords,
-            totalAccuracy: statistics.optional[date].accuracy,
-            audioChallenge: {
-              newWords: statistics.optional[date].audioChallenge.newWords,
-              accuracy: UtilsService.calcAverageAccuracy(statistics.optional[date].audioChallenge.accuracy),
-              bestStreak: statistics.optional[date].audioChallenge.bestStreak,
-            },
-            sprint: {
-              newWords: statistics.optional[date].sprint.newWords,
-              accuracy: UtilsService.calcAverageAccuracy(statistics.optional[date].sprint.accuracy),
-              bestStreak: statistics.optional[date].sprint.bestStreak,
-            }
-          }
+        if (statistics.optional[date]) {
+          dailyStats.newWords = statistics.optional[date].newWords;
+          dailyStats.learnedWords = statistics.optional[date].learnedWords;
+          dailyStats.totalAccuracy = statistics.optional[date].accuracy;
+
+          dailyStats.audioChallenge.newWords = statistics.optional[date].audioChallenge.newWords;
+          dailyStats.audioChallenge.accuracy = UtilsService.calcAverageAccuracy(statistics.optional[date].audioChallenge.accuracy);
+          dailyStats.audioChallenge.bestStreak = statistics.optional[date].audioChallenge.bestStreak;
+
+          dailyStats.sprint.newWords = statistics.optional[date].sprint.newWords;
+          dailyStats.sprint.accuracy = UtilsService.calcAverageAccuracy(statistics.optional[date].sprint.accuracy);
+          dailyStats.sprint.bestStreak = statistics.optional[date].sprint.bestStreak;
         }
       }
     } catch (error) {
@@ -224,62 +189,62 @@ export class StatsService {
   }
 
   static async getFullStatistics(): Promise<FullStatsData> {
-    const d1 = '2022/9/6';
-    const d2 = '2022/9/7';
-    const d3 = '2022/9/8';
-    const d4 = '2022/9/12';
-    const d5 = '2022/9/15';
-    const d6 = '2022/9/16';
-    const d7 = '2022/9/20';
-    const d8 = '2022/9/21';
-    const d9 = '2022/9/22';
-    const d10 = '2022/9/23';
-    const testObj: FullStatsData = {
-      [d1]: {
-        newWords: 30,
-        totalLearnedWords: 123,
-      },
-      [d2]: {
-        newWords: 40,
-        totalLearnedWords: 167,
-      },
-      [d3]: {
-        newWords: 50,
-        totalLearnedWords: 223,
-      },
-      [d4]: {
-        newWords: 50,
-        totalLearnedWords: 223,
-      },
-      [d5]: {
-        newWords: 69,
-        totalLearnedWords: 300,
-      },
-      [d6]: {
-        newWords: 78,
-        totalLearnedWords: 467,
-      },
-      [d7]: {
-        newWords: 79,
-        totalLearnedWords: 468,
-      },
-      [d8]: {
-        newWords: 120,
-        totalLearnedWords: 500,
-      },
-      [d9]: {
-        newWords: 160,
-        totalLearnedWords: 589,
-      },
-      [d10]: {
-        newWords: 201,
-        totalLearnedWords: 601,
-      },
-    }
+    // const d1 = '2022/9/6';
+    // const d2 = '2022/9/7';
+    // const d3 = '2022/9/8';
+    // const d4 = '2022/9/12';
+    // const d5 = '2022/9/15';
+    // const d6 = '2022/9/16';
+    // const d7 = '2022/9/20';
+    // const d8 = '2022/9/21';
+    // const d9 = '2022/9/22';
+    // const d10 = '2022/9/23';
+    // const testObj: FullStatsData = {
+    //   [d1]: {
+    //     newWords: 30,
+    //     totalLearnedWords: 123,
+    //   },
+    //   [d2]: {
+    //     newWords: 40,
+    //     totalLearnedWords: 167,
+    //   },
+    //   [d3]: {
+    //     newWords: 50,
+    //     totalLearnedWords: 223,
+    //   },
+    //   [d4]: {
+    //     newWords: 50,
+    //     totalLearnedWords: 223,
+    //   },
+    //   [d5]: {
+    //     newWords: 69,
+    //     totalLearnedWords: 300,
+    //   },
+    //   [d6]: {
+    //     newWords: 78,
+    //     totalLearnedWords: 467,
+    //   },
+    //   [d7]: {
+    //     newWords: 79,
+    //     totalLearnedWords: 468,
+    //   },
+    //   [d8]: {
+    //     newWords: 120,
+    //     totalLearnedWords: 500,
+    //   },
+    //   [d9]: {
+    //     newWords: 160,
+    //     totalLearnedWords: 589,
+    //   },
+    //   [d10]: {
+    //     newWords: 201,
+    //     totalLearnedWords: 601,
+    //   },
+    // }
 
     const date = UtilsService.getCurrentDate();
 
-    let fullStatsData: FullStatsData = {
+    const fullStatsData: FullStatsData = {
       [date]: {
         newWords: 0,
         totalLearnedWords: 0,
@@ -291,15 +256,6 @@ export class StatsService {
 
       if (response.status !== 200 && response.status !== 404) {
         throw new Error(`getFullStatistics in StatsService response.status is --- ${response.status}`)
-      }
-
-      if (response.status === 404) {
-        fullStatsData = {
-          [date]: {
-            newWords: 0,
-            totalLearnedWords: 0,
-          }
-        }
       }
 
       if (response.status === 200) {
@@ -325,5 +281,91 @@ export class StatsService {
 
     console.log('getFullStatistics ----- ', fullStatsData);
     return fullStatsData;
+  }
+
+  static async updateStatisticWithEBookData(statsUpdateObject: StatsUpdateObject): Promise<void> {
+    const date = UtilsService.getCurrentDate();
+    const newStatistics: StatsModel = {
+      learnedWords: null,
+      optional: {
+        [date]: {
+          newWords: null,
+          learnedWords: null,
+          accuracy: null,
+          totalLearnedWords: null,
+          audioChallenge: {
+            newWords: null,
+            accuracy: [],
+            bestStreak: null,
+          },
+
+          sprint: {
+            newWords: null,
+            accuracy: [],
+            bestStreak: null,
+          }
+        }
+      }
+    }
+    try {
+      const response = await StatsApi.getUserStats();
+
+      if (response.status !== 200 && response.status !== 404) {
+        throw new Error(`updateStatisticWithEBookData in StatsService response.status is --- ${response.status}`)
+      }
+
+      if (response.status === 404) {
+        newStatistics.learnedWords = statsUpdateObject.newLearnedWords;
+        newStatistics.optional[date].newWords = 0;
+        newStatistics.optional[date].learnedWords = statsUpdateObject.newLearnedWords;
+        newStatistics.optional[date].accuracy = 0;
+        newStatistics.optional[date].totalLearnedWords = statsUpdateObject.newLearnedWords;
+
+        newStatistics.optional[date].audioChallenge.newWords = 0;
+        newStatistics.optional[date].audioChallenge.accuracy = []
+        newStatistics.optional[date].audioChallenge.bestStreak = 0;
+
+        newStatistics.optional[date].sprint.newWords = 0;
+        newStatistics.optional[date].sprint.accuracy = [];
+        newStatistics.optional[date].sprint.bestStreak = 0;
+
+        console.log('updateStatisticWithEBookData ----- ', newStatistics);
+        await StatsApi.updateUserStats(newStatistics);
+      }
+
+      if (response.status === 200) {
+        const statistics: ServerStatsModel = response.body;
+        delete statistics.id;
+        if (!statistics.optional[date]) {
+          (statistics.learnedWords as number) += statsUpdateObject.newLearnedWords;
+          newStatistics.optional[date].newWords = 0;
+          (statistics.optional[date].learnedWords as number) = statsUpdateObject.newLearnedWords;
+          if ((statistics.optional[date].learnedWords as number) < 0) {
+            statistics.optional[date].learnedWords = 0;
+          }
+          newStatistics.optional[date].accuracy = 0;
+          newStatistics.optional[date].totalLearnedWords = statistics.learnedWords;
+
+          newStatistics.optional[date].audioChallenge.newWords = 0;
+          newStatistics.optional[date].audioChallenge.accuracy = []
+          newStatistics.optional[date].audioChallenge.bestStreak = 0;
+
+          newStatistics.optional[date].sprint.newWords = 0;
+          newStatistics.optional[date].sprint.accuracy = [];
+          newStatistics.optional[date].sprint.bestStreak = 0;
+        } else {
+          (statistics.learnedWords as number) += statsUpdateObject.newLearnedWords;
+          (statistics.optional[date].learnedWords as number) += statsUpdateObject.newLearnedWords;
+          if ((statistics.optional[date].learnedWords as number) < 0) {
+            statistics.optional[date].learnedWords = 0;
+          }
+          statistics.optional[date].totalLearnedWords = statistics.learnedWords;
+        }
+        console.log('updateStatisticWithEBookData ----- ', statistics);
+        await StatsApi.updateUserStats(statistics);
+      }
+    } catch (error) {
+      throw new Error((error as Error).message)
+    }
   }
 }

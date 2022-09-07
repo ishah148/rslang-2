@@ -1,7 +1,7 @@
 import { StatsUpdateObject } from "../models/StatsModels";
 import { ServerUserWord, UserWord } from "../models/UserWordsModels";
 import { UserWordsApi } from "./api/UserWords_api";
-
+import { StatsService } from "./stats_service";
 
 export class EBookService {
 
@@ -17,6 +17,11 @@ export class EBookService {
         meetingCounter: null,
       }
     }
+
+    const statsUpdateObject: StatsUpdateObject = {
+      newLearnedWords: 0,
+    }
+
     let result: ServerUserWord | null = null;
 
     try {
@@ -30,14 +35,17 @@ export class EBookService {
           newUserWord.optional.progressBarSize = 3;
           newUserWord.optional.progressBar = 0;
           newUserWord.optional.isLearned = false;
-          newUserWord.optional.isNew =  (userWord.optional.meetingCounter <= 5) && (userWord.optional.meetingCounter !== 0);
+          newUserWord.optional.isNew = (userWord.optional.meetingCounter <= 5) && (userWord.optional.meetingCounter !== 0);
           newUserWord.optional.meetingCounter = userWord.optional.meetingCounter;
         } else if (userWord.difficulty === 'easy') {
           newUserWord.difficulty = 'hard';
           newUserWord.optional.progressBarSize = 5;
           newUserWord.optional.progressBar = 0;
+          if(userWord.optional.isLearned === true) {
+            statsUpdateObject.newLearnedWords -= 1;
+          }
           newUserWord.optional.isLearned = false;
-          newUserWord.optional.isNew =  (userWord.optional.meetingCounter <= 5) && (userWord.optional.meetingCounter !== 0);
+          newUserWord.optional.isNew = (userWord.optional.meetingCounter <= 5) && (userWord.optional.meetingCounter !== 0);
           newUserWord.optional.meetingCounter = userWord.optional.meetingCounter;
         }
 
@@ -61,6 +69,7 @@ export class EBookService {
       throw new Error((error as Error).message);
     }
 
+    await StatsService.updateStatisticWithEBookData(statsUpdateObject);
     return result as ServerUserWord;
   }
 
@@ -75,6 +84,11 @@ export class EBookService {
         meetingCounter: null,
       }
     }
+
+    const statsUpdateObject: StatsUpdateObject = {
+      newLearnedWords: 0,
+    }
+
     let result: ServerUserWord | null = null;
 
     try {
@@ -90,6 +104,7 @@ export class EBookService {
           newUserWord.optional.progressBarSize = 3;
           newUserWord.difficulty = 'easy';
           newUserWord.optional.progressBar = 0;
+          statsUpdateObject.newLearnedWords -= 1;
         } else if (userWord.optional.isLearned === false) {
           newUserWord.optional.isLearned = true;
           newUserWord.optional.isNew = false;
@@ -97,6 +112,7 @@ export class EBookService {
           newUserWord.optional.progressBar = userWord.difficulty === 'hard' ? 5 : 3;
           newUserWord.optional.progressBarSize = userWord.difficulty === 'hard' ? 5 : 3;
           newUserWord.difficulty = 'easy';
+          statsUpdateObject.newLearnedWords += 1;
         }
 
         result = (await UserWordsApi.updateUserWord(wordID, newUserWord)).body;
@@ -109,6 +125,8 @@ export class EBookService {
         newUserWord.difficulty = 'easy';
         newUserWord.optional.progressBar = 3;
         newUserWord.optional.progressBarSize = 3;
+        statsUpdateObject.newLearnedWords += 1;
+        
         result = (await UserWordsApi.createUserWord(wordID, newUserWord)).body;
       }
 
@@ -119,6 +137,7 @@ export class EBookService {
       throw new Error((error as Error).message);
     }
 
+    await StatsService.updateStatisticWithEBookData(statsUpdateObject);
     return result as ServerUserWord;
   }
 }
