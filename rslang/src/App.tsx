@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route, useNavigate } from "react-router-dom"
 
 //styles
 import "./App.css"
@@ -39,6 +39,7 @@ function App() {
   const { user } = useTypedSelector((state) => state.user)
   const { getUserWords } = useUserWordsActionsCreators()
   const dispatch = useDispatch()
+  const navigate = useNavigate();
   useEffect(() => {
     const jsonUser: string | null = localStorage.getItem("user")
 
@@ -46,6 +47,7 @@ function App() {
       const localUser: IUser = JSON.parse(jsonUser)
       dispatch({ type: UserActionTypes.SIGNIN, payload: localUser })
     }
+    navigate('/rslang-2/')
   }, [])
   React.useLayoutEffect(() => {
     if (user) {
