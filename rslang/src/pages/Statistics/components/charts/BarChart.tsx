@@ -32,23 +32,14 @@ export function BarChart(props: props) {
     const labels = data.map((i) => i[0]) as string[]
     const newWords = data.map((i) => i[1])
     
-    if (data.length) setGraphProps({ ...graphProps, ...generatePropsObj(labels, newWords) })
+    if (data.length) setGraphProps({ ...graphProps, ...generatePropsObj(labels, newWords,'newWords') })
     console.log("labels", labels)
     console.log("newwords", newWords)
-    console.log("generatePropsObj(labels,newWords)", generatePropsObj(labels, newWords))
+    console.log("generatePropsObj(labels,newWords)", generatePropsObj(labels, newWords,'total'))
     console.log('defaultGraphPropsData',defaultGraphPropsData)
     console.log("graphProps", graphProps)
   }, [props, test])
 
-  // useEffect(() => {
-  //   const data = Object.entries(props.data || 0)
-  //   const newWords = data.map((i) => i[1])
-  //   propsObj(['10'],[1])
-  //   // if(newWords.length) setGraphProps(() => {})
-  //   console.log("", labels)
-  // }, [props])
-
-  // const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July']; //динамически формировать массив дат
 
   return (
     <>

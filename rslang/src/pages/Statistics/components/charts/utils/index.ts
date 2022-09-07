@@ -5,10 +5,11 @@ export const generatePropsObj = (
   data: {
     newWords: number
     totalLearnedWords: number
-  }[]
+  }[],
+  type: 'newWords'|'total'
 ): graphPropsData => {
   console.log("data", data)
-  const dataArr = data.map(i => i.newWords)
+  const dataArr = data.map(i => type === 'newWords'?i.newWords:i.totalLearnedWords)
   return {
     labels,
     datasets: [
