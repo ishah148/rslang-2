@@ -21,6 +21,7 @@ export default function WordItem({ dataWord, currentChapter }: IWordObject) {
   
   const { userWords } = useTypedSelector((state) => state.userWords)
   const { setDificultyUserWord, setLearndUserWord } = useUserWordsActionsCreators()
+  const { user } = useTypedSelector((state) => state.user)
 
   function playButton() {
     const audio = new Audio("https://rslang-rss.herokuapp.com/" + dataWord.audio)
@@ -61,120 +62,122 @@ export default function WordItem({ dataWord, currentChapter }: IWordObject) {
           </div>
         </div>
 
-        <div className={styles.optionalWrapper}>
-          <div
-            className={styles.buttonsHardness}
-            style={
-              {
-                // display: "flex",
-                // marginTop: -20,
-                // gap: 10,
-                // justifyContent: "center",
-                // flexWrap: "wrap",
-                // listStyle: "none",
+        {user?.message === "Authenticated" && (
+          <div className={styles.optionalWrapper}>
+            <div
+              className={styles.buttonsHardness}
+              style={
+                {
+                  // display: "flex",
+                  // marginTop: -20,
+                  // gap: 10,
+                  // justifyContent: "center",
+                  // flexWrap: "wrap",
+                  // listStyle: "none",
+                }
               }
-            }
-          >
-            {localStorage.getItem("user") ? (
-              <>
-                <button
-                  className={dataWord?.difficulty === "hard" ? styles.btnHardActive : styles.btnHard}
-                  onClick={() => setDificultyUserWord(dataWord.id, userWords)}
-                >
-                  <p>Hard</p>
-                </button>
-                <button
-                  className={dataWord?.optional?.isLearned === true ? styles.btnLearnedActive : styles.btnLearned}
-                  // style={{ width: 200, backgroundColor: dataWord?.optional?.isLearned === true ? "green" : "" }}
-                  onClick={() => setLearndUserWord(dataWord.id, userWords)}
-                >
-                  <p>Learnd</p>
-                </button>
-              </>
-            ) : (
-              <>
-                <Link to="/signin">
-                  <button style={{ width: 200, backgroundColor: dataWord.difficulty === "hard" ? "green" : "" }}>
+            >
+              {localStorage.getItem("user") ? (
+                <>
+                  <button
+                    className={dataWord?.difficulty === "hard" ? styles.btnHardActive : styles.btnHard}
+                    onClick={() => setDificultyUserWord(dataWord.id, userWords)}
+                  >
                     <p>Hard</p>
                   </button>
-                </Link>
-                <Link to="/signin">
                   <button
-                    style={{ width: 200, backgroundColor: dataWord?.optional?.isLearned === true ? "green" : "" }}
+                    className={dataWord?.optional?.isLearned === true ? styles.btnLearnedActive : styles.btnLearned}
+                    // style={{ width: 200, backgroundColor: dataWord?.optional?.isLearned === true ? "green" : "" }}
+                    onClick={() => setLearndUserWord(dataWord.id, userWords)}
                   >
                     <p>Learnd</p>
                   </button>
-                </Link>
+                </>
+              ) : (
+                <>
+                  <Link to="/signin">
+                    <button style={{ width: 200, backgroundColor: dataWord.difficulty === "hard" ? "green" : "" }}>
+                      <p>Hard</p>
+                    </button>
+                  </Link>
+                  <Link to="/signin">
+                    <button
+                      style={{ width: 200, backgroundColor: dataWord?.optional?.isLearned === true ? "green" : "" }}
+                    >
+                      <p>Learnd</p>
+                    </button>
+                  </Link>
+                </>
+              )}
+            </div>
+            {dataWord.optional ? (
+              <>
+                <div className={styles.progressItem}>
+                  <p className={styles.progressTitle}>Learning progress:</p>
+                  {Array.from("1".repeat(dataWord.optional.progressBarSize)).map((elem, index) => {
+                    return (
+                      <div
+                        style={{
+                          height: `${20 + 2 * index}px`,
+                          width: `${20 + 2 * index}px`,
+                          background: `${index < dataWord.optional.progressBar ? "#00aeff" : "#a5a5a5"}`,
+                        }}
+                        className={styles.progress}
+                        key={index}
+                      ></div>
+                    )
+                  })}
+                </div>
+
+                <div className={styles.progressItem}>
+                  <p className={styles.progressTitle}>Learned:</p>
+                  <p className={styles.progressTitle}>{dataWord.optional.isLearned ? "Yes" : "No"}</p>
+                </div>
+
+                {dataWord.optional.isNew && (
+                  <div className={styles.progressItem}>
+                    <p className={styles.progressNew}>{"New"}</p>
+                  </div>
+                )}
               </>
+            ) : (
+              <p className={styles.progressTitle}>No info</p>
+              // <ul
+              //   className={styles.optionalContainer}
+              //   style={{
+              //     display: "flex",
+              //     marginTop: -20,
+              //     justifyContent: "space-between",
+              //     flexWrap: "wrap",
+              //     listStyle: "none",
+              //   }}
+              // >
+              //   <li>difficulty: {dataWord.difficulty}</li>
+              //   <li>Is learnd: {dataWord.optional.isLearned ? "yes" : "no"}</li>
+              //   <li>
+              //     Progress bar: {dataWord.optional.progressBar} / {dataWord.optional.progressBarSize}
+              //   </li>
+              //   <li>is New: {dataWord.optional.isNew ? "yes" : "no"}</li>
+              //   <li>meetingCounter: {dataWord.optional.meetingCounter}</li>
+              // </ul>
+              // <ul
+              //   style={{
+              //     display: "flex",
+              //     marginTop: -20,
+              //     justifyContent: "space-between",
+              //     flexWrap: "wrap",
+              //     listStyle: "none",
+              //   }}
+              // >
+              //   <li>difficulty: null</li>
+              //   <li>Is learnd: null</li>
+              //   <li>Progress bar: null</li>
+              //   <li>is New: null</li>
+              //   <li>meetingCounter: null</li>
+              // </ul>
             )}
           </div>
-          {dataWord.optional ? (
-            <>
-              <div className={styles.progressItem}>
-                <p className={styles.progressTitle}>Learning progress:</p>
-                {Array.from("1".repeat(dataWord.optional.progressBarSize)).map((elem, index) => {
-                  return (
-                    <div
-                      style={{
-                        height: `${20 + 2 * index}px`,
-                        width: `${20 + 2 * index}px`,
-                        background: `${index < dataWord.optional.progressBar ? "#00aeff" : "#a5a5a5"}`,
-                      }}
-                      className={styles.progress}
-                      key={index}
-                    ></div>
-                  )
-                })}
-              </div>
-
-              <div className={styles.progressItem}>
-                <p className={styles.progressTitle}>Learned:</p>
-                <p className={styles.progressTitle}>{dataWord.optional.isLearned ? "Yes" : "No"}</p>
-              </div>
-
-              {dataWord.optional.isNew && (
-                <div className={styles.progressItem}>
-                  <p className={styles.progressNew}>{"New"}</p>
-                </div>
-              )}
-            </>
-          ) : (
-            <p className={styles.progressTitle}>No info</p>
-            // <ul
-            //   className={styles.optionalContainer}
-            //   style={{
-            //     display: "flex",
-            //     marginTop: -20,
-            //     justifyContent: "space-between",
-            //     flexWrap: "wrap",
-            //     listStyle: "none",
-            //   }}
-            // >
-            //   <li>difficulty: {dataWord.difficulty}</li>
-            //   <li>Is learnd: {dataWord.optional.isLearned ? "yes" : "no"}</li>
-            //   <li>
-            //     Progress bar: {dataWord.optional.progressBar} / {dataWord.optional.progressBarSize}
-            //   </li>
-            //   <li>is New: {dataWord.optional.isNew ? "yes" : "no"}</li>
-            //   <li>meetingCounter: {dataWord.optional.meetingCounter}</li>
-            // </ul>
-            // <ul
-            //   style={{
-            //     display: "flex",
-            //     marginTop: -20,
-            //     justifyContent: "space-between",
-            //     flexWrap: "wrap",
-            //     listStyle: "none",
-            //   }}
-            // >
-            //   <li>difficulty: null</li>
-            //   <li>Is learnd: null</li>
-            //   <li>Progress bar: null</li>
-            //   <li>is New: null</li>
-            //   <li>meetingCounter: null</li>
-            // </ul>
-          )}
-        </div>
+        )}
       </div>
     </>
   )
