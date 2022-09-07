@@ -1,4 +1,4 @@
-import { DailyStatsData, FullStatsData, StatsModel, StatsUpdateObject } from "../models/StatsModels";
+import { DailyStatsData, FullStatsData, ServerStatsModel, StatsForSpecificDate, StatsModel, StatsUpdateObject } from "../models/StatsModels";
 import { GameData } from "../models/UserWordsModels";
 import { StatsApi } from "./api/stats_api";
 import { UtilsService } from "./utils_service";
@@ -33,6 +33,8 @@ export class StatsService {
         }
       }
     }
+    const newStatsForCurrentDate: StatsForSpecificDate = newStatistics.optional[date];
+
     try {
 
       const response = await StatsApi.getUserStats();
@@ -42,37 +44,88 @@ export class StatsService {
       }
 
       if (response.status === 404) {
-        const statsForCurrentDate = newStatistics.optional[date];
 
-        if (gameName === 'sprint') {
-          statsForCurrentDate.sprint.accuracy.push(gameData.accuracy as number);
-          statsForCurrentDate.sprint.newWords = gameData.newWords;
-          statsForCurrentDate.sprint.bestStreak = gameData.bestStreak;
-          statsForCurrentDate.audioChallenge.newWords = 0;
-          statsForCurrentDate.audioChallenge.bestStreak = 0;
-        }
-
-        if (gameName === 'audioChallenge') {
-          statsForCurrentDate.audioChallenge.accuracy.push(gameData.accuracy as number);
-          statsForCurrentDate.audioChallenge.newWords = gameData.newWords;
-          statsForCurrentDate.audioChallenge.bestStreak = gameData.bestStreak;
-          statsForCurrentDate.sprint.newWords = 0;
-          statsForCurrentDate.sprint.bestStreak = 0;
-        }
-        statsForCurrentDate.accuracy = UtilsService.calcAverageAccuracy(statsForCurrentDate.sprint.accuracy, statsForCurrentDate.audioChallenge.accuracy);
-        statsForCurrentDate.newWords = (statsForCurrentDate.sprint.newWords as number) + (statsForCurrentDate.audioChallenge.newWords as number);
-        statsForCurrentDate.learnedWords = statsUpdateObject.newLearnedWords;
-        statsForCurrentDate.totalLearnedWords = statsUpdateObject.newLearnedWords;
+        StatsService.createStatsForCurrentDate(newStatsForCurrentDate, gameData, gameName, statsUpdateObject);
         newStatistics.learnedWords = statsUpdateObject.newLearnedWords;
+        newStatsForCurrentDate.totalLearnedWords = statsUpdateObject.newLearnedWords;
         if (statsUpdateObject.newLearnedWords < 0) {
-          console.log('WTF BOOOYYY');
+          console.log('WTFFFFFFFFFFFFFFFFFFF BOOOYYYYYYYYYYYYYYYYY');
           newStatistics.learnedWords = 0;
+          newStatsForCurrentDate.learnedWords = 0;
+          newStatsForCurrentDate.totalLearnedWords = 0;
         }
-        console.log(newStatistics)
+        console.log(newStatistics);
+        await StatsApi.updateUserStats(newStatistics);
+      }
+
+      if (response.status === 200) {
+        const statistics: ServerStatsModel = response.body;
+        let statsForCurrentDate: StatsForSpecificDate = statistics.optional[date];
+        if (!statsForCurrentDate) {
+          statistics.optional[date] = {
+            newWords: null,
+            learnedWords: null,
+            accuracy: null,
+            totalLearnedWords: null,
+
+            audioChallenge: {
+              newWords: null,
+              accuracy: [],
+              bestStreak: null,
+            },
+
+            sprint: {
+              newWords: null,
+              accuracy: [],
+              bestStreak: null,
+            }
+          }
+          statsForCurrentDate = statistics.optional[date];
+          StatsService.createStatsForCurrentDate(statsForCurrentDate, gameData, gameName, statsUpdateObject);
+        } else {
+          if (gameName === 'sprint') {
+            statsForCurrentDate.sprint.accuracy = [...statsForCurrentDate.sprint.accuracy, (gameData.accuracy as number)];
+            (statsForCurrentDate.sprint.newWords as number) += (gameData.newWords as number);
+            statsForCurrentDate.sprint.bestStreak = (statsForCurrentDate.sprint.bestStreak as number) > (gameData.bestStreak as number) ? statsForCurrentDate.sprint.bestStreak : gameData.bestStreak;
+          }
+          if (gameName === 'audioChallenge') {
+            statsForCurrentDate.audioChallenge.accuracy = [...statsForCurrentDate.audioChallenge.accuracy, (gameData.accuracy as number)];
+            (statsForCurrentDate.audioChallenge.newWords as number) += (gameData.newWords as number);
+            statsForCurrentDate.audioChallenge.bestStreak = (statsForCurrentDate.audioChallenge.bestStreak as number) > (gameData.bestStreak as number) ? statsForCurrentDate.audioChallenge.bestStreak : gameData.bestStreak;
+          }
+          statsForCurrentDate.accuracy = UtilsService.calcAverageAccuracy(statsForCurrentDate.sprint.accuracy, statsForCurrentDate.audioChallenge.accuracy);
+          statsForCurrentDate.newWords = (statsForCurrentDate.sprint.newWords as number) + (statsForCurrentDate.audioChallenge.newWords as number);
+          (statsForCurrentDate.learnedWords as number) += statsUpdateObject.newLearnedWords;
+        }
+        (statistics.learnedWords as number) += (statsForCurrentDate.learnedWords as number);
+        statsForCurrentDate.totalLearnedWords = statistics.learnedWords;
+        console.log(statistics);
+        await StatsApi.updateUserStats(statistics);
       }
     } catch (error) {
       throw new Error((error as Error).message)
     }
+  }
+
+  static createStatsForCurrentDate(newStatsForCurrentDate: StatsForSpecificDate, gameData: GameData, gameName: string, statsUpdateObject: StatsUpdateObject) {
+    if (gameName === 'sprint') {
+      newStatsForCurrentDate.sprint.accuracy.push(gameData.accuracy as number);
+      newStatsForCurrentDate.sprint.newWords = gameData.newWords;
+      newStatsForCurrentDate.sprint.bestStreak = gameData.bestStreak;
+      newStatsForCurrentDate.audioChallenge.newWords = 0;
+      newStatsForCurrentDate.audioChallenge.bestStreak = 0;
+    }
+
+    if (gameName === 'audioChallenge') {
+      newStatsForCurrentDate.audioChallenge.accuracy.push(gameData.accuracy as number);
+      newStatsForCurrentDate.audioChallenge.newWords = gameData.newWords;
+      newStatsForCurrentDate.audioChallenge.bestStreak = gameData.bestStreak;
+      newStatsForCurrentDate.sprint.newWords = 0;
+      newStatsForCurrentDate.sprint.bestStreak = 0;
+    }
+    newStatsForCurrentDate.accuracy = UtilsService.calcAverageAccuracy(newStatsForCurrentDate.sprint.accuracy, newStatsForCurrentDate.audioChallenge.accuracy);
+    newStatsForCurrentDate.newWords = (newStatsForCurrentDate.sprint.newWords as number) + (newStatsForCurrentDate.audioChallenge.newWords as number);
+    newStatsForCurrentDate.learnedWords = statsUpdateObject.newLearnedWords;
   }
 
 

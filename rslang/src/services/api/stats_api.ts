@@ -1,9 +1,9 @@
 import { apiInstance } from "../axios_service";
-import { StatsModel } from "../../models/StatsModels";
+import { ServerStatsModel, StatsModel } from "../../models/StatsModels";
 
 export class StatsApi {
   static async getUserStats() {
-    const response = await apiInstance.get<StatsModel>(`/users/${localStorage.getItem("userId")}/statistics`)
+    const response = await apiInstance.get<ServerStatsModel>(`/users/${localStorage.getItem("userId")}/statistics`)
     return {
       status: response.status,
       body: response.data,
@@ -11,7 +11,7 @@ export class StatsApi {
   }
 
   static async updateUserStats(data: StatsModel) {
-    const response = await apiInstance.put<StatsModel>(`/users/${localStorage.getItem("userId")}/statistics`, data)
+    const response = await apiInstance.put<ServerStatsModel>(`/users/${localStorage.getItem("userId")}/statistics`, data)
     return {
       status: response.status,
       body: response.data,

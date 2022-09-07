@@ -31,6 +31,50 @@ export interface StatsModel {
   }
 }
 
+export interface ServerStatsModel {
+  id: string;
+  learnedWords: number | null;
+  optional: {
+    [date: string]: {
+      newWords: number | null;
+      learnedWords: number | null;
+      accuracy: number | null;
+      totalLearnedWords: number | null;
+
+      audioChallenge: {
+        newWords: number | null;
+        accuracy: number[];
+        bestStreak: number | null;
+      }
+
+      sprint: {
+        newWords: number | null;
+        accuracy: number[];
+        bestStreak: number | null;
+      } 
+    }
+  }
+}
+
+export interface StatsForSpecificDate {
+    newWords: number | null;
+    learnedWords: number | null;
+    accuracy: number | null;
+    totalLearnedWords: number | null;
+
+    audioChallenge: {
+      newWords: number | null;
+      accuracy: number[];
+      bestStreak: number | null;
+    }
+
+    sprint: {
+      newWords: number | null;
+      accuracy: number[];
+      bestStreak: number | null;
+    } 
+}
+
 export interface StatsUpdateObject {
   newLearnedWords: number;
 }
