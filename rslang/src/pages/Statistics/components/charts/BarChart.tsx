@@ -23,33 +23,35 @@ export function BarChart(props: props) {
     },
   }
 
-  const [labels, setLabels] = useState<Array<string>>([])
   const [graphProps, setGraphProps] = useState<graphPropsData>(defaultGraphPropsData)
-  const [test, setTest] = useState(false)
 
   useEffect(() => {
     const data = Object.entries(props.data || 0)
     const labels = data.map((i) => i[0]) as string[]
     const newWords = data.map((i) => i[1])
-    
     if (data.length) setGraphProps({ ...graphProps, ...generatePropsObjNewWords(labels, newWords) })
-    console.log("labels", labels)
-    console.log("newwords", newWords)
-    console.log("generatePropsObj(labels,newWords)", generatePropsObjNewWords(labels, newWords))
-    console.log('defaultGraphPropsData',defaultGraphPropsData)
-    console.log("graphProps", graphProps)
-  }, [props, test])
+  }, [props])
 
 
   return (
     <>
       <Bar options={options} data={graphProps as graphPropsData} />
-      <button
-        onClick={() => {
-          console.log("graphProps", graphProps)
-          setTest(!test)
-        }}
-      ></button>
+
     </>
   )
 }
+// for debug!
+// const [test, setTest] = useState(false)
+// console.log("labels", labels)
+// console.log("newwords", newWords)
+// console.log("generatePropsObj(labels,newWords)", generatePropsObjNewWords(labels, newWords))
+// console.log('defaultGraphPropsData',defaultGraphPropsData)
+// console.log("graphProps", graphProps)
+
+
+// <button
+// onClick={() => {
+//   console.log("graphProps", graphProps)
+//   setTest(!test)
+// }}
+// ></button>

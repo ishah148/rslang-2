@@ -20,6 +20,7 @@ export const generatePropsObjNewWords = (
     ],
   }
 }
+
 export const generatePropsObjTotalWords = (
   labels: Array<string>,
   data: {
@@ -27,7 +28,6 @@ export const generatePropsObjTotalWords = (
     totalLearnedWords: number
   }[],
 ): graphPropsData => {
-  console.log("data", data)
   const dataArr = data.map(i => i.totalLearnedWords)
   return {
     labels,
