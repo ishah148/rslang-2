@@ -3,6 +3,7 @@
 .wordcontainer {
   display: flex;
   flex-direction: column;
+  position: relative;
   gap: 20px;
   background-color: var(--color-darkblue);
   border-radius: 10px;
@@ -138,4 +139,16 @@
   font-family: "Montserrat-Regular";
   font-size: 16px;
   color: var(--color-white);
+}
+
+.progressNew {
+  font-family: "Montserrat-Regular";
+  font-size: 16px;
+  color: var(--color-white);
+  background-color: green;
+  padding: 10px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-top-left-radius: 10px;
 }

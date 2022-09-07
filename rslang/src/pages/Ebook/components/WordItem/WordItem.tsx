@@ -127,6 +127,10 @@ export default function WordItem({ dataWord }: { dataWord: IUserWordsWithCurrent
                 <p className={styles.progressTitle}>Learned:</p>
                 <p className={styles.progressTitle}>{dataWord.optional.isLearned ? "Yes" : "No"}</p>
               </div>
+
+              <div className={styles.progressItem}>
+                <p className={styles.progressNew}>{!dataWord.optional.isNew ? "New" : ""}</p>
+              </div>
             </>
           ) : (
             <p className={styles.progressTitle}>No info</p>
