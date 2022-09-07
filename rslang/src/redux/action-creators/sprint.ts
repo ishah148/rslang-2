@@ -5,21 +5,34 @@ import { WordsApi } from "../../services/api"
 import { IWord } from "../../services/api_types"
 import { SprintAction, SprintActionResultTypes, SprintActionTypes } from "../action-types/sprint"
 
-export const sprintSetStart = (difficult: number, pages: number[], type?:'patricular' | 'random') => {
-  return async (dispatch: Dispatch<SprintAction>) => {
-    dispatch(sprintSetLevel(difficult))
-    dispatch({ type: SprintActionTypes.PENDING, payload: true })
-    const promisArr = pages.map(async (page) => {
-      const res = await WordsApi.getWords(page, difficult)
-      const sprintWords = prepareWords(res.data)
-      dispatch(updateSprintWords(res.data, sprintWords))
-      return res
-    })
-    dispatch({ type: SprintActionTypes.UPDATE_DIFFICULT, payload: difficult })
-    Promise.allSettled(promisArr).then(() => {
+export const sprintSetStart = (difficult: number, pages: number[], type?: "patricular" | "random") => {
+  if (difficult === 7) {
+    return async (dispatch: Dispatch<SprintAction>) => {
+      dispatch(sprintSetLevel(difficult))
+      dispatch({ type: SprintActionTypes.PENDING, payload: true })
+      // const res = await WordsApi.getWords(difficult)
+      // const sprintWords = prepareWords(res.data)
+      // dispatch(updateSprintWords(res.data, sprintWords))
+      dispatch({ type: SprintActionTypes.UPDATE_DIFFICULT, payload: difficult })
       dispatch({ type: SprintActionTypes.PENDING, payload: false })
       dispatch({ type: SprintActionTypes.START, payload: null })
-    })
+    }
+  } else {
+    return async (dispatch: Dispatch<SprintAction>) => {
+      dispatch(sprintSetLevel(difficult))
+      dispatch({ type: SprintActionTypes.PENDING, payload: true })
+      const promisArr = pages.map(async (page) => {
+        const res = await WordsApi.getWords(page, difficult)
+        const sprintWords = prepareWords(res.data)
+        dispatch(updateSprintWords(res.data, sprintWords))
+        return res
+      })
+      dispatch({ type: SprintActionTypes.UPDATE_DIFFICULT, payload: difficult })
+      Promise.allSettled(promisArr).then(() => {
+        dispatch({ type: SprintActionTypes.PENDING, payload: false })
+        dispatch({ type: SprintActionTypes.START, payload: null })
+      })
+    }
   }
 }
 
@@ -36,4 +49,3 @@ export function sprintSetReset(): SprintAction {
 export function sprintSetLevel(level: number): SprintAction {
   return { type: SprintActionTypes.UPDATE_LEVEL, payload: level }
 }
-

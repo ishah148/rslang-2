@@ -24,7 +24,7 @@ const Round = () => {
   }, [pending])
   useEffect(() => {
     hiddenResult()
-    return ()=>{
+    return () => {
       sprintSetReset()
     }
   }, [])
@@ -38,7 +38,7 @@ const Round = () => {
     hiddenResult()
     setIndex(2)
     dispatch({ type: SprintActionTypes.RESET, payload: null })
-    sprintSetStart(level || 1, generateRandNumbers(5))
+    if (level !== 7) sprintSetStart(level || 1, generateRandNumbers(5))
     setTimer(60)
   }
   function reset() {
@@ -68,7 +68,6 @@ const Round = () => {
   }, [timer])
 
   function handleKeyDown(e: KeyboardEvent) {
-
     if (e.key === "Enter" || e.key === " ") e.preventDefault()
     if (e.key === "ArrowLeft") handleAnswer(null, "left")
     if (e.key === "ArrowRight") handleAnswer(null, "right")
@@ -86,7 +85,7 @@ const Round = () => {
       dispatch({ type: SprintActionTypes.SCORE, payload: score - 10 })
       addAnswer(currentWord, "incorrect")
     }
-    
+
     if (answer) {
       if (answer === "yes" && currentWord.isCorrect) rightAnswer()
       else if (answer === "no" && !currentWord.isCorrect) rightAnswer()
