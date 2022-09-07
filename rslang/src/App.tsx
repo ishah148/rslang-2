@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route, useNavigate } from "react-router-dom"
 
 //styles
 import "./App.css"
@@ -47,6 +47,16 @@ function App() {
       dispatch({ type: UserActionTypes.SIGNIN, payload: localUser })
     }
   }, [])
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    navigate(JSON.parse(window.sessionStorage.getItem('lastRoute') || '{}'))
+    window.onbeforeunload = () => {
+        window.sessionStorage.setItem('lastRoute', JSON.stringify(window.location.pathname))
+    }
+}, [])
+
   React.useLayoutEffect(() => {
     if (user) {
       getUserWords()
