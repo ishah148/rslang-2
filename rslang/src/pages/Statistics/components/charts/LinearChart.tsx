@@ -11,6 +11,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import { FullStatsData } from "../../../../models/StatsModels";
 
 ChartJS.register(
   CategoryScale,
@@ -21,8 +22,11 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+type props = {
+  data: FullStatsData | undefined
+}
 
-export function LinearChart() {
+export function LinearChart(props:props) {
 
   const options = {
     responsive: true,

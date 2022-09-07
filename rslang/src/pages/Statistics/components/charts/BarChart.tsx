@@ -6,7 +6,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 import { Bar } from "react-chartjs-2"
 import { FullStatsData } from "../../../../models/StatsModels"
 import { defaultGraphPropsData, graphPropsData } from "./models/types"
-import { generatePropsObj } from "./utils"
+import { generatePropsObjNewWords } from "./utils"
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 type props = {
@@ -32,10 +32,10 @@ export function BarChart(props: props) {
     const labels = data.map((i) => i[0]) as string[]
     const newWords = data.map((i) => i[1])
     
-    if (data.length) setGraphProps({ ...graphProps, ...generatePropsObj(labels, newWords,'newWords') })
+    if (data.length) setGraphProps({ ...graphProps, ...generatePropsObjNewWords(labels, newWords) })
     console.log("labels", labels)
     console.log("newwords", newWords)
-    console.log("generatePropsObj(labels,newWords)", generatePropsObj(labels, newWords,'total'))
+    console.log("generatePropsObj(labels,newWords)", generatePropsObjNewWords(labels, newWords))
     console.log('defaultGraphPropsData',defaultGraphPropsData)
     console.log("graphProps", graphProps)
   }, [props, test])

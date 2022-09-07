@@ -20,7 +20,7 @@ export function FullStats() {
   return (
     <div className={styles.fullStats}>
       <BarChart data={dataGraph} />
-      <LinearChart />
+      <LinearChart data={dataGraph}/>
     </div>
   )
 }

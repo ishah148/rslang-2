@@ -4,6 +4,7 @@ export type graphPropsData = {
     label: string
     data: number[]
     backgroundColor: string
+    borderColor?:string
   }[]
 }
 
