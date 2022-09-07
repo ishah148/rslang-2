@@ -1,17 +1,17 @@
 import React from "react"
-import styles from '../Stats.module.scss'
+import styles from "../Stats.module.scss"
 import { GameStatsProps } from "../../../models/StatsModels"
 
-export function GameStats({title, newWords, accuracy, streak, img}: GameStatsProps) {
+export function GameStats({ title, newWords, accuracy, streak, img }: GameStatsProps) {
   return (
     <div className={styles.gameStats}>
+      <img className={styles.gameStatsImg} src={img} alt={img} />
       <div>
-        <img src={img} alt={img} />
-        <h2>{title}</h2>
+        <h2 className={styles.statsTitle}>{title}</h2>
+        <p>{newWords} new words</p>
+        <p>{accuracy}% accuracy</p>
+        <p>{streak} streak</p>
       </div>
-      <p>{newWords} new words</p>
-      <p>{accuracy}% accuracy</p>
-      <p>{streak} streak</p>
     </div>
   )
 }
