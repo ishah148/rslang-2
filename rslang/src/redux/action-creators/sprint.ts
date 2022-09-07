@@ -5,7 +5,7 @@ import { WordsApi } from "../../services/api"
 import { IWord } from "../../services/api_types"
 import { SprintAction, SprintActionResultTypes, SprintActionTypes } from "../action-types/sprint"
 
-export const sprintSetStart = (difficult: number, pages: number[]) => {
+export const sprintSetStart = (difficult: number, pages: number[], type?:'patricular' | 'random') => {
   return async (dispatch: Dispatch<SprintAction>) => {
     dispatch(sprintSetLevel(difficult))
     dispatch({ type: SprintActionTypes.PENDING, payload: true })
