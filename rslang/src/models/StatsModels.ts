@@ -32,7 +32,7 @@ export interface StatsModel {
 }
 
 export interface ServerStatsModel {
-  id: string;
+  id?: string;
   learnedWords: number | null;
   optional: {
     [date: string]: {

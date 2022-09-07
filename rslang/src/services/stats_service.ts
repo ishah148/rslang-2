@@ -60,6 +60,7 @@ export class StatsService {
 
       if (response.status === 200) {
         const statistics: ServerStatsModel = response.body;
+        delete statistics.id;
         let statsForCurrentDate: StatsForSpecificDate = statistics.optional[date];
         if (!statsForCurrentDate) {
           statistics.optional[date] = {
@@ -97,8 +98,11 @@ export class StatsService {
           statsForCurrentDate.newWords = (statsForCurrentDate.sprint.newWords as number) + (statsForCurrentDate.audioChallenge.newWords as number);
           (statsForCurrentDate.learnedWords as number) += statsUpdateObject.newLearnedWords;
         }
-        (statistics.learnedWords as number) += (statsForCurrentDate.learnedWords as number);
+        (statistics.learnedWords as number) += statsUpdateObject.newLearnedWords;
         statsForCurrentDate.totalLearnedWords = statistics.learnedWords;
+        if (statsUpdateObject.newLearnedWords < 0) {
+          console.log('WTFFFFFFFFFFFFFFFFFFF BOOOYYYYYYYYYYYYYYYYY');
+        }
         console.log(statistics);
         await StatsApi.updateUserStats(statistics);
       }
