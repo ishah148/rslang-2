@@ -10,11 +10,15 @@ import { CircularProgress } from "@mui/material"
 import { Link, NavLink } from "react-router-dom"
 import { IUserWordsWithCurrentWords } from "../../Ebook"
 
-// interface IWordObject {
-//   dataWord: IWord
-// }
+interface IWordObject {
+  dataWord: IUserWordsWithCurrentWords
+  currentChapter: number
+}
 
-export default function WordItem({ dataWord }: { dataWord: IUserWordsWithCurrentWords }) {
+const BACKGROUNDS = ["#4d5c6c", "#5c5c73", "#736b4e", "#68483b", "#5e6156", "#735e63", "#374829"]
+
+export default function WordItem({ dataWord, currentChapter }: IWordObject) {
+  console.log(BACKGROUNDS[currentChapter])
   const { userWords } = useTypedSelector((state) => state.userWords)
   const { setDificultyUserWord, setLearndUserWord } = useUserWordsActionsCreators()
 
@@ -25,7 +29,7 @@ export default function WordItem({ dataWord }: { dataWord: IUserWordsWithCurrent
 
   return (
     <>
-      <div className={styles.wordcontainer}>
+      <div className={styles.wordcontainer} style={{ background: `${BACKGROUNDS[currentChapter]}` }}>
         <div className={styles.wordCard}>
           <img className={styles.wordImage} src={"https://rslang-rss.herokuapp.com/" + dataWord.image}></img>
           <div className={styles.wordInfo}>
@@ -127,6 +131,12 @@ export default function WordItem({ dataWord }: { dataWord: IUserWordsWithCurrent
                 <p className={styles.progressTitle}>Learned:</p>
                 <p className={styles.progressTitle}>{dataWord.optional.isLearned ? "Yes" : "No"}</p>
               </div>
+
+              {dataWord.optional.isNew && (
+                <div className={styles.progressItem}>
+                  <p className={styles.progressNew}>{"New"}</p>
+                </div>
+              )}
             </>
           ) : (
             <p className={styles.progressTitle}>No info</p>

@@ -1,7 +1,20 @@
 @import url("../../variables/Variables.module.css");
 
 .ebookContainer {
+  position: absolute;
   padding-top: 70px;
+  left: 0;
+  right: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 1280px;
+  min-height: calc(100vh - 80px);
+  padding: 0 40px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .ebookMenu {

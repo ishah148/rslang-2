@@ -19,6 +19,7 @@ import LinearProgress from "@mui/material/LinearProgress/LinearProgress"
 import HardWords from "./components/HardWords"
 
 const SECTIONS = [0, 1, 2, 3, 4, 5, 6]
+const BACKGROUNDS = ["#abcdef", "#ccccff", "#ffedae", "#e7a083", "#d0d7c0", "#ffd1dc", "#7ba05b"]
 
 export interface IUserWordsWithCurrentWords extends IWord {
   difficulty: "easy" | "hard"
@@ -98,44 +99,46 @@ function Ebook() {
   }, [])
 
   return (
-    <div className={styles.ebookContainer}>
-      <div className={styles.ebookMenu}>
-        <div className={styles.itemsContainer}>
-          {SECTIONS.map((elem) => {
-            return <SectionItem key={elem.toString()} group={elem} clickHandler={clickHandler} />
-          })}
+    <div className={styles.ebookContainer} style={{ background: `${BACKGROUNDS[curChapter]}` }}>
+      <div className={styles.container}>
+        <div className={styles.ebookMenu}>
+          <div className={styles.itemsContainer}>
+            {SECTIONS.map((elem) => {
+              return <SectionItem key={elem.toString()} group={elem} clickHandler={clickHandler} />
+            })}
+          </div>
+          {!(wordsToShow as IUserAggregatedWordsResponce)?.[0]?.paginatedResults && (
+            <div className={styles.gamesContainer}>
+              <Link to="/rslang-2/games/audiocall" onClick={() => handleAudiocallStart(curChapter, curPage)}>
+                <div className={styles.gamesItem}>
+                  <img src={gameImage} className={styles.gamesImage}></img>
+                  <p>AudioCall</p>
+                </div>
+              </Link>
+              <Link to="/rslang-2/games/sprint/round" onClick={() => handleSprintStart(curChapter, curPage)}>
+                <div className={styles.gamesItem}>
+                  <img src={gameImage} className={styles.gamesImage}></img>
+                  <p>Sprint</p>
+                </div>
+              </Link>
+            </div>
+          )}
+        </div>
+        {loading && <LinearProgress />}
+        <div className={styles.ebookWords}>
+          {(wordsToShow as IUserAggregatedWordsResponce)?.[0]?.paginatedResults && (
+            <HardWords wordsToShow={wordsToShow as IUserAggregatedWordsResponce} />
+          )}
+
+          {!(wordsToShow as IUserAggregatedWordsResponce)?.[0]?.paginatedResults &&
+            (wordsToShow as IUserWordsWithCurrentWords[])?.map((elem) => {
+              return <WordItem key={elem.id} dataWord={elem} currentChapter={curChapter} />
+            })}
         </div>
         {!(wordsToShow as IUserAggregatedWordsResponce)?.[0]?.paginatedResults && (
-          <div className={styles.gamesContainer}>
-            <Link to="/rslang-2/games/audiocall" onClick={() => handleAudiocallStart(curChapter, curPage)}>
-              <div className={styles.gamesItem}>
-                <img src={gameImage} className={styles.gamesImage}></img>
-                <p>AudioCall</p>
-              </div>
-            </Link>
-            <Link to="/rslang-2/games/sprint/round" onClick={() => handleSprintStart(curChapter, curPage)}>
-              <div className={styles.gamesItem}>
-                <img src={gameImage} className={styles.gamesImage}></img>
-                <p>Sprint</p>
-              </div>
-            </Link>
-          </div>
+          <Paginatinon chapter={curChapter} curPage={curPage} setCurPage={setCurPage} clickHandler={clickHandler} />
         )}
       </div>
-      {loading && <LinearProgress />}
-      <div className={styles.ebookWords}>
-        {(wordsToShow as IUserAggregatedWordsResponce)?.[0]?.paginatedResults && (
-          <HardWords wordsToShow={wordsToShow as IUserAggregatedWordsResponce} />
-        )}
-
-        {!(wordsToShow as IUserAggregatedWordsResponce)?.[0]?.paginatedResults &&
-          (wordsToShow as IUserWordsWithCurrentWords[])?.map((elem) => {
-            return <WordItem key={elem.id} dataWord={elem} />
-          })}
-      </div>
-      {!(wordsToShow as IUserAggregatedWordsResponce)?.[0]?.paginatedResults && (
-        <Paginatinon chapter={curChapter} curPage={curPage} setCurPage={setCurPage} clickHandler={clickHandler} />
-      )}
     </div>
   )
 }
