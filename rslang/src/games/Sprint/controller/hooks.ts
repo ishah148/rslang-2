@@ -11,15 +11,12 @@ export function useResult() {
   const dispatch = useDispatch()
   const { combo, result } = useTypedSelector((state) => state.sprint)
 
-  const [results, setResults] = useState<boolean[]>([])
-  // const [maxCombo, setMaxCombo] = useState<number>(0)
-
   function addAnswer(word: SprintWord, answer: answerType) {
     calcCombo(answer)
     if (answer === "right") {
       word.result = true
     } else word.result = false
-    // setResults((state) => [...state, answer === "right" ? true : false])
+
     dispatch(SprintResultActionCreator.pushWordID(word.word.id))
     dispatch(SprintResultActionCreator.corectness(word.word.id, word.result))
   }
@@ -37,7 +34,7 @@ export function useResult() {
 
   useEffect(() => {
     const accur = +calcAccuracy(result)
-    
+
     dispatch(SprintResultActionCreator.accuracy(accur))
   }, [combo])
 
@@ -57,7 +54,7 @@ export function useGame(difficultLevel: number | null) {
     if (difficultLevel) sprintSetStart(difficultLevel, generateRandNumbers(5))
   }, [])
 
-  controlIndex(index, sprintWords, setIndex)
+  controlIndex(index, sprintWords, setIndex, setTimer, difficultLevel)
 
   const currentWord = sprintWords[index > 1 ? index - 1 : index] || null
   const currentWorldEn =
@@ -86,7 +83,7 @@ function useTimer() {
   const decrement = () => {
     if (timer > 0) setTimer(timer - 1)
     // if (timer < 1) {
-    //   
+    //
     //   sprintSetReset()
     // }
   }
@@ -103,14 +100,22 @@ function useTimer() {
 function controlIndex(
   index: number,
   sprintWords: SprintWord[],
-  setIndex: React.Dispatch<React.SetStateAction<number>>
+  setIndex: React.Dispatch<React.SetStateAction<number>>,
+  setTimer: React.Dispatch<React.SetStateAction<number>>,
+  level: number | null
 ) {
+
   const { sprintSetStart } = useSprintActionsCreators()
   const { difficult } = useTypedSelector((state) => state.sprint)
+
   useEffect(() => {
-    if (index === sprintWords.length - 15) {
+    if (index === sprintWords.length - 15 && level !== 7) {
       sprintSetStart(difficult || 2, generateRandNumbers(4))
     }
+    if (level === 7 && index === sprintWords.length - 1) {
+      setTimer(0);
+    }
   }, [index])
+
 }
 // =============== ===============
