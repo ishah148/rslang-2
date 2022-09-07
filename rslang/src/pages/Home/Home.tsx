@@ -22,8 +22,8 @@ function Home() {
       <div className={styles.homeContainer}>
         <p className={styles.homeTitle}>Improve your English level with RsLang</p>
         <div className="alert">
-          <p>Не проверяйте пожалуйста сегодня! Спасибо!!! :)</p>
-          <p>Контакты для связи : </p>
+          <p>Оставьте пожалуйста контакты после проверки :)</p>
+          <p>В случае вопросов по функционалу контакты для связи : </p>
           <p>@IgorTg123</p>
           <p>@theroofisonfire</p>
           <p>Discord:</p>
