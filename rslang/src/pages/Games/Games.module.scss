@@ -27,3 +27,11 @@
   p {
   }
 }
+
+@media (max-width: 1024px) {
+  .games__wrapper {
+    justify-content: flex-start;
+    height: calc(100vh + 300px);
+    flex-direction: column;
+  }
+}
