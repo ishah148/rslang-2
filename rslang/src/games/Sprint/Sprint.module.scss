@@ -139,3 +139,14 @@
     background-color: bisque;
   }
 }
+
+@media (max-width: 1024px) {
+  .wrapper {
+    justify-content: flex-start;
+    padding-top: 150px;
+  }
+  .levels__container {
+    flex-wrap: wrap;
+    margin: 0 50px;
+  }
+}
