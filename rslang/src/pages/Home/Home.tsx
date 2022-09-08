@@ -31,7 +31,7 @@ function Home() {
           <p>IgorShah(ishah148)#3091</p>
           <p>theroofisonfire#1523</p>
         </div>
-        <NavLink to="/rslang-2/games">
+        <NavLink to="/games">
           <button className={variables.button}>start learning</button>
         </NavLink>
       </div>
@@ -42,7 +42,7 @@ function Home() {
         </div>
         <div className={styles.capabilitiesContainer}>
           <div className={styles.capabilitie}>
-            <NavLink to="/rslang-2/ebook">
+            <NavLink to="/ebook">
               <img className={styles.capabilitieImage} src={textBookImage}></img>
               <p className={styles.capabilitieTitle}>Electronic textbook</p>
             </NavLink>
@@ -52,7 +52,7 @@ function Home() {
             </p>
           </div>
           <div className={styles.capabilitie}>
-            <NavLink to="/rslang-2/games">
+            <NavLink to="/games">
               <img className={styles.capabilitieImage} src={gamesImage}></img>
               <p className={styles.capabilitieTitle}>Mini games</p>
             </NavLink>
@@ -62,7 +62,7 @@ function Home() {
             </p>
           </div>
           <div className={styles.capabilitie}>
-            <NavLink to="/rslang-2/statistics">
+            <NavLink to="/statistics">
               <img className={styles.capabilitieImage} src={statisticImage}></img>
               <p className={styles.capabilitieTitle}>Statistics page</p>
             </NavLink>

@@ -15,7 +15,7 @@ const Sprint = () => {
     if (level) {
       
       sprintSetLevel(+level)
-      navigate("/rslang-2/games/sprint/round")
+      navigate("/games/sprint/round")
     }
   }
   return (
@@ -28,7 +28,7 @@ const Sprint = () => {
       )}
       <div className={styles.levels__container}>
         {levels.map((level) => (
-          <button className={styles.buttonLevel} key={level} data-level={level-1} onClick={chooseLevel}>
+          <button className={styles.buttonLevel} key={level} data-level={level - 1} onClick={chooseLevel}>
             {level}
           </button>
         ))}

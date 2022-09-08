@@ -25,14 +25,14 @@ function Games() {
   function playShahGame(level: number, pages: Array<number>) {
     // sprintSetLevel(5)
     sprintSetStart(level, [1, 2, 3])
-    navigate("/rslang-2/games/sprint/round")
+    navigate("/games/sprint/round")
   }
 
   const { audiocallSetReset } = useAudiocallActionsCreators()
   return (
     <div className={styles.games__wrapper}>
       <BasicCard {...game1}>
-        <Link to="/rslang-2/games/audiocall">
+      <Link to="/games/audiocall">
           <Button
             size="small"
             variant="contained"
@@ -45,7 +45,7 @@ function Games() {
       </BasicCard>
 
       <BasicCard {...game2}>
-        <Link to="/rslang-2/games/sprint">
+      <Link to="/games/sprint">
           <Button size="small" variant="contained" sx={{ justifyContent: "center" }}>
             Start
           </Button>

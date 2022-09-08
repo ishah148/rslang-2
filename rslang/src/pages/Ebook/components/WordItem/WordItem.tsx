@@ -95,12 +95,12 @@ export default function WordItem({ dataWord, currentChapter }: IWordObject) {
                 </>
               ) : (
                 <>
-                  <Link to="/rslang-2/signin">
+                  <Link to="/signin">
                     <button style={{ width: 200, backgroundColor: dataWord.difficulty === "hard" ? "green" : "" }}>
                       <p>Hard</p>
                     </button>
                   </Link>
-                  <Link to="/rslang-2/signin">
+                  <Link to="/signin">
                     <button
                       style={{ width: 200, backgroundColor: dataWord?.optional?.isLearned === true ? "green" : "" }}
                     >
