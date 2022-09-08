@@ -1,8 +1,17 @@
 import { IWord } from "../api_types"
 import { apiInstance } from "../axios_service"
 
+export interface IWordWithUserData extends IWord {
+  difficulty: "easy" | "hard" | null
+  isLearned: boolean
+  progressBar: number
+  progressBarSize: number
+  isNew: boolean
+  meetingCounter: number
+}
+
 interface IUserServerWord {
-  difficulty: "easy" | "hard"
+  difficulty: "easy" | "hard" | null;
   optional: {
     isLearned: boolean
     progressBar: number // 1-2-3 для easy и 1-2-3-4-5 для hard
@@ -45,7 +54,7 @@ export class UserAggregatedWordsApi {
     }
   }
 
-  static async getLearnedUserAgregatedWords(): Promise<getAggregatedWordsResponse> {
+  static async getLearndUserAggregatedWords() {
     const response = await apiInstance.get<IUserAggregatedWordsResponce>(
       `/users/${localStorage.getItem("userId")}/aggregatedWords?filter={"$or":[{"userWord.optional.isLearned":true}]}`
     )

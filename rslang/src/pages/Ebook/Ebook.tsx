@@ -52,8 +52,8 @@ function Ebook() {
     })
   }
   const { sprintSetStart } = useSprintActionsCreators()
-  function handleSprintStart(group: number, page: number) {
-    sprintSetStart(group, [page])
+  const handleAudiocallStart = (group: number, page: number, userWords: ServerUserWord[]) => {
+    audiocallStart(group, page, userWords)
   }
 
   const { audiocallStart } = useAudiocallActionsCreators()

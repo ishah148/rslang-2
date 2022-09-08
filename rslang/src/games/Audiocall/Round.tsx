@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react"
-import { IRoundWord } from "../../redux/action-types/audiocall"
+import { ILearndRoundWord, IRoundWord } from "../../redux/action-types/audiocall"
 import Stack from "@mui/material/Stack"
 import Button from "@mui/material/Button"
 import { useAudiocallActionsCreators } from "../../hooks/useActions"
@@ -14,7 +14,7 @@ import resultSoundUrl from "./assets/status_w5zDGaI.mp3"
 import { useNavigate } from "react-router-dom"
 
 interface props {
-  round: IRoundWord
+  round: IRoundWord | ILearndRoundWord
   setRoundNumber: (prev: (prev: number) => number) => void
   lastRaund: number
   currentRaund: number
@@ -121,7 +121,16 @@ function Round({ round, setRoundNumber, lastRaund, currentRaund }: props) {
   return (
     <div className={styles.wordInfo}>
       <div className={styles.imageContainer}>
-        <span style={{ backgroundColor: "grey", display: "inline-block" }}>
+        <span
+          style={{
+            backgroundColor: "grey",
+            display: "inline-block",
+            position: "relative",
+            borderRadius: "15px 15px 15px 15px",
+          }}
+        >
+          {(round as ILearndRoundWord)?.isNew && <div className={styles.wordNew}>NEW</div>}
+          {(round as ILearndRoundWord)?.difficulty === "hard" && <div className={styles.btnHard}>HARD</div>}
           <img
             style={{ visibility: chosen ? "visible" : "hidden", verticalAlign: "middle" }}
             src={API_URL + "/" + round.image}
@@ -152,7 +161,23 @@ function Round({ round, setRoundNumber, lastRaund, currentRaund }: props) {
         {round.word}
       </h2>
 
-      <Stack id={styles.translateWords} spacing={2} direction="row">
+      <div className={styles.progressItem}>
+        {(round as ILearndRoundWord)?.progressBarSize && <p className={styles.progressTitle}>Word progress:</p>}
+        {Array.from("1".repeat((round as ILearndRoundWord)?.progressBarSize)).map((elem, index) => {
+          return (
+            <div
+              style={{
+                height: `${20 + 2 * index}px`,
+                width: `${20 + 2 * index}px`,
+                background: `${index < (round as ILearndRoundWord)?.progressBar ? "#00aeff" : "#a5a5a5"}`,
+              }}
+              className={styles.progress}
+              key={index}
+            ></div>
+          )
+        })}
+      </div>
+      <Stack spacing={2} direction="row">
         {round.choice.map(({ wordTranslated, isCorrect }, i) => (
           <Button
             disabled={chosen}

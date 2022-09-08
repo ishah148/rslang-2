@@ -1,13 +1,14 @@
 import { Dispatch } from "redux"
 import { createRounds, processAudiocallResult } from "../../games/Audiocall/controller"
+import { ServerUserWord } from "../../models/UserWordsModels"
 import { GamesService } from "../../services/games_services"
-import { AudiocallAction, AudiocallActionTypes, IResult, IRoundWord } from "../action-types/audiocall"
+import { AudiocallAction, AudiocallActionTypes, ILearndRoundWord, IResult, IRoundWord } from "../action-types/audiocall"
 
-export const audiocallStart = (group: number, page?: number) => {
+export const audiocallStart = (group: number, page?: number, userWords?: ServerUserWord[]) => {
   return async (dispatch: Dispatch<AudiocallAction>) => {
     try {
       dispatch(audiocallSetPending())
-      const roundsWords: IRoundWord[] = await createRounds(group, page)
+      const roundsWords: IRoundWord[] | ILearndRoundWord[] = await createRounds(group, page, userWords)
       dispatch({ type: AudiocallActionTypes.START, payload: roundsWords })
     } catch (error) {
       if (error instanceof Error) dispatch(audiocallSetError(error.message))
