@@ -77,6 +77,12 @@
   color: var(--color-gray);
 }
 
+.btnsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .btnContainer {
   display: flex;
   justify-content: center;

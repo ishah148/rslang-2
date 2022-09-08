@@ -18,13 +18,22 @@ interface IWordObject {
 const BACKGROUNDS = ["#4d5c6c", "#5c5c73", "#736b4e", "#68483b", "#5e6156", "#735e63", "#374829"]
 
 export default function WordItem({ dataWord, currentChapter }: IWordObject) {
-  
   const { userWords } = useTypedSelector((state) => state.userWords)
   const { setDificultyUserWord, setLearndUserWord } = useUserWordsActionsCreators()
   const { user } = useTypedSelector((state) => state.user)
 
   function playButton() {
     const audio = new Audio("https://rslang-rss.herokuapp.com/" + dataWord.audio)
+    audio.play()
+  }
+
+  function playButtonExample() {
+    const audio = new Audio("https://rslang-rss.herokuapp.com/" + dataWord.audioExample)
+    audio.play()
+  }
+
+  function playButtonMeaning() {
+    const audio = new Audio("https://rslang-rss.herokuapp.com/" + dataWord.audioMeaning)
     audio.play()
   }
 
@@ -57,8 +66,16 @@ export default function WordItem({ dataWord, currentChapter }: IWordObject) {
             </div>
           </div>
 
-          <div className={styles.btnContainer}>
-            <img draggable="false" src={playBtn} className={styles.playBtn} onClick={playButton}></img>
+          <div className={styles.btnsContainer}>
+            <div className={styles.btnContainer}>
+              <img draggable="false" src={playBtn} className={styles.playBtn} onClick={playButton}></img>
+            </div>
+            <div className={styles.btnContainer}>
+              <img draggable="false" src={playBtn} className={styles.playBtn} onClick={playButtonExample}></img>
+            </div>
+            <div className={styles.btnContainer}>
+              <img draggable="false" src={playBtn} className={styles.playBtn} onClick={playButtonMeaning}></img>
+            </div>
           </div>
         </div>
 
