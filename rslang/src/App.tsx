@@ -47,7 +47,6 @@ function App() {
       const localUser: IUser = JSON.parse(jsonUser)
       dispatch({ type: UserActionTypes.SIGNIN, payload: localUser })
     }
-    navigate('/')
   }, [])
   React.useLayoutEffect(() => {
     if (user) {
