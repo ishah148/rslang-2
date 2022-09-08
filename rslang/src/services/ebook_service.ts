@@ -155,27 +155,18 @@ export class EBookService {
       const words: IWord[] = getWordsResponse.data;
       console.log('WORDS', words);
 
-      const getHardAggregatedWordsResponse: getAggregatedWordsResponse = await UserAggregatedWordsApi.getHardUserAggregatedWords();
-      if (getHardAggregatedWordsResponse.status !== 200) {
-        throw new Error(`checkStatusOfPage getHardAggregatedWordsResponse response.status is --- ${getHardAggregatedWordsResponse.status}`);
+      const userWordsResponse = await UserWordsApi.getUserWords();
+      if (userWordsResponse.status !== 200) {
+        throw new Error(`checkStatusOfPage WordsApi.getWords response.status is --- ${userWordsResponse.status}`);
       }
-      const userDifficultWords = getHardAggregatedWordsResponse.body[0].paginatedResults;
-      console.log('DIFFICULT WORDS', userDifficultWords);
 
-      const getLearnedAggregatedWordsResponse: getAggregatedWordsResponse = await UserAggregatedWordsApi.getLearnedUserAgregatedWords();
-      if (getHardAggregatedWordsResponse.status !== 200) {
-        throw new Error(`checkStatusOfPage getLearnedAggregatedWordsResponse response.status is --- ${getLearnedAggregatedWordsResponse.status}`);
-      }
-      const userLearnedWords = getLearnedAggregatedWordsResponse.body[0].paginatedResults;
-      console.log('LEARNED WORDS', userLearnedWords);
-
+      const userWords: ServerUserWord[] = userWordsResponse.body;
+      console.log('USER WORDS --- ', userWords)
       for (const word of words) {
-        const isLearned = userLearnedWords.find((learnedWord) => learnedWord._id === word.id )
+        const userWord = userWords.find((learnedWord) => learnedWord.wordId === word.id);
+        console.log(userWord);
 
-        const isDifficult = userDifficultWords.find((difficultWord) => difficultWord._id === word.id)
-
-        console.log(`isLearned --- ${isLearned} isDifficult ---- ${isDifficult}`);
-        if(!isLearned && !isDifficult) {
+        if(!userWord?.optional.isLearned && userWord?.difficulty !== 'hard') {
           isPageLearned = false;
           break;
         }

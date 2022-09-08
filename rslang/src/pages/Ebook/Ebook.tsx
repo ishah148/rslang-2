@@ -17,6 +17,7 @@ import { ServerUserWord } from "../../models/UserWordsModels"
 import { IUserAggregatedWordsResponce, UserAggregatedWordsApi } from "../../services/api/AggregatedWords"
 import LinearProgress from "@mui/material/LinearProgress/LinearProgress"
 import HardWords from "./components/HardWords"
+import { EBookService } from "../../services/ebook_service"
 
 const SECTIONS = [0, 1, 2, 3, 4, 5, 6]
 const BACKGROUNDS = ["#abcdef", "#ccccff", "#ffedae", "#e7a083", "#d0d7c0", "#ffd1dc", "#7ba05b"]
@@ -70,6 +71,7 @@ function Ebook() {
     }
   }, [userWords, dataWords])
 
+
   const navigate = useNavigate()
   async function clickHandler(page: number, group: number) {
     setCurChapter(group)
@@ -91,6 +93,9 @@ function Ebook() {
       setLoading((prev) => false)
       setWordsToShow(body)
     }
+    //!DELETE
+      await EBookService.checkStatusOfPage(curChapter, curPage);
+    //!DELETE
   }
 
   const { getUserWords } = useUserWordsActionsCreators()
