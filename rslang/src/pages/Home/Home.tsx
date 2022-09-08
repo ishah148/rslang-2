@@ -1,5 +1,5 @@
 import React from "react"
-import { Link, NavLink } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 
 import styles from "./Home.module.scss"
 import variables from "../../variables/Variables.module.css"
@@ -23,6 +23,7 @@ function Home() {
         <p className={styles.homeTitle}>Improve your English level with RsLang</p>
         <div className="alert">
           <p>Оставьте пожалуйста контакты после проверки :)</p>
+          <p>! Для корректной работы статистики необходимо создать новый аккаунт !</p>
           <p>В случае вопросов по функционалу контакты для связи : </p>
           <p>@IgorTg123</p>
           <p>@theroofisonfire</p>

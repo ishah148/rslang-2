@@ -5,7 +5,6 @@ import styles from "../Stats.module.scss"
 import { DailyStatsDataDefault } from "./charts/models/defaultData"
 
 export function WordsStats() {
-  const obj = {}
   const [pending,setPending] = useState(false)
   const [data, setData] = useState<DailyStatsData>(DailyStatsDataDefault)
   useEffect(() => {
@@ -20,9 +19,9 @@ export function WordsStats() {
   return (
     <div className={styles.wordsStats}>
       <h2>{pending?'Loading...':''}</h2>
-      <p>Новых слов за сегодня : {data.newWords}</p>
-      <p>Сегодня изучено слов : {data.learnedWords}</p>
-      <p>Общая точность прохождения игр : {data.totalAccuracy}</p>
+      <p>New words for today :  {data.newWords}</p>
+      <p>Words learned today :  {data.learnedWords}</p>
+      <p>Overall games passing accuracy :  {data.totalAccuracy}</p>
     </div>
   )
 }
