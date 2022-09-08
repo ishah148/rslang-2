@@ -132,6 +132,7 @@ function Ebook() {
 
           {!(wordsToShow as IUserAggregatedWordsResponce)?.[0]?.paginatedResults &&
             (wordsToShow as IUserWordsWithCurrentWords[])?.map((elem) => {
+              console.log(elem)
               return <WordItem key={elem.id} dataWord={elem} currentChapter={curChapter} />
             })}
         </div>

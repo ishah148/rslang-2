@@ -250,3 +250,59 @@
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
 }
+
+@media (max-width: 1024px) {
+  .mainContainer {
+    margin-bottom: 50px;
+  }
+}
+
+@media (max-width: 650px) {
+  .gameInfo {
+    min-width: 300px;
+  }
+
+  .gameInfo {
+    min-width: 300px;
+
+    .gameSubInfo {
+      p {
+        font-size: 12px;
+      }
+      .score {
+        font-family: "Montserrat-Bold";
+        font-size: 30px;
+      }
+    }
+  }
+
+  .timer {
+    font-size: 30px;
+  }
+
+  .wordsContainer {
+    p {
+      font-size: 25px;
+    }
+  }
+
+  .roundSettings {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 15px;
+  }
+
+  .btnChangeTimer {
+    width: 47%;
+    padding: 10px 0;
+  }
+
+  .btnStart,
+  .btnStop {
+    width: 20%;
+    padding: 10px 0;
+  }
+  .btnChangeLevel {
+    width: 47%;
+  }
+}
