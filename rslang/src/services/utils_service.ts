@@ -9,16 +9,16 @@ export class UtilsService {
   }
 
   static calcAverageAccuracy(arr1: number[] = [], arr2: number[] = []): number {
-    if(!arr1.length && !arr2.length) {return 0}
+    if (!arr1.length && !arr2.length) { return 0 }
     const merge = arr1.concat(arr2);
-    const result =  merge.reduce((sum, item) => sum + item, 0) / (arr1.length + arr2.length);
+    const result = merge.reduce((sum, item) => sum + item, 0) / (arr1.length + arr2.length);
     return +result.toFixed(1);
   }
 
   static getLastDateInStatistics(stats: ServerStatsModel): string {
     const listOfDates: string[] = Object.keys(stats.optional);
     const result = listOfDates.pop()
-    if(!result) {
+    if (!result) {
       console.log('ERROR WITH getLastDateInStatistics; listOfDates:  ', listOfDates);
       return '7/10/2022';
     }
@@ -27,7 +27,7 @@ export class UtilsService {
 
   static generateMockFullStatsDataObjects(fullStatsData: FullStatsData, amount: number) {
     const dates = UtilsService.GetMockDates(amount);
-    for(const date of dates) {
+    for (const date of dates) {
       fullStatsData[date] = {
         newWords: 0,
         totalLearnedWords: 0,
@@ -40,9 +40,10 @@ export class UtilsService {
     const aryDates = [];
     for (let i = 0; i <= amount; i++) {
       const currentDate = new Date();
-      currentDate.setDate(startDate.getDate() + i);
+      currentDate.setDate(startDate.getDate() + i + 1);
       aryDates.push(currentDate.getDate() + "/" + UtilsService.MonthAsString(currentDate.getMonth()) + "/" + currentDate.getFullYear());
     }
+    console.log('MOCKDATES', aryDates)
     return aryDates;
   }
 
@@ -61,6 +62,18 @@ export class UtilsService {
     month[10] = "11";
     month[11] = "12";
     return month[monthIndex];
+  }
+
+  static sortFullDataObject(fullStatsData: FullStatsData): FullStatsData {
+    return Object.keys(fullStatsData).sort(function (a: string, b: string) {
+      return new Date(a).getTime() - new Date(b).getTime();
+    }).reduce(
+      (obj: FullStatsData, key) => {
+        obj[key] = fullStatsData[key];
+        return obj;
+      },
+      {}
+    );
   }
 }
 

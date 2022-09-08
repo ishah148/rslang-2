@@ -250,6 +250,8 @@ export class StatsService {
       }
     }
 
+    let result: FullStatsData = {};
+
     try {
       const response = await StatsApi.getUserStats();
 
@@ -277,13 +279,15 @@ export class StatsService {
         if(Object.keys(fullStatsData).length < 7) {
           UtilsService.generateMockFullStatsDataObjects(fullStatsData, 7 - Object.keys(fullStatsData).length);
         }
+
+        result = UtilsService.sortFullDataObject(fullStatsData);
       }
     } catch (error) {
       throw new Error((error as Error).message)
     }
 
-    console.log('getFullStatistics ----- ', fullStatsData);
-    return fullStatsData;
+    console.log('getFullStatistics ----- ', result);
+    return result;
   }
 
   static async updateStatisticWithEBookData(statsUpdateObject: StatsUpdateObject): Promise<void> {
