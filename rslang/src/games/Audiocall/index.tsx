@@ -32,11 +32,11 @@ function Audiocall() {
 
   if (pending) {
     return (
-      <div>
-        <h1>AUDIOCALL</h1>
+      <div className={styles.audioContainer}>
+        <h1 style={{ color: "white" }}>AUDIOCALL</h1>
 
-        <CircularProgress />
-        <div>Loading...</div>
+        <CircularProgress style={{ color: "white" }} />
+        <div style={{ color: "white" }}>Loading...</div>
         <Button color="warning" variant="outlined" size="large">
           <Link to="/games">Back</Link>
         </Button>

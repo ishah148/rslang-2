@@ -1,7 +1,7 @@
-import { AudiocallActionTypes, IRoundWord, IResult, AudiocallAction } from "../action-types/audiocall"
+import { AudiocallActionTypes, IRoundWord, IResult, AudiocallAction, ILearndRoundWord } from "../action-types/audiocall"
 
 interface IAudiocallState {
-  rounds: IRoundWord[] | null
+  rounds: IRoundWord[] | ILearndRoundWord[] | null
   correct: IResult
   incorrect: IResult
   pending: boolean

@@ -276,63 +276,44 @@
   }
 }
 
-@media (max-width: 1024px) {
-  .container {
-    padding: 0 20px;
-  }
-  #translateWords {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    padding: 0 20px;
-  }
-
-  .wordResult {
-    margin: 30px 0;
-  }
-
-  .resultCorrectContainer {
-    min-width: auto;
-    width: 100%;
-    align-items: center;
-
-    li {
-      min-width: 300px;
-    }
-  }
-
-  .resultContainer {
-    gap: 20px;
-  }
+.wordNew {
+  font-family: "Montserrat-Regular";
+  font-size: 12px;
+  color: var(--color-white);
+  background-color: green;
+  padding: 7px;
+  position: absolute;
+  left: -15px;
+  top: -15px;
+  border-radius: 10px 10px 0 10px;
 }
 
-@media (max-width: 650px) {
-  .audioContainer {
-    gap: 20px;
-  }
+.progress {
+  height: 30px;
+  width: 30px;
+}
 
-  #settingsRadio {
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 300px;
-    gap: 20px;
-  }
+.progressItem {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
 
-  .title {
-    font-size: 50px;
-    margin: 0;
-  }
+.progressTitle {
+  font-family: "Montserrat-Regular";
+  font-size: 16px;
+  color: var(--color-white);
+}
 
-  #formControl {
-    gap: 10px;
-
-    label {
-      font-size: 18px;
-    }
-  }
-
-  .settingsContainer {
-    gap: 40px;
-  }
+.btnHard {
+  font-family: "Montserrat-Bold";
+  font-size: 12px;
+  text-transform: uppercase;
+  background: red;
+  color: black;
+  padding: 7px;
+  position: absolute;
+  right: -15px;
+  top: -15px;
+  border-radius: 10px 10px 10px 0;
 }

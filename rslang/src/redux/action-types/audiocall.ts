@@ -1,3 +1,4 @@
+import { IWordWithUserData } from "../../services/api/AggregatedWords"
 import { IWord } from "../../services/api_types"
 
 export interface IChoice {
@@ -6,6 +7,10 @@ export interface IChoice {
 }
 
 export interface IRoundWord extends IWord {
+  choice: IChoice[]
+}
+
+export interface ILearndRoundWord extends IWordWithUserData {
   choice: IChoice[]
 }
 
@@ -27,7 +32,7 @@ export enum AudiocallActionTypes {
 
 interface IAudiocallStartAction {
   type: AudiocallActionTypes.START
-  payload: IRoundWord[]
+  payload: IRoundWord[] | ILearndRoundWord[]
 }
 
 interface IAudiocallPendingAction {
