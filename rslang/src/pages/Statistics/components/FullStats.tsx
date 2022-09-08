@@ -9,8 +9,8 @@ export function FullStats() {
   const [dataGraph, setDataGraph] = useState<FullStatsData>()
   const [pending,setPending] = useState(false)
   useEffect(() => {
-    const abortController = new AbortController()
-    ;(async function () {
+    const abortController = new AbortController();
+    (async function () {
       setPending(true)
       const res: FullStatsData = await StatsService.getFullStatistics()
       setPending(false)
