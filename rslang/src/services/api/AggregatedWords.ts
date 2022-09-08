@@ -28,10 +28,26 @@ export type IUserAggregatedWordsResponce = [
   }
 ]
 
+
+export type getAggregatedWordsResponse = {
+  body: IUserAggregatedWordsResponce;
+  status: number;
+}
+
 export class UserAggregatedWordsApi {
-  static async getHardUserAggregatedWords() {
+  static async getHardUserAggregatedWords(): Promise<getAggregatedWordsResponse>{
     const response = await apiInstance.get<IUserAggregatedWordsResponce>(
       `/users/${localStorage.getItem("userId")}/aggregatedWords?filter={"$or":[{"userWord.difficulty":"hard"}]}`
+    )
+    return {
+      status: response.status,
+      body: response.data,
+    }
+  }
+
+  static async getLearnedUserAgregatedWords(): Promise<getAggregatedWordsResponse> {
+    const response = await apiInstance.get<IUserAggregatedWordsResponce>(
+      `/users/${localStorage.getItem("userId")}/aggregatedWords?filter={"$or":[{"userWord.optional.isLearned":true}]}`
     )
     return {
       status: response.status,

@@ -1,6 +1,9 @@
 import { StatsUpdateObject } from "../models/StatsModels";
 import { ServerUserWord, UserWord } from "../models/UserWordsModels";
+import { WordsApi } from "./api";
+import { getAggregatedWordsResponse, UserAggregatedWordsApi } from "./api/AggregatedWords";
 import { UserWordsApi } from "./api/UserWords_api";
+import { IWord } from "./api_types";
 import { StatsService } from "./stats_service";
 
 export class EBookService {
@@ -41,7 +44,7 @@ export class EBookService {
           newUserWord.difficulty = 'hard';
           newUserWord.optional.progressBarSize = 5;
           newUserWord.optional.progressBar = 0;
-          if(userWord.optional.isLearned === true) {
+          if (userWord.optional.isLearned === true) {
             statsUpdateObject.newLearnedWords -= 1;
           }
           newUserWord.optional.isLearned = false;
@@ -126,7 +129,7 @@ export class EBookService {
         newUserWord.optional.progressBar = 3;
         newUserWord.optional.progressBarSize = 3;
         statsUpdateObject.newLearnedWords += 1;
-        
+
         result = (await UserWordsApi.createUserWord(wordID, newUserWord)).body;
       }
 
@@ -139,5 +142,41 @@ export class EBookService {
 
     await StatsService.updateStatisticWithEBookData(statsUpdateObject);
     return result as ServerUserWord;
+  }
+
+  static async checkStatusOfPage(chapter: number, page: number): Promise<boolean> {
+    let isPageLearned = true;
+    console.log(`Chapter ${chapter}  Page ${page}`);
+    try {
+      const getWordsResponse = await WordsApi.getWords(page, chapter);
+      if (getWordsResponse.status !== 200) {
+        throw new Error(`checkStatusOfPage WordsApi.getWords response.status is --- ${getWordsResponse.status}`);
+      }
+      const words: IWord[] = getWordsResponse.data;
+      console.log('WORDS', words);
+
+      const userWordsResponse = await UserWordsApi.getUserWords();
+      if (userWordsResponse.status !== 200) {
+        throw new Error(`checkStatusOfPage WordsApi.getWords response.status is --- ${userWordsResponse.status}`);
+      }
+
+      const userWords: ServerUserWord[] = userWordsResponse.body;
+      console.log('USER WORDS --- ', userWords)
+      for (const word of words) {
+        const userWord = userWords.find((learnedWord) => learnedWord.wordId === word.id);
+        console.log(userWord);
+
+        if(!userWord?.optional.isLearned && userWord?.difficulty !== 'hard') {
+          isPageLearned = false;
+          break;
+        }
+      }
+    } catch (error) {
+
+      throw new Error((error as Error).message)
+    }
+
+    console.log(isPageLearned)
+    return isPageLearned;
   }
 }
