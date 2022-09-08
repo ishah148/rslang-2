@@ -30,7 +30,7 @@ const Result = (props: ResultProps) => {
         </>
       )}
       {props.words.length ? <h2>Ошибки:</h2> : ""}
-  
+
       {falsyWords.map((word) => {
         const findedWord = findWordByid(word[0], props.words)
         if (findedWord) {
