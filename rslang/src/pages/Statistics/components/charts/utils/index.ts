@@ -13,7 +13,7 @@ export const generatePropsObjNewWords = (
     labels,
     datasets: [
       {
-        label: "Words per day",
+        label: "New words per day",
         data:dataArr,
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
@@ -33,7 +33,7 @@ export const generatePropsObjTotalWords = (
     labels,
     datasets: [
       {
-        label: "Total Words",
+        label: "Progress on learned words",
         data:dataArr,
         borderColor: 'rgb(53, 162, 235)',
         backgroundColor: 'rgba(53, 162, 235, 0.5)',

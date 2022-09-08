@@ -6,7 +6,7 @@ import { BarChart } from "./charts/BarChart"
 import { LinearChart } from "./charts/LinearChart"
 
 export function FullStats() {
-  const [dataGraph, setDataGraph] = useState<FullStatsData>()
+  const [fullStatsData, setDataGraph] = useState<FullStatsData>()
   const [pending,setPending] = useState(false)
   useEffect(() => {
     const abortController = new AbortController();
@@ -15,7 +15,7 @@ export function FullStats() {
       const res: FullStatsData = await StatsService.getFullStatistics()
       setPending(false)
       const data = Object.entries(res)
-      if (data.length) setDataGraph({ ...dataGraph, ...res })
+      if (data.length) setDataGraph({ ...fullStatsData, ...res })
     })()
     return () => abortController.abort()
   }, [])
@@ -23,8 +23,8 @@ export function FullStats() {
   return (
     <div className={styles.fullStats}>
       <h2 style={{textAlign:'center'}}>{pending?'Loading...':''}</h2>
-      <BarChart data={dataGraph} />
-      <LinearChart data={dataGraph}/>
+      <BarChart data={fullStatsData} />
+      <LinearChart data={fullStatsData}/>
     </div>
   )
 }

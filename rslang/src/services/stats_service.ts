@@ -189,16 +189,16 @@ export class StatsService {
   }
 
   static async getFullStatistics(): Promise<FullStatsData> {
-    // const d1 = '2022/9/6';
-    // const d2 = '2022/9/7';
-    // const d3 = '2022/9/8';
-    // const d4 = '2022/9/12';
-    // const d5 = '2022/9/15';
-    // const d6 = '2022/9/16';
-    // const d7 = '2022/9/20';
-    // const d8 = '2022/9/21';
-    // const d9 = '2022/9/22';
-    // const d10 = '2022/9/23';
+    // const d1 = '6/9/2022';
+    // const d2 = '7/9/2022';
+    // const d3 = '8/9/2022';
+    // const d4 = '12/9/2022';
+    // const d5 = '15/9/2022';
+    // const d6 = '16/9/2022';
+    // const d7 = '20/9/2022';
+    // const d8 = '21/9/2022';
+    // const d9 = '22/9/2022';
+    // const d10 = '23/9/2022';
     // const testObj: FullStatsData = {
     //   [d1]: {
     //     newWords: 30,
@@ -227,8 +227,7 @@ export class StatsService {
     //   [d7]: {
     //     newWords: 79,
     //     totalLearnedWords: 468,
-    //   },
-    //   [d8]: {
+    //   }, [d8]: {
     //     newWords: 120,
     //     totalLearnedWords: 500,
     //   },
@@ -250,6 +249,8 @@ export class StatsService {
         totalLearnedWords: 0,
       }
     }
+
+    let result: FullStatsData = {};
 
     try {
       const response = await StatsApi.getUserStats();
@@ -274,13 +275,21 @@ export class StatsService {
             totalLearnedWords: statistics.optional[lastDate].totalLearnedWords,
           }
         }
+
+        if(Object.keys(fullStatsData).length < 7) {
+          UtilsService.generateMockFullStatsDataObjects(fullStatsData, 7 - Object.keys(fullStatsData).length);
+        }
+
+        result = UtilsService.sortFullDataObject(fullStatsData);
+        UtilsService.addStartDate(result);
+        result = UtilsService.sortFullDataObject(result);
       }
     } catch (error) {
       throw new Error((error as Error).message)
     }
 
-    console.log('getFullStatistics ----- ', fullStatsData);
-    return fullStatsData;
+    console.log('getFullStatistics ----- ', result);
+    return result;
   }
 
   static async updateStatisticWithEBookData(statsUpdateObject: StatsUpdateObject): Promise<void> {
