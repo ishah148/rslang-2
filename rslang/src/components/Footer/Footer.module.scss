@@ -66,3 +66,40 @@
   font-size: 20px;
   text-transform: uppercase;
 }
+
+@media (max-width: 1024px) {
+  .footerContainer {
+    padding: 0 20px;
+  }
+
+  .footerGitsContainer {
+    gap: 10px;
+  }
+
+  .footerInfo {
+    font-size: 15px;
+  }
+
+  .footerIcon {
+    width: 135px;
+  }
+
+  .footerGitName {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 650px) {
+  .footerInfo {
+    font-size: 10px;
+    width: 50px;
+  }
+
+  .footerIcon {
+    width: 50px;
+  }
+
+  .footerGitName {
+    font-size: 10px;
+  }
+}
