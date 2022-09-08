@@ -152,7 +152,7 @@ function Round({ round, setRoundNumber, lastRaund, currentRaund }: props) {
         {round.word}
       </h2>
 
-      <Stack spacing={2} direction="row">
+      <Stack id={styles.translateWords} spacing={2} direction="row">
         {round.choice.map(({ wordTranslated, isCorrect }, i) => (
           <Button
             disabled={chosen}
