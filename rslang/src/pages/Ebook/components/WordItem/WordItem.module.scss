@@ -152,3 +152,134 @@
   top: 0;
   border-top-left-radius: 10px;
 }
+
+@media (max-width: 1024px) {
+  .wordImage {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+  }
+
+  .word {
+    font-size: 20px;
+  }
+
+  .wordTranscription,
+  .wordTranslate {
+    font-size: 15px;
+  }
+
+  .wordSubinfo {
+    gap: 15px;
+  }
+
+  .wordInfo {
+    gap: 15px;
+  }
+
+  .wordText,
+  .wordTextTranslate {
+    font-size: 11px;
+  }
+
+  .btnContainer {
+    padding: 0;
+    padding-right: 10px;
+  }
+
+  .playBtn {
+    height: 60px;
+    width: 60px;
+  }
+
+  .buttonsHardness {
+    width: 150px;
+    gap: 10px;
+  }
+
+  .btnHard,
+  .btnLearned {
+    font-size: 12px;
+    padding: 10px 0;
+  }
+
+  .optionalWrapper {
+    gap: 20px;
+  }
+
+  .progressTitle {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 650px) {
+  .wordCard {
+    gap: 10px;
+  }
+
+  .optionalWrapper {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .wordImage {
+    width: 120px;
+    height: 150px;
+    object-fit: cover;
+  }
+
+  .wordItem {
+    flex-wrap: wrap;
+    gap: 0 10px;
+  }
+
+  .word {
+    font-size: 12px;
+  }
+
+  .wordTranscription,
+  .wordTranslate {
+    font-size: 8px;
+  }
+
+  .wordSubinfo {
+    gap: 10px;
+  }
+
+  .wordInfo {
+    gap: 10px;
+  }
+
+  .wordText,
+  .wordTextTranslate {
+    font-size: 8px;
+  }
+
+  .btnContainer {
+    padding: 0;
+  }
+
+  .playBtn {
+    height: 40px;
+    width: 40px;
+  }
+
+  .buttonsHardness {
+    width: 100%;
+    gap: 25px;
+  }
+
+  .btnHard,
+  .btnLearned {
+    font-size: 12px;
+    padding: 10px 0;
+  }
+
+  .optionalWrapper {
+    gap: 20px;
+  }
+
+  .progressTitle {
+    font-size: 10px;
+  }
+}
