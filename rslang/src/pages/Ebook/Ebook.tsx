@@ -37,7 +37,7 @@ function Ebook() {
   const [dataWords, setDataWords] = React.useState<IWord[]>([])
   const [curChapter, setCurChapter] = React.useState(0)
   const [curPage, setCurPage] = React.useState(0)
-  const [isLearned,setIsLearned] = useState(false)
+  const [isLearned, setIsLearned] = useState(false)
   const [wordsToShow, setWordsToShow] = React.useState<
     Array<IWord | IUserWordsWithCurrentWords> | IUserAggregatedWordsResponce | null
   >(null)
@@ -61,10 +61,13 @@ function Ebook() {
     audiocallStart(group, page)
   }
 
-  useEffect(()=>{
-    // console.log('curPage!',curPage)
-    // console.log('curGroup!',curChapter)
-  },[curPage,curChapter])
+  useEffect(() => {
+    let curZnach: boolean
+    ;(async function () {
+      curZnach = await EBookService.checkStatusOfPage(curChapter, curPage)
+      setIsLearned(curZnach)
+    })()
+  }, [curPage, curChapter])
 
   const { userWords } = useTypedSelector((state) => state.userWords)
   useEffect(() => {
@@ -77,11 +80,11 @@ function Ebook() {
     }
   }, [userWords, dataWords])
 
-
   const navigate = useNavigate()
   async function clickHandler(page: number, group: number) {
     setCurChapter(group)
     setCurPage(page)
+    console.log("", page)
     if (group < 6) {
       setLoading((prev) => true)
       const { status, data } = await WordsApi.getWords(page, group)
@@ -107,7 +110,10 @@ function Ebook() {
   }, [])
 
   return (
-    <div className={styles.ebookContainer} style={{ background: `${BACKGROUNDS[curChapter]}` }}>
+    <div
+      className={styles.ebookContainer}
+      style={{ background: `${isLearned === true ? "green" : BACKGROUNDS[curChapter]}` }}
+    >
       <div className={styles.container}>
         <div className={styles.ebookMenu}>
           <div className={styles.itemsContainer}>
@@ -134,6 +140,7 @@ function Ebook() {
         </div>
         {loading && <LinearProgress />}
         <div className={styles.ebookWords}>
+          {isLearned === true && <p className={styles.pageLearned}>All the words on this page have been learned!</p>}
           {(wordsToShow as IUserAggregatedWordsResponce)?.[0]?.paginatedResults && (
             <HardWords wordsToShow={wordsToShow as IUserAggregatedWordsResponce} />
           )}
