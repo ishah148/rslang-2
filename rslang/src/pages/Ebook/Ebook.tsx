@@ -82,7 +82,6 @@ function Ebook() {
   async function clickHandler(page: number, group: number) {
     setCurChapter(group)
     setCurPage(page)
-    console.log('',page)
     if (group < 6) {
       setLoading((prev) => true)
       const { status, data } = await WordsApi.getWords(page, group)
@@ -141,7 +140,6 @@ function Ebook() {
 
           {!(wordsToShow as IUserAggregatedWordsResponce)?.[0]?.paginatedResults &&
             (wordsToShow as IUserWordsWithCurrentWords[])?.map((elem) => {
-              console.log(elem)
               return <WordItem key={elem.id} dataWord={elem} currentChapter={curChapter} />
             })}
         </div>
