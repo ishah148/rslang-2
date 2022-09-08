@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import SectionItem from "./components/SectionItem/SectionItem"
 import styles from "./Ebook.module.scss"
 import gameImage from "../../assets/img/mainGames.png"
@@ -36,6 +36,7 @@ function Ebook() {
   const [dataWords, setDataWords] = React.useState<IWord[]>([])
   const [curChapter, setCurChapter] = React.useState(0)
   const [curPage, setCurPage] = React.useState(0)
+  const [isLearned,setIsLearned] = useState(false)
   const [wordsToShow, setWordsToShow] = React.useState<
     Array<IWord | IUserWordsWithCurrentWords> | IUserAggregatedWordsResponce | null
   >(null)
@@ -59,6 +60,11 @@ function Ebook() {
     audiocallStart(group, page)
   }
 
+  useEffect(()=>{
+    // console.log('curPage!',curPage)
+    // console.log('curGroup!',curChapter)
+  },[curPage,curChapter])
+
   const { userWords } = useTypedSelector((state) => state.userWords)
   useEffect(() => {
     if (curChapter < 6) {
@@ -74,6 +80,7 @@ function Ebook() {
   async function clickHandler(page: number, group: number) {
     setCurChapter(group)
     setCurPage(page)
+    console.log('',page)
     if (group < 6) {
       setLoading((prev) => true)
       const { status, data } = await WordsApi.getWords(page, group)
