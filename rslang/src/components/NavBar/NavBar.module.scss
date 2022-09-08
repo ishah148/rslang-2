@@ -91,3 +91,20 @@
   padding: 10px 0;
   box-sizing: border-box;
 }
+
+@media (max-width: 1024px) {
+  .mainNavContainer {
+    padding: 0 20px;
+  }
+
+  .mainNavLinks {
+    li {
+      font-size: 12px;
+    }
+    gap: 10px;
+  }
+
+  .logoContainer {
+    display: none;
+  }
+}
