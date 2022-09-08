@@ -119,8 +119,7 @@
   display: flex;
   font-family: "Montserrat-Regular";
   padding: 15px;
-  gap: 135px;
-  justify-content: center;
+  justify-content: space-between;
   h2,
   h3 {
     text-align: center;
@@ -167,5 +166,85 @@
     // border: 1px solid green;
     padding: 15px;
     user-select: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  .homeTitle {
+    font-size: 40px;
+  }
+
+  .capabilitiesContainer {
+    gap: 50px;
+  }
+
+  .capabilitie {
+    width: auto;
+  }
+
+  .capabilitieTitle {
+    max-width: 150px;
+  }
+
+  .capabilitieSubTitle {
+    font-size: 15px;
+  }
+
+  .aboutTeam {
+    height: auto;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+
+    .card {
+      height: 500px;
+      width: 300px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .homeContainer {
+    width: 80%;
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 100px;
+    gap: 50px;
+
+    button {
+      width: 100%;
+    }
+  }
+
+  .mainContainer {
+    padding-top: 200px;
+  }
+
+  .homeTitle {
+    font-size: 35px;
+  }
+
+  .capabilitiesContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .capabilitie {
+    width: 300px;
+  }
+}
+
+@media (max-width: 630px) {
+  .homeContainer {
+    padding-top: 90px;
+    gap: 30px;
+  }
+
+  .mainContainer {
+    padding-top: 160px;
+  }
+
+  .homeTitle {
+    font-size: 20px;
   }
 }
