@@ -17,3 +17,19 @@
 .itemcontainer:hover {
   background-color: var(--color-blue);
 }
+
+@media (max-width: 1280px) {
+  .itemcontainer {
+    min-width: 90px;
+    padding: 10px 0;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 650px) {
+  .itemcontainer {
+    min-width: 60px;
+    padding: 10px 0;
+    font-size: 10px;
+  }
+}

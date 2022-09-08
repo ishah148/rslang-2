@@ -30,3 +30,11 @@
     background-color: var(--color-darkblue);
   }
 }
+
+@media (max-width: 1024px) {
+  .signup-form {
+    width: 300px;
+    gap: 15px;
+    box-sizing: border-box;
+  }
+}

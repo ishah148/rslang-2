@@ -11,7 +11,6 @@ import imageSprint from "../../../assets/img/wordsGame.jpg"
 
 import styles from "./BasicCard.module.scss"
 
-
 interface BasicCardProps {
   children: React.ReactNode
   name: string
@@ -25,7 +24,6 @@ export function BasicCard({ name, article, children }: BasicCardProps) {
       <CardContent className={styles.name}>
         <Typography>{name}</Typography>
         <Typography className={styles.subname} sx={{ mb: 1.5 }} color="text.secondary">
-
           {/* {props} */}
         </Typography>
         <Typography className={styles.subtitle} variant="body2">
