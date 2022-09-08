@@ -20,7 +20,7 @@ export class UtilsService {
     const listOfDates: string[] = Object.keys(stats.optional);
     const result = listOfDates.pop()
     if (!result) {
-      console.log('ERROR WITH getLastDateInStatistics; listOfDates:  ', listOfDates);
+      // console.log('ERROR WITH getLastDateInStatistics; listOfDates:  ', listOfDates);
       return '7/10/2022';
     }
     return result;
@@ -44,7 +44,7 @@ export class UtilsService {
       currentDate.setDate(startDate.getDate() + i + 1);
       aryDates.push(UtilsService.MonthAsString(currentDate.getMonth()) + "/" + currentDate.getDate() + "/" + currentDate.getFullYear());
     }
-    console.log('MOCKDATES', aryDates)
+    // console.log('MOCKDATES', aryDates)
     return aryDates;
   }
 
@@ -78,8 +78,8 @@ export class UtilsService {
   }
 
   static addStartDate(fullStatsData: FullStatsData) {
-    console.log('Object.keys(fullStatsData)[0]', Object.keys(fullStatsData)[0]);
-    console.log('first data', new Date (Object.keys(fullStatsData)[0]));
+    // console.log('Object.keys(fullStatsData)[0]', Object.keys(fullStatsData)[0]);
+    // console.log('first data', new Date (Object.keys(fullStatsData)[0]));
     const startDate = new Date((new Date (Object.keys(fullStatsData)[0])).getTime() - 86400000);
     const startDateKey = `${startDate.getMonth() + 1}/${startDate.getDate()}/${startDate.getFullYear()}`;
     fullStatsData[startDateKey] = {

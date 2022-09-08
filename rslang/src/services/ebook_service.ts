@@ -146,14 +146,14 @@ export class EBookService {
 
   static async checkStatusOfPage(chapter: number, page: number): Promise<boolean> {
     let isPageLearned = true;
-    console.log(`Chapter ${chapter}  Page ${page}`);
+    // console.log(`Chapter ${chapter}  Page ${page}`);
     try {
       const getWordsResponse = await WordsApi.getWords(page, chapter);
       if (getWordsResponse.status !== 200) {
         throw new Error(`checkStatusOfPage WordsApi.getWords response.status is --- ${getWordsResponse.status}`);
       }
       const words: IWord[] = getWordsResponse.data;
-      console.log('WORDS', words);
+      // console.log('WORDS', words);
 
       const userWordsResponse = await UserWordsApi.getUserWords();
       if (userWordsResponse.status !== 200) {
@@ -161,10 +161,10 @@ export class EBookService {
       }
 
       const userWords: ServerUserWord[] = userWordsResponse.body;
-      console.log('USER WORDS --- ', userWords)
+      // console.log('USER WORDS --- ', userWords)
       for (const word of words) {
         const userWord = userWords.find((learnedWord) => learnedWord.wordId === word.id);
-        console.log(userWord);
+        // console.log(userWord);
 
         if(!userWord?.optional.isLearned && userWord?.difficulty !== 'hard') {
           isPageLearned = false;
@@ -176,7 +176,7 @@ export class EBookService {
       throw new Error((error as Error).message)
     }
 
-    console.log(isPageLearned)
+    // console.log(isPageLearned)
     return isPageLearned;
   }
 }

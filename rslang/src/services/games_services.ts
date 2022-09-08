@@ -50,7 +50,7 @@ export class GamesService {
           newUserWord.optional.isNew = true;
           newUserWord.optional.meetingCounter = 1;
           await UserWordsApi.createUserWord(ID, newUserWord);
-          console.log('!userWord ---- ', newUserWord);
+          // console.log('!userWord ---- ', newUserWord);
         } else {
           // вынести в UserWords_Service (метод createNewUserWord)
           newUserWord.optional.meetingCounter = userWord.optional.meetingCounter + 1;
@@ -75,42 +75,42 @@ export class GamesService {
             //newUserWord.optional.progressBar = userWord.optional.progressBar + 1; // необязательно ?
             newUserWord.difficulty = userWord.difficulty;
             newUserWord.optional.isNew = ((newUserWord.optional.meetingCounter as number) <= 5) && (newUserWord.optional.meetingCounter !== 0);
-            console.log('isLearned == false && isLearned == false ---- ', newUserWord);
+            // console.log('isLearned == false && isLearned == false ---- ', newUserWord);
 
           } else if (userWord.optional.isLearned === true && newUserWord.optional.isLearned === true) {
             newUserWord.optional.progressBarSize = userWord.optional.progressBarSize;
             //newUserWord.optional.progressBar = userWord.optional.progressBar; // необязательно ?
             newUserWord.difficulty = userWord.difficulty;
             newUserWord.optional.isNew = false;
-            console.log('isLearned == true && isLearned == true ---- ', newUserWord);
+            // console.log('isLearned == true && isLearned == true ---- ', newUserWord);
 
           } else if (userWord.difficulty == 'easy' && userWord.optional.isLearned === false && newUserWord.optional.isLearned == true) {
             newUserWord.difficulty = 'easy';
             //newUserWord.optional.progressBar = 3; // необязательно ?
             newUserWord.optional.progressBarSize = 3;
             newUserWord.optional.isNew = false;
-            console.log('userWord.difficulty == easy && newUserWord.isLearned == true ---- ', newUserWord);
+            // console.log('userWord.difficulty == easy && newUserWord.isLearned == true ---- ', newUserWord);
 
           } else if (userWord.difficulty === 'hard' && userWord.optional.isLearned === false && newUserWord.optional.isLearned === true) {
             newUserWord.difficulty = 'easy';
             //newUserWord.optional.progressBar = 5; // необязательно ?
             newUserWord.optional.progressBarSize = 5;
             newUserWord.optional.isNew = false;
-            console.log('userWord.difficulty == hard && newUserWord.isLearned == true ---- ', newUserWord);
+            // console.log('userWord.difficulty == hard && newUserWord.isLearned == true ---- ', newUserWord);
 
           } else if (userWord.optional.progressBarSize === 3 && userWord.optional.isLearned === true && newUserWord.optional.isLearned === false) {
             newUserWord.optional.progressBarSize = 3;
             //newUserWord.optional.progressBar = 0; // необязательно ?
             newUserWord.difficulty = 'easy';
             newUserWord.optional.isNew = ((newUserWord.optional.meetingCounter as number) <= 5) && (newUserWord.optional.meetingCounter !== 0);
-            console.log('userWord.progressBarSize == 3 && newUserWord.isLearned == false ---- ', newUserWord);
+            // console.log('userWord.progressBarSize == 3 && newUserWord.isLearned == false ---- ', newUserWord);
 
           } else if (userWord.optional.progressBarSize === 5 && userWord.optional.isLearned === true && newUserWord.optional.isLearned === false) {
             newUserWord.optional.progressBarSize = 5;
             //newUserWord.optional.progressBar = 0; // необязательно ?
             newUserWord.difficulty = 'hard';
             newUserWord.optional.isNew = ((newUserWord.optional.meetingCounter as number) <= 5) && (newUserWord.optional.meetingCounter !== 0);
-            console.log('userWord.progressBarSize == 5 && newUserWord.isLearned == false ---- ', newUserWord);
+            // console.log('userWord.progressBarSize == 5 && newUserWord.isLearned == false ---- ', newUserWord);
           }
 
           GamesService.updateNewLearnedWords(userWord.optional.isLearned, newUserWord.optional.isLearned, statsUpdateObject);

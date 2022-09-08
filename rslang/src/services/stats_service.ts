@@ -5,9 +5,9 @@ import { UtilsService } from "./utils_service";
 
 export class StatsService {
   static async updateStatisticWithGameData(gameData: GameData, gameName: string, statsUpdateObject: StatsUpdateObject) {
-    console.log('GAMEDATA ---  ', gameData);
-    console.log('GAMENAME ---  ', gameName);
-    console.log('STATSUPDATEOBJ ---  ', statsUpdateObject);
+    // console.log('GAMEDATA ---  ', gameData);
+    // console.log('GAMENAME ---  ', gameName);
+    // console.log('STATSUPDATEOBJ ---  ', statsUpdateObject);
 
     const date = UtilsService.getCurrentDate();
 
@@ -49,12 +49,12 @@ export class StatsService {
         newStatistics.learnedWords = statsUpdateObject.newLearnedWords;
         newStatsForCurrentDate.totalLearnedWords = statsUpdateObject.newLearnedWords;
         if (statsUpdateObject.newLearnedWords < 0) {
-          console.log(`WTF BOY 2?  statsUpdateObject.newLearnedWords: ${statsUpdateObject.newLearnedWords}`);
+          // console.log(`WTF BOY 2?  statsUpdateObject.newLearnedWords: ${statsUpdateObject.newLearnedWords}`);
           newStatistics.learnedWords = 0;
           newStatsForCurrentDate.learnedWords = 0;
           newStatsForCurrentDate.totalLearnedWords = 0;
         }
-        console.log('updateStatisticWithGameData ----- ', newStatistics);
+        // console.log('updateStatisticWithGameData ----- ', newStatistics);
         await StatsApi.updateUserStats(newStatistics);
       }
 
@@ -104,11 +104,11 @@ export class StatsService {
         (statistics.learnedWords as number) += statsUpdateObject.newLearnedWords;
         statsForCurrentDate.totalLearnedWords = statistics.learnedWords;
         if ((statistics.learnedWords as number) < 0) {
-          console.log(`WTF BOY 2?  statsUpdateObject.newLearnedWords: ${statsUpdateObject.newLearnedWords} --- statistics.learnedWords: ${statistics.learnedWords}`, );
+          // console.log(`WTF BOY 2?  statsUpdateObject.newLearnedWords: ${statsUpdateObject.newLearnedWords} --- statistics.learnedWords: ${statistics.learnedWords}`, );
           statistics.learnedWords = 0;
           statsForCurrentDate.totalLearnedWords = 0;
         }
-        console.log('updateStatisticWithGameData ----- ', statistics);
+        // console.log('updateStatisticWithGameData ----- ', statistics);
         await StatsApi.updateUserStats(statistics);
       }
     } catch (error) {
@@ -183,7 +183,7 @@ export class StatsService {
     } catch (error) {
       throw new Error((error as Error).message)
     }
-    console.log('getDailyStatistics ----- ', dailyStats);
+    // console.log('getDailyStatistics ----- ', dailyStats);
     return dailyStats;
 
   }
@@ -288,7 +288,7 @@ export class StatsService {
       throw new Error((error as Error).message)
     }
 
-    console.log('getFullStatistics ----- ', result);
+    // console.log('getFullStatistics ----- ', result);
     return result;
   }
 
@@ -338,7 +338,7 @@ export class StatsService {
         newStatistics.optional[date].sprint.accuracy = [];
         newStatistics.optional[date].sprint.bestStreak = 0;
 
-        console.log('updateStatisticWithEBookData ----- ', newStatistics);
+        // console.log('updateStatisticWithEBookData ----- ', newStatistics);
         await StatsApi.updateUserStats(newStatistics);
       }
 
@@ -370,7 +370,7 @@ export class StatsService {
           }
           statistics.optional[date].totalLearnedWords = statistics.learnedWords;
         }
-        console.log('updateStatisticWithEBookData ----- ', statistics);
+        // console.log('updateStatisticWithEBookData ----- ', statistics);
         await StatsApi.updateUserStats(statistics);
       }
     } catch (error) {

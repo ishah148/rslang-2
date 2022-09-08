@@ -100,9 +100,6 @@ function Ebook() {
       setLoading((prev) => false)
       setWordsToShow(body)
     }
-    //!DELETE
-      await EBookService.checkStatusOfPage(curChapter, curPage);
-    //!DELETE
   }
 
   const { getUserWords } = useUserWordsActionsCreators()
