@@ -276,6 +276,37 @@
   }
 }
 
+@media (max-width: 1024px) {
+  .container {
+    padding: 0 20px;
+  }
+  #translateWords {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 0 20px;
+  }
+
+  .wordResult {
+    margin: 30px 0;
+  }
+
+  .resultCorrectContainer {
+    min-width: auto;
+    width: 100%;
+    align-items: center;
+
+    li {
+      min-width: 300px;
+    }
+  }
+
+  .resultContainer {
+    gap: 20px;
+  }
+}
+
 @media (max-width: 650px) {
   .audioContainer {
     gap: 20px;
@@ -303,13 +334,5 @@
 
   .settingsContainer {
     gap: 40px;
-  }
-
-  #translateWords {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    padding: 0 20px;
   }
 }
