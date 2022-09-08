@@ -1,6 +1,9 @@
 import { StatsUpdateObject } from "../models/StatsModels";
 import { ServerUserWord, UserWord } from "../models/UserWordsModels";
+import { WordsApi } from "./api";
+import { getAggregatedWordsResponse, UserAggregatedWordsApi } from "./api/AggregatedWords";
 import { UserWordsApi } from "./api/UserWords_api";
+import { IWord } from "./api_types";
 import { StatsService } from "./stats_service";
 
 export class EBookService {
@@ -41,7 +44,7 @@ export class EBookService {
           newUserWord.difficulty = 'hard';
           newUserWord.optional.progressBarSize = 5;
           newUserWord.optional.progressBar = 0;
-          if(userWord.optional.isLearned === true) {
+          if (userWord.optional.isLearned === true) {
             statsUpdateObject.newLearnedWords -= 1;
           }
           newUserWord.optional.isLearned = false;
@@ -126,7 +129,7 @@ export class EBookService {
         newUserWord.optional.progressBar = 3;
         newUserWord.optional.progressBarSize = 3;
         statsUpdateObject.newLearnedWords += 1;
-        
+
         result = (await UserWordsApi.createUserWord(wordID, newUserWord)).body;
       }
 
@@ -139,5 +142,50 @@ export class EBookService {
 
     await StatsService.updateStatisticWithEBookData(statsUpdateObject);
     return result as ServerUserWord;
+  }
+
+  static async checkStatusOfPage(chapter: number, page: number): Promise<boolean> {
+    let isPageLearned = true;
+    console.log(`Chapter ${chapter}  Page ${page}`);
+    try {
+      const getWordsResponse = await WordsApi.getWords(page, chapter);
+      if (getWordsResponse.status !== 200) {
+        throw new Error(`checkStatusOfPage WordsApi.getWords response.status is --- ${getWordsResponse.status}`);
+      }
+      const words: IWord[] = getWordsResponse.data;
+      console.log('WORDS', words);
+
+      const getHardAggregatedWordsResponse: getAggregatedWordsResponse = await UserAggregatedWordsApi.getHardUserAggregatedWords();
+      if (getHardAggregatedWordsResponse.status !== 200) {
+        throw new Error(`checkStatusOfPage getHardAggregatedWordsResponse response.status is --- ${getHardAggregatedWordsResponse.status}`);
+      }
+      const userDifficultWords = getHardAggregatedWordsResponse.body[0].paginatedResults;
+      console.log('DIFFICULT WORDS', userDifficultWords);
+
+      const getLearnedAggregatedWordsResponse: getAggregatedWordsResponse = await UserAggregatedWordsApi.getLearnedUserAgregatedWords();
+      if (getHardAggregatedWordsResponse.status !== 200) {
+        throw new Error(`checkStatusOfPage getLearnedAggregatedWordsResponse response.status is --- ${getLearnedAggregatedWordsResponse.status}`);
+      }
+      const userLearnedWords = getLearnedAggregatedWordsResponse.body[0].paginatedResults;
+      console.log('LEARNED WORDS', userLearnedWords);
+
+      for (const word of words) {
+        const isLearned = userLearnedWords.find((learnedWord) => learnedWord._id === word.id )
+
+        const isDifficult = userDifficultWords.find((difficultWord) => difficultWord._id === word.id)
+
+        console.log(`isLearned --- ${isLearned} isDifficult ---- ${isDifficult}`);
+        if(!isLearned && !isDifficult) {
+          isPageLearned = false;
+          break;
+        }
+      }
+    } catch (error) {
+
+      throw new Error((error as Error).message)
+    }
+
+    console.log(isPageLearned)
+    return isPageLearned;
   }
 }
