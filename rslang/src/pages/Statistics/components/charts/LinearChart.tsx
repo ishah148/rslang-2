@@ -28,7 +28,7 @@ export function LinearChart(props: props) {
         position: "top" as const,
       },
       title: {
-        display: true,
+        display: false,
         text: "Chart.js Line Chart",
       },
     },
