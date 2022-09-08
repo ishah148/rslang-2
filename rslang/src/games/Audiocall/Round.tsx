@@ -62,7 +62,7 @@ function Round({ round, setRoundNumber, lastRaund, currentRaund }: props) {
       if (lastRaund === currentRaund) {
         resultSound.play()
         audiocallSetResult(true, correct, incorrect, allRaundResults)
-        navigate("/rslang-2/games/audiocall/result")
+        navigate("/games/audiocall/result")
       }
       return
     }

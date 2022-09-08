@@ -2,7 +2,7 @@
   "name": "apptest",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://ishah148.github.io/rslang-2/",
+  "homepage": "https://ishah148.github.io/rslang-2",
   "dependencies": {
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
