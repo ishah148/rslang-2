@@ -4,8 +4,9 @@ export class UtilsService {
 
   static getCurrentDate() {
     //Возвращает дату в формате `6/9/2022` которая служит ключом объекта
+    //! МЕСЯЦ/ДЕНЬ/ГОД !
     const date = new Date();
-    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+    return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
   }
 
   static calcAverageAccuracy(arr1: number[] = [], arr2: number[] = []): number {
@@ -41,7 +42,7 @@ export class UtilsService {
     for (let i = 0; i <= amount; i++) {
       const currentDate = new Date();
       currentDate.setDate(startDate.getDate() + i + 1);
-      aryDates.push(currentDate.getDate() + "/" + UtilsService.MonthAsString(currentDate.getMonth()) + "/" + currentDate.getFullYear());
+      aryDates.push(UtilsService.MonthAsString(currentDate.getMonth()) + "/" + currentDate.getDate() + "/" + currentDate.getFullYear());
     }
     console.log('MOCKDATES', aryDates)
     return aryDates;
@@ -74,6 +75,17 @@ export class UtilsService {
       },
       {}
     );
+  }
+
+  static addStartDate(fullStatsData: FullStatsData) {
+    console.log('Object.keys(fullStatsData)[0]', Object.keys(fullStatsData)[0]);
+    console.log('first data', new Date (Object.keys(fullStatsData)[0]));
+    const startDate = new Date((new Date (Object.keys(fullStatsData)[0])).getTime() - 86400000);
+    const startDateKey = `${startDate.getMonth() + 1}/${startDate.getDate()}/${startDate.getFullYear()}`;
+    fullStatsData[startDateKey] = {
+      newWords: 0,
+      totalLearnedWords: 0,
+    }
   }
 }
 

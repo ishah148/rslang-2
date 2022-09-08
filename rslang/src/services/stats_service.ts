@@ -281,6 +281,8 @@ export class StatsService {
         }
 
         result = UtilsService.sortFullDataObject(fullStatsData);
+        UtilsService.addStartDate(result);
+        result = UtilsService.sortFullDataObject(result);
       }
     } catch (error) {
       throw new Error((error as Error).message)
