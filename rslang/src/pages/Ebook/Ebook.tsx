@@ -52,13 +52,13 @@ function Ebook() {
     })
   }
   const { sprintSetStart } = useSprintActionsCreators()
-  const handleAudiocallStart = (group: number, page: number, userWords: ServerUserWord[]) => {
-    audiocallStart(group, page, userWords)
+  function handleSprintStart(group: number, page: number) {
+    sprintSetStart(group, [page])
   }
 
   const { audiocallStart } = useAudiocallActionsCreators()
-  const handleAudiocallStart = (group: number, page: number) => {
-    audiocallStart(group, page)
+  const handleAudiocallStart = (group: number, page: number, userWords: ServerUserWord[]) => {
+    audiocallStart(group, page, userWords)
   }
 
   useEffect(()=>{
@@ -117,7 +117,7 @@ function Ebook() {
           </div>
           {!(wordsToShow as IUserAggregatedWordsResponce)?.[0]?.paginatedResults && (
             <div className={styles.gamesContainer}>
-              <Link to="/games/audiocall" onClick={() => handleAudiocallStart(curChapter, curPage)}>
+              <Link to="/games/audiocall" onClick={() => handleAudiocallStart(curChapter, curPage, userWords)}>
                 <div className={styles.gamesItem}>
                   <img src={gameImage} className={styles.gamesImage}></img>
                   <p>AudioCall</p>
