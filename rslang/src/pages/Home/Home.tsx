@@ -21,16 +21,7 @@ function Home() {
       </div>
       <div className={styles.homeContainer}>
         <p className={styles.homeTitle}>Improve your English level with RsLang</p>
-        <div className="alert">
-          <p>Оставьте пожалуйста контакты после проверки :)</p>
-          <p>! Для корректной работы статистики необходимо создать новый аккаунт !</p>
-          <p>В случае вопросов по функционалу контакты для связи : </p>
-          <p>@IgorTg123</p>
-          <p>@theroofisonfire</p>
-          <p>Discord:</p>
-          <p>IgorShah(ishah148)#3091</p>
-          <p>theroofisonfire#1523</p>
-        </div>
+
         <NavLink to="/games">
           <button className={variables.button}>start learning</button>
         </NavLink>
