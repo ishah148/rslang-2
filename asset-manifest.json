@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/rslang-2/static/css/main.5e0a64bd.css",
-    "main.js": "/rslang-2/static/js/main.f0c3580b.js",
+    "main.css": "/rslang-2/static/css/main.510dabc7.css",
+    "main.js": "/rslang-2/static/js/main.fbf1c84e.js",
     "static/media/gameMainCont.jpg": "/rslang-2/static/media/gameMainCont.71de8c3e85298ffb65c4.jpg",
     "static/media/wordsGame.jpg": "/rslang-2/static/media/wordsGame.d0ec022de3c44800a9b2.jpg",
     "static/media/audioBackground.jpg": "/rslang-2/static/media/audioBackground.1ade5932eb8a7678b5ff.jpg",
@@ -21,11 +21,11 @@
     "static/media/playBtn.png": "/rslang-2/static/media/playBtn.67b4f2acaa6d19607508.png",
     "static/media/adriantnt_u_click.mp3": "/rslang-2/static/media/adriantnt_u_click.8233ef5bdbe83b672159.mp3",
     "index.html": "/rslang-2/index.html",
-    "main.5e0a64bd.css.map": "/rslang-2/static/css/main.5e0a64bd.css.map",
-    "main.f0c3580b.js.map": "/rslang-2/static/js/main.f0c3580b.js.map"
+    "main.510dabc7.css.map": "/rslang-2/static/css/main.510dabc7.css.map",
+    "main.fbf1c84e.js.map": "/rslang-2/static/js/main.fbf1c84e.js.map"
   },
   "entrypoints": [
-    "static/css/main.5e0a64bd.css",
-    "static/js/main.f0c3580b.js"
+    "static/css/main.510dabc7.css",
+    "static/js/main.fbf1c84e.js"
   ]
 }
