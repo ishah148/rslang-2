@@ -1,0 +1,137 @@
+@import url("../../variables/Variables.module.css");
+
+.ebookContainer {
+  position: absolute;
+  padding-top: 70px;
+  left: 0;
+  right: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 1280px;
+  min-height: calc(100vh - 80px);
+  padding: 0 40px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.ebookMenu {
+  display: flex;
+  justify-content: space-between;
+}
+
+.itemsContainer,
+.gamesContainer {
+  height: 52px;
+  display: flex;
+  justify-content: space-between;
+  padding: 30px 0;
+  gap: 20px;
+}
+
+.gamesItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-gray);
+  padding: 10px;
+  border-radius: 10px;
+  gap: 5px;
+  color: var(--color-white);
+  transition: 1s;
+  cursor: pointer;
+  p {
+    font-family: "Montserrat-Bold";
+    font-size: 14px;
+  }
+}
+
+.gamesItem:hover {
+  background-color: var(--color-blue);
+}
+
+.gamesImage {
+  height: 30px;
+  width: 30px;
+}
+
+.ebookWords {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.pageLearned {
+  text-align: center;
+  font-family: "Montserrat-Bold";
+  font-size: 30px;
+  background-color: var(--color-blue);
+  border-radius: 10px;
+  padding: 20px;
+  color: var(--color-white);
+}
+
+@media (max-width: 1280px) {
+  .container {
+    padding: 0 20px;
+  }
+
+  .itemsContainer {
+    height: auto;
+    height: 90px;
+    width: 450px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 10px;
+    box-sizing: border-box;
+    padding: 0;
+  }
+
+  .gamesContainer {
+    height: 90px;
+    gap: 10px;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0;
+  }
+
+  .ebookMenu {
+    padding: 30px 0;
+  }
+
+  .gamesItem {
+    justify-content: flex-start;
+    width: 110px;
+    padding: 5px 10px;
+    p {
+      font-size: 12px;
+    }
+  }
+}
+
+@media (max-width: 650px) {
+  .ebookMenu {
+    flex-direction: column;
+  }
+
+  .itemsContainer {
+    justify-content: center;
+    height: auto;
+    width: 100%;
+  }
+
+  .gamesContainer {
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .gamesItem {
+    p {
+      font-size: 12px;
+    }
+  }
+}

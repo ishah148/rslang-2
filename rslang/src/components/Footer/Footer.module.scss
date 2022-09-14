@@ -1,0 +1,105 @@
+@import url("../../variables/Variables.module.css");
+
+.footer {
+  display: flex;
+  height: 80px;
+  width: 100%;
+  background-color: var(--color-darkblue);
+  user-select: none;
+}
+
+.footerContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1280px;
+  padding: 0 40px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.footerLinkElements {
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.footerIcon {
+  height: 40px;
+  width: 200px;
+  object-fit: contain;
+}
+
+.footerGitsContainer {
+  display: flex;
+  gap: 20px;
+  height: 100%;
+}
+
+.footerGitContainer {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.footerGit {
+  height: 30px;
+  width: 30px;
+  object-fit: contain;
+}
+
+.footerGitName {
+  font-family: "Montserrat-Bold";
+  color: var(--color-black);
+  font-size: 15px;
+}
+
+.footerInfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Montserrat-Bold";
+  color: var(--color-black);
+  font-size: 20px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1024px) {
+  .footerContainer {
+    padding: 0 20px;
+  }
+
+  .footerGitsContainer {
+    gap: 10px;
+  }
+
+  .footerInfo {
+    font-size: 15px;
+  }
+
+  .footerIcon {
+    width: 135px;
+  }
+
+  .footerGitName {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 650px) {
+  .footerInfo {
+    font-size: 10px;
+    width: 50px;
+  }
+
+  .footerIcon {
+    width: 50px;
+  }
+
+  .footerGitName {
+    font-size: 10px;
+  }
+}

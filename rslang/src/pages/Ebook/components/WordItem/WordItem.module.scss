@@ -1,0 +1,290 @@
+@import url("../../../../variables/Variables.module.css");
+
+.wordcontainer {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  gap: 20px;
+  background-color: var(--color-darkblue);
+  border-radius: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  width: 100%;
+}
+.wordCard {
+  width: 100%;
+  gap: 20px;
+  display: flex;
+  // background: green;
+}
+.optionalWrapper {
+  width: 100%;
+  display: flex;
+  gap: 40px;
+  align-items: flex-end;
+  .optionalContainer {
+    background: red;
+  }
+}
+
+.wordImage {
+  // min-width: 300px;
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+}
+
+.wordInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.wordItem {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.word {
+  font-family: "Montserrat-Bold";
+  font-size: 30px;
+  color: var(--color-blue);
+}
+
+.wordTranscription,
+.wordTranslate {
+  font-family: "Montserrat-Regular";
+  font-size: 20px;
+  color: var(--color-white);
+}
+
+.wordSubinfo {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.wordText,
+.wordTextTranslate {
+  font-family: "Montserrat-Regular";
+  font-size: 15px;
+  color: var(--color-white);
+}
+
+.wordTextTranslate {
+  color: var(--color-gray);
+}
+
+.btnsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.btnContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.playBtn {
+  height: 100px;
+  width: 100px;
+  cursor: pointer;
+  transition: 1s;
+}
+
+.playBtn:hover {
+  filter: brightness(60%);
+}
+
+.buttonsHardness {
+  display: flex;
+  width: 250px;
+  gap: 20px;
+
+  button {
+    width: 50%;
+  }
+}
+
+/* CUSTOM-BUTTON-START */
+
+.btnHard,
+.btnLearned {
+  font-family: "Montserrat-Bold";
+  font-size: 16px;
+  text-transform: uppercase;
+  background: var(--color-blue);
+}
+
+.btnHardActive {
+  background: red;
+}
+
+.btnLearnedActive {
+  background: green;
+}
+
+.progress {
+  height: 30px;
+  width: 30px;
+}
+
+.progressItem {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.progressTitle {
+  font-family: "Montserrat-Regular";
+  font-size: 16px;
+  color: var(--color-white);
+}
+
+.progressNew {
+  font-family: "Montserrat-Regular";
+  font-size: 16px;
+  color: var(--color-white);
+  background-color: green;
+  padding: 10px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-top-left-radius: 10px;
+}
+
+@media (max-width: 1024px) {
+  .wordImage {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+  }
+
+  .word {
+    font-size: 20px;
+  }
+
+  .wordTranscription,
+  .wordTranslate {
+    font-size: 15px;
+  }
+
+  .wordSubinfo {
+    gap: 15px;
+  }
+
+  .wordInfo {
+    gap: 15px;
+  }
+
+  .wordText,
+  .wordTextTranslate {
+    font-size: 11px;
+  }
+
+  .btnContainer {
+    padding: 0;
+    padding-right: 10px;
+  }
+
+  .playBtn {
+    height: 60px;
+    width: 60px;
+  }
+
+  .buttonsHardness {
+    width: 150px;
+    gap: 10px;
+  }
+
+  .btnHard,
+  .btnLearned {
+    font-size: 12px;
+    padding: 10px 0;
+  }
+
+  .optionalWrapper {
+    gap: 20px;
+  }
+
+  .progressTitle {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 650px) {
+  .wordCard {
+    gap: 10px;
+  }
+
+  .optionalWrapper {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .wordImage {
+    width: 120px;
+    height: 150px;
+    object-fit: cover;
+  }
+
+  .wordItem {
+    flex-wrap: wrap;
+    gap: 0 10px;
+  }
+
+  .word {
+    font-size: 12px;
+  }
+
+  .wordTranscription,
+  .wordTranslate {
+    font-size: 8px;
+  }
+
+  .wordSubinfo {
+    gap: 10px;
+  }
+
+  .wordInfo {
+    gap: 10px;
+  }
+
+  .wordText,
+  .wordTextTranslate {
+    font-size: 8px;
+  }
+
+  .btnContainer {
+    padding: 0;
+  }
+
+  .playBtn {
+    height: 40px;
+    width: 40px;
+  }
+
+  .buttonsHardness {
+    width: 100%;
+    gap: 25px;
+  }
+
+  .btnHard,
+  .btnLearned {
+    font-size: 12px;
+    padding: 10px 0;
+  }
+
+  .optionalWrapper {
+    gap: 20px;
+  }
+
+  .progressTitle {
+    font-size: 10px;
+  }
+}

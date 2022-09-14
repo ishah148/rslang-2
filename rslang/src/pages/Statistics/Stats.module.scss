@@ -1,0 +1,218 @@
+@import url(../../variables/Variables.module.css);
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+  padding-top: 150px;
+  padding-bottom: 100px;
+
+  .page {
+    width: 100%;
+    padding-top: 100px;
+  }
+
+  .gamesStats {
+    padding-top: 100px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    row-gap: 40px;
+    column-gap: 40px;
+
+    .gameStats {
+      display: flex;
+      justify-content: flex-start;
+      gap: 20px;
+      align-items: center;
+      width: 350px;
+      padding: 60px 20px;
+      box-sizing: border-box;
+      background: var(--color-darkblue);
+      border-radius: 10px;
+
+      p {
+        font-family: "Montserrat-Regular";
+        font-size: 15px;
+        color: var(--color-white);
+      }
+    }
+
+    .gameStatsImg {
+      height: 100px;
+      width: 100px;
+      object-fit: contain;
+    }
+  }
+
+  .wordsStats {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    p {
+      font-family: "Montserrat-Bold";
+      font-size: 25px;
+      color: var(--color-darkblue);
+    }
+  }
+}
+
+.statsTitle {
+  font-family: "Montserrat-Bold";
+  font-size: 17px;
+  color: var(--color-white);
+  margin-bottom: 20px;
+}
+
+.buttons__container {
+  width: 100%;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+
+  .button__dailyStats,
+  .button__fullStats {
+    display: block;
+    width: 150px;
+    height: 50px;
+
+    border-radius: 10px;
+    font-family: "Montserrat-Bold";
+    font-size: 17px;
+    cursor: pointer;
+    &:hover {
+      transition: 0.5s;
+      background-color: #00aeff;
+    }
+  }
+}
+
+.pageTitle {
+  text-align: center;
+  font-family: "Montserrat-Bold";
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+.buttonStats {
+  width: 210px;
+  height: 110px;
+  font-family: "Montserrat-Bold";
+  font-size: 22px;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+  font-weight: 700;
+  color: var(--color-darkblue);
+  background: #4fd1c5;
+  background: linear-gradient(90deg, rgba(129, 230, 217, 1) 0%, rgba(79, 209, 197, 1) 100%);
+  border: none;
+  border-radius: 1000px;
+  box-shadow: 12px 12px 24px rgba(79, 209, 197, 0.64);
+  transition: all 0.3s ease-in-out 0s;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+  padding: 10px;
+}
+
+.buttonStats::before {
+  content: "";
+  border-radius: 1000px;
+  width: calc(210px + 12px);
+  height: calc(110px + 12px);
+  border: 6px solid #00ffcb;
+  box-shadow: 0 0 60px rgba(0, 255, 203, 0.64);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.buttonStats:hover,
+.buttonStats:focus {
+  color: #313133;
+  transform: translateY(-6px);
+}
+
+.buttonStats:hover::before,
+.buttonStats:focus::before {
+  opacity: 1;
+}
+
+.buttonStats::after {
+  content: "";
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  border: 6px solid #00ffcb;
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: ring 1.5s infinite;
+}
+
+.buttonStats:hover::after,
+.buttonStats:focus::after {
+  animation: none;
+  display: none;
+}
+
+@keyframes ring {
+  0% {
+    width: 30px;
+    height: 30px;
+    opacity: 1;
+  }
+  100% {
+    width: 100px;
+    height: 100px;
+    opacity: 0;
+  }
+}
+
+@media (max-width: 650px) {
+  .buttons__container {
+    margin: 50px 0;
+    flex-direction: column;
+    gap: 60px;
+  }
+
+  .buttonStats::before {
+    height: 90px;
+  }
+
+  .pageTitle {
+    font-size: 25px;
+  }
+
+  .container {
+    .gameStats {
+      flex-direction: column;
+
+      .statsTitle {
+        font-size: 25px;
+        text-align: center;
+      }
+
+      p {
+        text-align: center;
+      }
+    }
+    .wordsStats {
+      h2 {
+        font-size: 20px;
+      }
+
+      p {
+        font-size: 15px;
+      }
+    }
+  }
+}

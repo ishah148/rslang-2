@@ -1,0 +1,33 @@
+:root {
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-gray: #a5a5a5;
+  --color-blue: #00aeff;
+  --color-darkblue: #004363;
+  --color-yellow: #cfb023;
+}
+
+@font-face {
+  font-family: "Montserrat-Bold";
+  src: url("../assets/fonts/Montserrat-Bold.ttf");
+}
+
+@font-face {
+  font-family: "Montserrat-Regular";
+  src: url("../assets/fonts/Montserrat-Regular.ttf");
+}
+
+.button {
+  height: 40px;
+  padding: 0 20px;
+  font-family: "Montserrat-Bold";
+  color: var(--color-white);
+  background-color: var(--color-blue);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: 1s;
+}
+
+.button:hover {
+  background-color: var(--color-darkblue);
+}

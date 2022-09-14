@@ -1,0 +1,250 @@
+@import url("../../variables/Variables.module.css");
+
+.homeBackground {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  max-height: 500px;
+  left: 0;
+  top: 0;
+  right: 0;
+  order: 2;
+  overflow: hidden;
+}
+
+.homeBackground {
+  img {
+    width: 100%;
+    object-fit: cover;
+    filter: brightness(70%);
+  }
+}
+
+.homeContainer {
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+  z-index: 10;
+  padding-top: 150px;
+  gap: 20px;
+
+  button {
+    width: 40%;
+  }
+}
+
+.homeTitle {
+  font-family: "Montserrat-Bold";
+  color: var(--color-white);
+  font-size: 50px;
+  text-transform: uppercase;
+}
+
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 60px;
+  padding-top: 180px;
+  padding-bottom: 80px;
+}
+
+.titleContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mainTitle {
+  display: flex;
+  justify-content: center;
+  font-family: "Montserrat-Bold";
+  color: var(--color-darkblue);
+  font-size: 30px;
+}
+
+.divider {
+  height: 5px;
+  width: 100%;
+  background-color: var(--color-darkblue);
+}
+
+.capabilitiesContainer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 80px;
+}
+
+.capabilitie {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 25%;
+  gap: 30px;
+
+  a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+  }
+}
+
+.capabilitieImage {
+  height: 80px;
+  width: 80px;
+}
+
+.capabilitieTitle {
+  font-family: "Montserrat-Bold";
+  font-size: 25px;
+  text-align: center;
+  color: var(--color-darkblue);
+}
+
+.capabilitieSubTitle {
+  font-family: "Montserrat-Regular";
+  font-size: 20px;
+  color: var(--color-darkblue);
+  text-align: center;
+}
+
+.aboutTeam {
+  width: 100%;
+  height: 500px;
+
+  display: flex;
+  font-family: "Montserrat-Regular";
+  padding: 15px;
+  justify-content: space-between;
+  h2,
+  h3 {
+    text-align: center;
+  }
+  .card {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--color-darkblue);
+    border-radius: 10px;
+    padding: 20px;
+    box-sizing: border-box;
+    cursor: pointer;
+  }
+  .card:hover {
+    box-shadow: 0 0 50px rgba(0, 119, 166, 0.5);
+  }
+  .image {
+    width: 100%;
+    img {
+      width: 100%;
+      border-radius: 50%;
+      background-color: var(--color-blue);
+    }
+  }
+  h2 {
+    color: var(--color-blue);
+    font-size: 25px;
+    font-family: "Montserrat-Bold";
+    margin-bottom: 10px;
+  }
+  h3 {
+    color: var(--color-white);
+    font-size: 18px;
+    font-family: "Montserrat-Regular";
+  }
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 250px;
+    height: 250px;
+    // border: 1px solid green;
+    padding: 15px;
+    user-select: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  .homeTitle {
+    font-size: 40px;
+  }
+
+  .capabilitiesContainer {
+    gap: 50px;
+  }
+
+  .capabilitie {
+    width: auto;
+  }
+
+  .capabilitieTitle {
+    max-width: 150px;
+  }
+
+  .capabilitieSubTitle {
+    font-size: 15px;
+  }
+
+  .aboutTeam {
+    height: auto;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+
+    .card {
+      height: 500px;
+      width: 300px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .homeContainer {
+    width: 80%;
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 100px;
+    gap: 50px;
+
+    button {
+      width: 100%;
+    }
+  }
+
+  .mainContainer {
+    padding-top: 200px;
+  }
+
+  .homeTitle {
+    font-size: 35px;
+  }
+
+  .capabilitiesContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .capabilitie {
+    width: 300px;
+  }
+}
+
+@media (max-width: 630px) {
+  .homeContainer {
+    padding-top: 90px;
+    gap: 30px;
+  }
+
+  .mainContainer {
+    padding-top: 160px;
+  }
+
+  .homeTitle {
+    font-size: 20px;
+  }
+}

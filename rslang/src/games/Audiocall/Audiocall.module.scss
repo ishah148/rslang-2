@@ -1,0 +1,319 @@
+@import url(../../variables/Variables.module.css);
+
+.custom-player {
+  .audio-player {
+    position: absolute;
+    visibility: hidden;
+  }
+  button:hover {
+    background: #4fd1c5;
+  }
+}
+
+.audioContainer {
+  height: calc(100vh - 100px);
+  padding-top: 100px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  gap: 40px;
+  left: 0;
+  right: 0;
+  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6)), url(../../assets/img/audioBackground.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.title {
+  font-family: "Montserrat-Bold";
+  font-size: 70px;
+  color: var(--color-white);
+  margin-bottom: 20px;
+}
+
+.settingsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 80px;
+}
+
+.buttonStart {
+  width: 110px;
+  height: 110px;
+  font-family: "Montserrat-Bold";
+  font-size: 22px;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+  font-weight: 700;
+  color: var(--color-darkblue);
+  background: #4fd1c5;
+  background: linear-gradient(90deg, rgba(129, 230, 217, 1) 0%, rgba(79, 209, 197, 1) 100%);
+  border: none;
+  border-radius: 1000px;
+  box-shadow: 12px 12px 24px rgba(79, 209, 197, 0.64);
+  transition: all 0.3s ease-in-out 0s;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+  padding: 10px;
+}
+
+.buttonStart::before {
+  content: "";
+  border-radius: 1000px;
+  width: calc(110px + 12px);
+  height: calc(110px + 12px);
+  border: 6px solid #00ffcb;
+  box-shadow: 0 0 60px rgba(0, 255, 203, 0.64);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.buttonStart:hover,
+.buttonStart:focus {
+  color: #313133;
+  transform: translateY(-6px);
+}
+
+.buttonStart:hover::before,
+.buttonStart:focus::before {
+  opacity: 1;
+}
+
+.buttonStart::after {
+  content: "";
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  border: 6px solid #00ffcb;
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: ring 1.5s infinite;
+}
+
+.buttonStart:hover::after,
+.buttonStart:focus::after {
+  animation: none;
+  display: none;
+}
+
+@keyframes ring {
+  0% {
+    width: 30px;
+    height: 30px;
+    opacity: 1;
+  }
+  100% {
+    width: 100px;
+    height: 100px;
+    opacity: 0;
+  }
+}
+
+#settingsRadio {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  background: #4fd1c5;
+  padding: 10px 30px;
+  border-radius: 10px 30px;
+
+  box-shadow: 0 0 60px rgb(0 255 203 / 64%);
+  label {
+    display: flex;
+    width: 50px;
+    color: var(--color-white);
+  }
+}
+
+#formControl {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  label {
+    font-family: "Montserrat-Bold";
+    font-size: 22px;
+    color: var(--color-white);
+  }
+}
+
+.wordInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+
+  span {
+    height: 150px;
+    width: 150px;
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
+.wordResult {
+  font-size: 20px;
+  background-color: var(--color-gray);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.imageContainer {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.buttonsNavigate {
+  display: flex;
+  gap: 30px;
+}
+
+.resultContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 100px;
+  background-color: var(--color-darkblue);
+  position: absolute;
+  left: 0;
+  right: 0;
+  gap: 50px;
+}
+
+.resultAgain {
+  background-color: #4fd1c5;
+  padding: 10px 30px;
+  border-radius: 10px;
+  transition: 1s;
+  font-family: "Montserrat-Bold";
+  font-size: 22px;
+  color: var(--color-white);
+}
+
+.resultAgain:hover {
+  background-color: #00ffcb;
+}
+
+.resultTitle {
+  font-family: "Montserrat-Bold";
+  font-size: 22px;
+  color: var(--color-white);
+}
+
+.resultCorrectContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 800px;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    span {
+      font-family: "Montserrat-Regular";
+      font-size: 15px;
+      color: var(--color-white);
+    }
+  }
+}
+
+.resultCorrect {
+  font-family: "Montserrat-Bold";
+  font-size: 22px;
+  color: green;
+}
+
+.resultMistakes {
+  font-family: "Montserrat-Bold";
+  font-size: 22px;
+  color: red;
+}
+
+.resultButtons {
+  display: flex;
+  gap: 50px;
+  margin: 30px 0;
+}
+
+.resultButton {
+  width: 50%;
+  border: #4fd1c5;
+}
+
+.resultMessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  background-color: #4fd1c5;
+  padding: 20px;
+  margin-bottom: 50px;
+  border-radius: 10px;
+  font-family: "Montserrat-Bold";
+  font-size: 15px;
+
+  svg {
+    color: red;
+  }
+}
+
+.wordNew {
+  font-family: "Montserrat-Regular";
+  font-size: 12px;
+  color: var(--color-white);
+  background-color: green;
+  padding: 7px;
+  position: absolute;
+  left: -15px;
+  top: -15px;
+  border-radius: 10px 10px 0 10px;
+}
+
+.progress {
+  height: 30px;
+  width: 30px;
+}
+
+.progressItem {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.progressTitle {
+  font-family: "Montserrat-Regular";
+  font-size: 16px;
+  color: var(--color-white);
+}
+
+.btnHard {
+  font-family: "Montserrat-Bold";
+  font-size: 12px;
+  text-transform: uppercase;
+  background: red;
+  color: black;
+  padding: 7px;
+  position: absolute;
+  right: -15px;
+  top: -15px;
+  border-radius: 10px 10px 10px 0;
+}
